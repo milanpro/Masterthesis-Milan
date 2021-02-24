@@ -1,6 +1,22 @@
 %!TEX root = ../thesis.tex
 \chapter{Background}
-In this chapter, we will look into heterogeneous systems and the processing units frequently used in such systems. While heterogeneous systems power heterogeneous computing algorithms and can consist of processing units of all kinds. This thesis focus lies on Central Processing Units (CPUs) and Graphical Processing Units (GPUs) as the processing power of a heterogeneous system.
+In this chapter, we will look into heterogeneous computing, heterogeneous systems and the processing units frequently used in such systems. While heterogeneous systems power heterogeneous computing algorithms, they can consist of processing units of all kinds. This thesis focus lies on the \acrfull{CPU} and the \acrfull{GPU} as the processing power of a heterogeneous system.
 After that the theoretical background of Causal Structure Learning and the PC-algorithm will be explained, which we will connect to the possible execution on heterogeneous systems.
 
 \section{Heterogeneous Computing}
+Heterogeneous computing refers to systems which include conventional as well as specialized processors. Those different processors work cooperatively on the same workload. \cite{heterogprocessing} Heterogeneous computing aims to use more than one processing unit of the systems resources and increase the execution effectiveness. Heterogeneity in the computing context refers to different instruction-set architectures (ISA), which means that the processors in this system are heterogeneous in their architecture.
+Abstractions can eliminate this heterogeneity for the software developer, but since those processors have different advantages and disadvantages over another the developer still has to think on the optimal usage of such.
+
+Most modern computing systems are heterogeneous and consist of one or more \acrshort{CPU} and one or more \acrshort{GPU}. Therefore a heterogeneous computing approach could be beneficial in their effectiveness for such systems. Both, the \acrshort{CPU} and the \acrshort{GPU} are very different in their architecture and function, so most modern applications only use one of those processors effectively.
+
+\subsection{Central Processing Unit}
+The \acrshort{CPU}, sometimes also just called processor, is the main instruction executing component of a computer. While modern \acrshort{CPU}s introduce parallelism concepts, the main purpose is still low latency execution of given instructions.
+Without those later introduced parallelism concepts, a \acrshort{CPU} is only able to execute instructions in a serial manner. The ability to run concurrent applications is mostly done by introducing a thread and scheduling concept, which switches those threads periodically using a set of rules. Programs can create such threads using an operating system interface.
+Modern \acrshort{CPU}s have multiple so called cores, which can independently execute instructions and therefore are able to run multiple threads in parallel. This is also called task-level parallelism.
+Concurrent programs are prone to memory access errors in shared resources. Such errors need mechanisms such as critical sections for safe concurrent access. Such access mechanisms are also important in heterogeneous computing where concurrent memory access of multiple processors can occur.
+Frameworks such as OpenMP can help the developer to handle multithreading and safe concurrency with abstractions of those concepts. OpenMP, a shared/memory parallel programming framework for C/C++ and Fortran framework, helps annotating parallel regions like parallelizable for loops and creates multiple execuion threads for those regions using a runtime.
+The thesis project uses OpenMP for efficiency and parallelism purposes.
+% OpenBlas armadillo boost SIMD AVX?
+
+\subsection{Graphics Processing Unit}
+

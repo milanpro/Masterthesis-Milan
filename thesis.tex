@@ -42,7 +42,6 @@
 	\pagenumbering{roman}
 	\input{sections/abstract}
 	\clearpage
-	\input{sections/background}
 	\input{sections/zusammenfassung}
 	\input{sections/acknowledgment}
 	\glsresetall
@@ -51,6 +50,7 @@
 	\tableofcontents
 	\glsresetall
 	\cleardoublepage
+	\input{sections/background}
 	\phantomsection \label{listoffig}
 %	\addcontentsline{toc}{section}{List of Figures}
 	\listoffigures
@@ -66,10 +66,10 @@
 	\glsresetall
 	\pagenumbering {arabic}
 	\setcounter{page}{0}
-	\input{sections/introduction}
-	\clearpage
-%	\printglossary[type=\acronymtype,style=modsuper]
-	\bibliography{Remote.bib}
+%	\input{sections/introduction}
+%	\clearpage
+	\printglossary[type=\acronymtype]
+\bibliography{Remote}
 %	\begin{appendices}
 %	\input{sections/appendix}
 %	\end{appendices}
