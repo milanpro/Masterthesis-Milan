@@ -19,4 +19,14 @@ The thesis project uses OpenMP for efficiency and parallelism purposes.
 % OpenBlas armadillo boost SIMD AVX?
 
 \subsection{Graphics Processing Unit}
+The \acrshort{GPU} handles graphics processing in computer systems. In the beginning video games were the main driver for technical advancements in deveolping better \acrshort{GPU}s. For computing graphics the processing of mutliple things in parallel is essantially. The same operation has to be done on multiple voxels or vertices. Other use cases such as machine learning algorithms later also extensively used the systems \acrshort{GPU}, because of their parallelizability and frameworks such as OpenCL or CUDA, that made developing programs running on the GPU easier.
+CUDA is a superset language of C/C++ that allows the definition of functions, that can be run on the \acrshort{GPU}. The Nvidia CUDA compiler 
 
+%% TODO
+
+
+\subsection{Constraint Based Causal Structure Learning}
+In this section, I introduce necessary terminology in the context of Causal Structure Learning which is the problem class I look into in this thesis. This section introduces the Causal Graphical Model based on the definition given by Schmidt et al \cite{constraintgpu}. After that the PC-Algorithm is explained, which is the base for the heterogeneous approach this thesis is about.
+
+\subsubsection{Causal Graphical Model}
+Given a finite set of $N$ vertices $V = (V_1,...,V_N)$ and a set of edges $E \subseteq V \times V$, let $G = (V,E)$. The vertices each represent an observation. An edge $(V_i, V_j) \in E$ is called directed, i.e., $V_i \rightarrow V_j$, if $(V_i,V_j) \in E$ but $(V_j, V_i) \notin E$. An edge is called undirected, if both $(V_i,V_j) \in E$ and $(V_j, V_i) \in E$, i.e. $V_i - V_j$. Two vertices $V_i$, $V_j$ are called adjacent if there is an undirected edge $V_i - V_j$. The adjacenecy set $adj(G, V_i)$ of the vertex $V_i \in V$ in $G$ are all vertices $V_j \in V$ that are connected to $V_i$ by an undirected edge.
