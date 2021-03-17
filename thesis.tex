@@ -2,7 +2,7 @@
 \input{header}
 
 \newcommand{\TITLE}{Load Balancing Causal Structure Learning Algorithms in Heterogeneous Computing}
-\newcommand{\SUBTITLE}{GERMAN TITLE}
+\newcommand{\SUBTITLE}{Lasten Verteilung in Kausalem Struktur Lernen auf Heterogenen Systemen}
 \newcommand{\AUTHOR}{Milan Proell}
 \newcommand{\EMAIL}{milan.proell@student.hpi.de}
 \newcommand{\SUPERVISOR}{Christopher Hagedorn}
@@ -50,7 +50,6 @@
 	\tableofcontents
 	\glsresetall
 	\cleardoublepage
-	\input{sections/background}
 	\phantomsection \label{listoffig}
 %	\addcontentsline{toc}{section}{List of Figures}
 	\listoffigures
@@ -66,10 +65,11 @@
 	\glsresetall
 	\pagenumbering {arabic}
 	\setcounter{page}{0}
-%	\input{sections/introduction}
-%	\clearpage
-	\printglossary[type=\acronymtype]
-\bibliography{Remote}
+	\input{sections/introduction}
+	\input{sections/background}
+	\clearpage
+%	\printglossary[type=\acronymtype,style=modsuper]
+	\bibliography{Remote.bib}
 %	\begin{appendices}
 %	\input{sections/appendix}
 %	\end{appendices}
