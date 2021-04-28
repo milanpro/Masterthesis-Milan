@@ -1,0 +1,25 @@
+{
+  "latex-workshop.synctex.afterBuild.enabled": true,
+  "latex-workshop.view.pdf.viewer": "tab",
+  "grammarly.domain": "academic",
+  "grammarly.overrides": [
+    {
+      "files": [
+        "**/sections/**.tex"
+      ],
+      "config": {
+        "audience": "knowledgeable",
+        "dialect": "american",
+        "domain": "academic",
+        "emotions": [
+          "neutral",
+          "analytical"
+        ],
+        "goals": [
+          "inform",
+          "describe"
+        ]
+      }
+    }
+  ]
+}
