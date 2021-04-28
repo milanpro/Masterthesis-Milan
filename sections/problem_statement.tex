@@ -1,13 +1,18 @@
 %!TEX root = ../thesis.tex
 \chapter{Problem Statement}
-Efforts for a more effient PC Algorithm have been done for versions running solely on the CPU or GPU. Since the skeleton discovery phase can be highly parallelizable, GPU variants mostly outperformed variants running on the CPU. In both variants the other processor idles and its processing power is unused. A solution to this problem could be using both processing units at the same time and split the workload accordingly.
-Splitting the workload into predefined tasks can help parallelizing the workload. For homogeneous processing units scheduling such split tasks needs a mostly straightforward load balancing such as splitting the task load into same size batches and places them on the available processors.
-Because of their equal processing power, those homogeneous processors should process these task batches in the same time.
-Heterogeneous systems are more complex for the load balancer, because of the additional parameters coming into consideration. For example a modern CPU has few but fast processing cores being good at processing a few tasks with high load. In contrast the modern GPU has a lot of slower processing cores, being able to process many parallel tasks at the same time.
-To main problem statements arise in this discussion.
+Efforts for a more efficient PC Algorithm have been done for versions running solely on the CPU or GPU. Since the skeleton discovery phase can be highly parallelizable, GPU variants mostly outperformed variants running on the CPU. In both variants the other processor idles and its processing power is unused. A solution to this problem could be using both processing units at the same time and split the workload accordingly.
+Splitting the workload into predefined tasks can help parallelizing the workload. For homogeneous processing units scheduling such split tasks needs a mostly straightforward load balancing such as splitting the task load into same size batches and placing them on the available processors.
+Because of their equal processing power, those homogeneous processors should process these task batches in the same time frame.
+Heterogeneous systems are more complex for balancing the workload, because of the additional parameters coming into consideration. For example a modern CPU has few but fast processing cores being good at processing a few tasks with high load. In contrast the modern GPU has a lot of slower processing cores, being able to process many parallel tasks at the same time.
+
+On this basis the following research questions arises: How do I optimally use the resources of a heterogeneous system to speed up the PC Algorithm execution?
+The research question can be split into a few smaller questions, that are important to answer the research question itself and allow a finer grained view of the problem:
 
 \begin{enumerate}
   \item What tasks should be defined in the workload of the PC-Algorithm?
-  \item How should those tasks be scheduled on those hetereogeneous processing units?
+  \item How do I parallelize the workload in a heterogeneous context?
+  \item How do I schedule the workload effectively on those processing units?
+  \item What performance parameters are important on heterogeneous systems?
 \end{enumerate}
 
+Deciding on a task size is the main factor in being able to effectively schedule the workload. Using this task to parallelize the workload is then effectively assigning the tasks to the given processing units. Assigning the task to the given processing units has to be done by some kind of scheduling algorithm, which has to know about performance parameters of the heterogeneous system and its processing units.

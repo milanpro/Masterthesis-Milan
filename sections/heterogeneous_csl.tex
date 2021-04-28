@@ -1,2 +1,73 @@
 %!TEX root = ../thesis.tex
 \chapter{Heterogeneous Constraint Based Causal Structure Learning}
+Parallelizing the PC algorithm on heterogeneous systems starts with choosing a task size that is flexible enough for the different processing units executing the workload. As a basis the implementation of the PC algorithm from the paper \cite{schmidt_order-independent_2018} is used, since efforts for parallelizing the PC algorithm have already been done with the purpose of utilizing the throughput of the GPU. After that the chosen task has to balanced on the CPU and GPU using a balancing algorithm. The balancing algorithm has to be adaptable to the environmental parameters of the system it runs on.
+
+\section{Parallelize the PC Algorithm}
+Parallelizing workloads is the basis of parallel programming. A well known design methodology used to architect a workload such that it can be run in parallel efficiently is the Foster's Methodology \cite{foster_designing_1995}. Foster's Methodology is also often used for distributed-memory systems. Since GPU-CPU heterogeneous systems are distributed-memory systems, I will apply this method to parallelize the workload. Foster's Methodology uses four distinct stages, which are meant to be applied to the workload one after another:
+
+\begin{enumerate}
+    \item Partitioning
+    \item Communication
+    \item Agglomeration 
+    \item Mapping
+\end{enumerate}
+
+The workload is decomposed into the smallest possible tasks in the Partitioning stage. For a correct execution the Communication stage defines the necessary coordination of task execution. Both the first and the second stage are essential for the search of concurrency and scalability as well as the algorithm correctness. In the Agglomeration stage, multiple tasks are agglomerated, to better align the computation and data to the underlying system. The Mapping stage can be seen as analogue to scheduling and maps the agglomerated tasks onto the different processing units.
+
+\subsection{Partitioning and Communication}
+In the Partitioning stage opportunities for parallel execution are exposed. A good partition keeps computational parts and their respective data together, to minimize the later communication efforts. 
+- Partitioning und Communication genauer erklären
+- GPU paper basis
+    - partitioning schon getan
+    - Task ist eine edge
+    - Wiederverwenden
+    - Durch parallelisierung auf processing units weiterhin diese partitionierung
+    
+\subsection{Agglomeration}
+- Agglomeration genauer erklären
+- Durch adjazenz matrix basis bietet sich row basiert an
+- row bundelt mehrere edges und ist damit etwas geeigneter als Task
+- einzelne edge können weiterhin parallel bearbeitet werden auf den PUs
+- genauer die ausführung der GPU anschauen
+ - GPU als basis -> wie geschwindigkeit der GPU erhöhen
+ - serieller/paralleler anteil
+ - GPU Block besteht meist aus 64 Threads
+ - (Beispiel code für ausführung)
+ - Iterationsanzahl bestimmt längste thread ausführung
+ - iterationsanzahl ist abhängig von row length
+ - Testanzahl berechnen aus und daraus iteration (wie)
+ - Diagram Iterations länge
+ - erklären wie dadurch der serielle anteil gekürzt werden kann
+ 
+\subsubsection{Compact Adjacency Lists}
+- durch compact step werden adjacency lists zwischen leveln berechnet
+- länge der liste ist anzahl an edges in einer row
+- letztes element genutzt als längenspeicher
+- grafik zur verbesserten darstellung
+- wird auch in \cite{zarebavani_cupc_2018} verwendet
+
+\subsection{Mapping}
+- Mapping genauer erklären
+- Scheduling spezifizieren
+    - Static/Dynamic scheduling
+    - static = prebalanced
+        vor nachteile
+    - dynamic 
+        vor nachteile
+- Two approaches pre balanced and workstealing
+
+\section{Heterogeneous PC Algorithm Approaches}
+\subsection{Pre-Balanced Approach}
+- Static scheduling ansatz
+- Load balancer schiebt längste rows auf CPU
+...
+- Viel Memory/ communication -> nvprof?
+- Limitieren durch Migrierungsschritt der CPU
+
+\subsection{Workstealing Approach}
+- Dynamic scheduling
+- Workstealing erklären (herkunft etc)
+- GPU läuft normal durch
+- CPU nimmt sich längste rows als erstes vor und arbeitet von hinten ab
+- regelmäßiges überprüfen ob schon fertig
+- vermehrte kommunikation
