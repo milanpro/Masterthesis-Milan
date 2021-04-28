@@ -3,7 +3,7 @@
 Parallelizing the PC algorithm on heterogeneous systems starts with choosing a task size that is flexible enough for the different processing units executing the workload. As a basis, the implementation of the PC algorithm from the paper \cite{schmidt_order-independent_2018} is used since efforts for parallelizing the PC algorithm have already been done to utilize the throughput of the GPU. After that, the chosen task must be balanced on the CPU and the GPU using a balancing algorithm. The balancing algorithm has to be adaptable to the environmental parameters of the system it runs on.
 
 \section{Parallelize the PC Algorithm}
-Parallelizing workloads is the basis of parallel programming. A well-known design methodology used to architect a workload such that it can be run in parallel efficiently is Foster's Methodology \cite{foster_designing_1995}. Foster's Methodology is also often used for distributed-memory systems. Since GPU-CPU heterogeneous systems are distributed-memory systems, I will apply this method to parallelize the workload. Foster's Methodology uses four distinct stages, which are meant to be applied to the workload one after another:
+Parallelizing workloads is the basis of parallel programming. A well-known design methodology used to architect a workload such that it can be run in parallel efficiently is Foster's Methodology \cite{foster_designing_1995}. Foster's Methodology is also often used for distributed-memory systems. Since GPU-CPU heterogeneous systems are distributed-memory systems, I will apply this method to parallelize the workload. Foster's Methodology uses four distinct stages, which are applied to the workload one after another:
 
 \begin{enumerate}
     \item Partitioning
@@ -12,14 +12,14 @@ Parallelizing workloads is the basis of parallel programming. A well-known desig
     \item Mapping
 \end{enumerate}
 
-The workload is decomposed into the smallest possible tasks in the Partitioning stage. For a correct execution, the Communication stage defines the necessary coordination of task execution. Both the first and the second stage are essential for the search of concurrency, scalability, and algorithm correctness. In the Agglomeration stage, multiple tasks are agglomerated, better to align the computation and data to the underlying system. The Mapping stage can be seen as analog to scheduling and maps the agglomerated tasks onto the different processing units.
+The workload is decomposed into the smallest possible tasks in the Partitioning stage. For a correct execution, the Communication stage defines the necessary coordination of task execution. Both the first and the second stage of Foster's Methodology are essential for the search of concurrency and scalability in the given workload while achieving algorithm correctness. In the Agglomeration stage, multiple tasks are agglomerated, better to align the computation and data to the underlying system. The Mapping stage can be seen as analog to scheduling and maps the agglomerated tasks onto the different processing units.
 
 \subsection{Partitioning and Communication}
 In the Partitioning stage, opportunities for parallel execution are exposed. A good partition keeps computational parts and their respective data together to minimize the later communication efforts. Using fine-grained decomposition of the workload can be done in two different ways. Domain decomposition defines small data fragments first and specifies the computation later. Functional decomposition splits the computation into disjoint tasks and handles the data after. Domain decomposition is more appropriate than functional decomposition if there is a significant data overlap.
 More generalized functional decomposition can also be seen as splitting a multivariate function $f(x_1,x_2,...,x_n)$ into multiple functions ${g_1,g_2,...g_m}$ such that $f(x_1,x_2,...,x_n) = \theta(g_1(x_1,x_2,...,x_n),g_2(x_1,x_2,...,x_n),...g_m(x_1,x_2,...,x_n))$ where $\theta$ is another function combining the results. Every function $g_n$ gets the same input as $f$. If the functional approach is applied to some algorithmic problem, loops with independent iterations can be mapped to this mathematical model and make parallelizing single iterations possible. If iterations of such loops mapped to a task do have side effect communication or synchronization must be done.
-The Communication stage specifies links between data consumers and producers. Domain decomposition problems can have more complex communication infrastructures due to data dependencies. Distributing computation and communication is more efficient than centralizing the algorithm through some central manager, which communicates with every task. Independent and balanced tasks communication-wise are more capable of performant execution.
+The Communication stage specifies links between data consumers and producers. Domain decomposition problems can have more complex communication infrastructures due to data dependencies. Distributing computation and communication is more efficient than centralizing the algorithm through some central manager communicating with every task. Independent and balanced tasks communication-wise are more capable of performant execution.
 
-Using the PC-stable GPU-accelerated Algorithm proposed in the paper by Schmidt et al. \cite{schmidt_order-independent_2018} makes handling the Partitioning and Communication step straightforward. The algorithm is based on the gaussian distribution model and handles only the CI-Test for normal distributed data. For simplicity purposes the thesis implementation incorporates the same approach and looks into other CI-Tests in the later discussion.
+Using the PC-stable GPU-accelerated Algorithm proposed in the paper by Schmidt et al. \cite{schmidt_order-independent_2018} makes handling the Partitioning and Communication step straightforward. The algorithm is based on the gaussian distribution model and handles only the CI-Test for normal distributed data. For simplicity purposes, the thesis implementation incorporates the same approach and looks into other CI-Tests later.
 
 \begin{algorithm}
     \caption{Adjacency search of PC-stable algorithm with gaussian distribution model \cite{schmidt_order-independent_2018, colombo_order-independent_nodate}}
@@ -49,11 +49,11 @@ Using the PC-stable GPU-accelerated Algorithm proposed in the paper by Schmidt e
 \end{algorithm}
 
 As can be seen in algorithm \ref{alg:pcstable_gaussian} the main input next to the vertices is the correlation matrix for those vertices. The correlation matrix is necessary for the gaussian-based CI-Test. The algorithm \ref{alg:pcstable} is a CI-Test generalized version of the algorithm \ref{alg:pcstable_gaussian}.
-As already stated, loops can be split into tasks if their iteration execution flow is independent from the input of other iterations. This statement does not apply to the repetition in line \ref{alg:pcstable_gaussian:level_loop} because every level depends on the results of its predecessor. Synchronization must occur between each level.
+As already stated, loops can be split into tasks if their iteration execution flow is independent of the input of other iterations. This statement does not apply to the repetition in line \ref{alg:pcstable_gaussian:level_loop} because every level depends on its predecessor's results. Synchronization must occur between each level.
 Only two loops are independent iteration-wise. The proposed algorithm can be split between different edge as in line \ref{alg:pcstable_gaussian:edge_loop} or between different separation sets as in line \ref{alg:pcstable_gaussian:sepset_loop}. The smaller and, therefore, the correct task for the Partitioning phase is a separation set split.
 
 In the proposed GPU-accelerated algorithm variant of Schmidt et al. \cite{schmidt_order-independent_2018} level 0 is split into edges, because there is only one separation set $S \subseteq a(V_i ) \backslash \{V_j\}$ with $| S | = l$ which is the empty set ${}$. Therefore only one CI-Test has to be done per edge.
-Level $1,2 ... m$ all split into per separation set tasks in the Partitioning stage. Performance improvements can be done by having a early stop criterion such as a deleted edge, but this requires additional communication between tasks. Data that is shared can not be properly aligned to the tasks. Task data access is nearly randomized on the input correlation in level 1 and following because the separation sets can be build from all existing vertices. 
+Level $1,2 ... m$ all split into per separation set tasks in the Partitioning stage. Performance improvements can be made by having an early stop criterion such as a deleted edge, but this requires additional communication between tasks. Data that is shared can not be properly aligned to the tasks. Task data access is nearly randomized on the input correlation in level 1 and following because the separation sets can be build from all existing vertices. 
 
 %- Partitioning und Communication genauer erklären
 %- GPU paper basis
@@ -63,15 +63,19 @@ Level $1,2 ... m$ all split into per separation set tasks in the Partitioning st
 %    - Durch parallelisierung auf processing units weiterhin diese partitionierung
     
 \subsection{Agglomeration}
-The Agglomeration stage uses the correct algorithm produced by the Partitioning and Communication stages and specializes that for the execution environment. Tasks should be agglomerated to be executed efficiently. In the case of this thesis the execution environment is a heterogeneous system containing CPUs and GPUs as processing units. The resulting number of tasks of the Agglomeration stage can be greater than the number of processing units. To guide through the Agglomeration stage, conflicting decisions have to be made:
+The Agglomeration stage uses the correct algorithm produced by the Partitioning and Communication stages and specializes that for the execution environment. Tasks are agglomerated so that their execution is efficient. In the purpose of this thesis, the execution environment is a heterogeneous system containing CPUs and GPUs as processing units. The resulting number of tasks of the Agglomeration stage can be greater than the number of processing units. To guide through the Agglomeration stage, the subsequent conflicting decisions have to be made:
 
 \begin{enumerate}
     \item Reduce communication cost through agglomerated computation
-    \item Preserve flexibility with respect to later Mapping stage and maintain parallelism
+    \item Preserve flexibility concerning the later Mapping stage and maintain parallelism
 \end{enumerate}
 
 With regards to the GPU implementation of the paper by Schmidt et al. \cite{schmidt_order-independent_2018} which splits the algorithm into separation set tasks and parallelizes those on the GPU, agglomerating those tasks into larger task sets can be done by 
-taking the next bigger loop into consideration. The per edge iteration in line \ref{alg:pcstable_gaussian:edge_loop} is suitable for 
+taking the next bigger loop into consideration. The per edge iteration in line \ref{alg:pcstable_gaussian:edge_loop} is suitable for combining multiple tasks because it is also not dependent on the other edge iterations while also being able to be parallelised even more on the underlying processing unit, that executes the edge.
+
+The PC-stable algorithm is commonly used in high-dimensional settings with thousands of variables \cite{nagarajan_functional_2010}. An edge between each vertex representing a variable can exists so that $|E| \leq |V|^{2}$. Therefore millions of edges might exists in a level, so that agglomerating an edge as a task is not feasible for a GPU-CPU heterogeneous system.
+
+Looking further into the GPU side implementation leads to another possible task that agglomerates multiple edges.
 % - Agglomeration genauer erklären
 % - Durch adjazenz matrix basis bietet sich row basiert an
 % - row bundelt mehrere edges und ist damit etwas geeigneter als Task
