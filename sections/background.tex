@@ -5,29 +5,31 @@ After that, the theoretical background of Causal Structure Learning and the PC-a
 
 \section{Heterogeneous Computing}
 Heterogeneous computing refers to systems that include conventional as well as specialized processors. Those different processors work cooperatively on the same workload. \cite{shan_heterogeneous_2006} Heterogeneous computing aims to use more than one processing unit of the systems resources and increase the execution effectiveness. Heterogeneity in the computing context refers to different instruction-set architectures (ISA), which means that the processors in this system are heterogeneous in their architecture.
-Abstractions can eliminate this heterogeneity for the software developer, but since those processors have different advantages and disadvantages over another the developer still has to think about the optimal usage of such.
+Abstractions can eliminate this heterogeneity for the software developer, but since the heterogeneous processing units have different advantages and disadvantages over another, the developer still has to think about the optimal and efficient usage of the PUs.
 
-Most modern computing systems are heterogeneous and consist of one or more CPUs and one or more GPUs. Therefore a heterogeneous computing approach could be beneficial in their effectiveness for such systems. Both, the CPU and the GPU are very different in their architecture and function, so most modern applications only use one of those processors effectively.
+Most modern computing systems are heterogeneous and consist of one or more CPUs and one or more GPUs. Therefore a heterogeneous computing approach could be beneficial in their effectiveness for such systems. Both the CPU and the GPU are very different in their architecture and function, so most modern applications only use one of those processors effectively.
 
-CPU-GPU heterogeneous computing approaches are also referred to as hybrid or co-operative execution. In most applications, one of GPU and CPU is called the host, which controls the execution flow, and the device, that accelerates the execution of the host. Therefore the device is also called the accelerator. In this thesis, both the CPU and the GPU are called processing units (PU) as a term that includes both processors.
+CPU-GPU heterogeneous computing approaches are also referred to as hybrid or co-operative execution. In most applications, one of GPU and CPU is called the host, which controls the execution flow and the device that accelerates the execution of the host. Therefore the device is also called the accelerator. In this thesis, both the CPU and the GPU are called processing units (PU) as a term that includes both processors.
 
 \subsection{Central Processing Unit}
 The CPU, sometimes also just called processor, is the main instruction executing component of a computer. While modern CPUs introduce parallelism concepts, the main purpose is still low latency execution of given instructions.
-Without those later introduced parallelism concepts, a CPU is only able to execute instructions in a serial manner. The ability to run concurrent applications is mostly done by introducing a thread and scheduling concept, which switches those threads periodically using a set of rules. Programs can create such threads using an operating system interface.
-Additional performance improvements such as superscalar architectures and instruction pipelines, which can be extended through optimizations such as branch prediction or speculative execution, help to support the main goal of the CPU, which is a robust and moderately fast way to run any code.
-Modern CPU architectures include instruction set extensions for data-level parallelism, called Single Instruction Multiple Data (SIMD). Those instructions execute operations, which would normally mutate scalar values, on vector registers in memory. Those SIMD extensions are common in most modern CPU architectures such as x86\_64 (SSE, AVX) or PowerPC (AltiVec). Mathematical operations benefit of SIMD. Especially in linear algebra optimized implementations for commonly used vector and matrix operations are implemented in Basic Linear Algebra Subprogram (BLAS) implementations. For realizing an optimal CPU side implementation for this thesis, using BLAS is essential and enables using the CPU resources.
+Without those later introduced parallelism concepts, a CPU is only able to execute instructions serially. The ability to run concurrent applications is mainly done by introducing a thread and scheduling concept, which switches those threads periodically using a set of rules. Programs can create such threads using an operating system interface.
+Additional performance improvements such as superscalar architectures and instruction pipelines, which can be extended through optimizations such as branch prediction or speculative execution, help support the main goal of the CPU, which is a robust and moderately fast way to run any code.
+Modern CPU architectures include instruction set extensions for data-level parallelism, called Single Instruction Multiple Data (SIMD). Those instructions execute operations, which would normally mutate scalar values on vector registers in memory. Those SIMD extensions are common in most modern CPU architectures such as x86\_64 (SSE, AVX) or PowerPC (AltiVec). Mathematical operations benefit of SIMD. Especially in linear algebra, optimized implementations for commonly used vector and matrix operations are implemented in Basic Linear Algebra Subprogram (BLAS) implementations. For realizing an optimal CPU side implementation for this thesis, using BLAS is essential and enables using the CPU resources.
 Modern CPUs have multiple so-called cores, which can independently execute instructions and therefore are able to run multiple parallel threads concurrently. This is also called task-level parallelism.
-Concurrency between threads, that share a common resource introduces another problem. Since there can not be any assumption about the relative speed of those threads, analog interferences are possible. Two threads accessing a resource at nearly the same time can result in a so-called race condition since there is no way to identify the thread that accesses the resource first. To prevent this behavior, critical sections for safe concurrent access are introduced. At any moment, only one thread is allowed into the critical section shared between the threads. The implementation of a critical section requires atomic read / write behavior.
-Such access mechanisms like atomic read/write and critical sections are also important in heterogeneous computing where concurrent memory access of multiple processors can occur.
-Frameworks such as OpenMP can help the developer to handle multi-threading and safe concurrency with abstractions of those concepts. OpenMP, a shared/memory parallel programming framework for C/C++ and Fortran framework, helps to annotate parallel regions like parallelizable for loops and creates multiple execution threads for those regions using a run-time.
+Concurrency between threads that share a common resource introduces another problem. Since there can not be any assumption about the relative speed of those threads, analog interferences are possible. Two threads accessing a resource at nearly the same time can result in a so-called race condition since there is no way to identify the thread that accesses the resource first. To prevent those race conditions, critical sections for safe concurrent access are introduced. At any moment, only one thread is allowed into the critical section shared between the threads. The implementation of a critical section requires atomic read / write behavior.
+Such access mechanisms like atomic read/write and critical sections are also crucial in heterogeneous computing, where concurrent memory access of multiple processors can occur.
+Frameworks such as OpenMP can help the developer to handle multi-threading and safe concurrency with abstractions of those concepts. OpenMP, a shared/memory parallel programming framework for C/C++ and Fortran framework, helps annotate parallel regions like parallelizable for loops and creates multiple execution threads for those regions using a run-time.
 The thesis implementation uses OpenMP for efficiency and parallelism purposes.
 
 \subsection{Graphics Processing Unit}
-The GPU handles graphics processing in computer systems. In the beginning video games were the main driver for technical advancements in developing better GPUs. For computing graphics the processing of multiple calculations in parallel is essential. The same operation has to be done on multiple voxels or vertices. Other use cases such as machine learning algorithms later also extensively used the systems GPU, because of their parallelizability and frameworks such as OpenCL or CUDA, which made developing programs running on the GPU easier.
-CUDA is a super-set language of C/C++ that allows the definition of functions, that can be run on the GPU. The Nvidia CUDA compiler compiles CUDA code which then runs on the GPU as well as CUDA code that runs on the host processor.
+The GPU handles graphics processing in computer systems. In the beginning video games were the main driver for technical advancements in developing better GPUs. The design of modern GPUs is significantly different from the first GPUs, which had hard-coded pipelines and allow for programming the GPU as a general-purpose processing unit \cite{nickolls_gpu_2010}. For computing graphics, the processing of multiple calculations in parallel is essential. Image and video processing primarily consists of doing the same operation on multiple pixels in parallel. Modern recordings and screens can have up to 8 million or more pixels transformed in real-time (i.e., 60 times per second). Such high throughput rates are only possible with a domain-specific processor such as the GPU that can execute thousands of threads concurrently.
+Through the general-purpose programming capabilities of modern GPUs, other problems that require processing large data in parallel can be processed using GPUs. Those capabilities enable scientists and high-performance programmers to boost their parallelizable problems on the GPU.
+Another benefit of GPUs in comparison to CPUs is their energy efficiency. GPUs are more energy-efficient than CPUs and are therefore commonly incorporated in high-performance heterogeneous systems such as supercomputers.
+Looking into Nvidia GPU architectures such as Volta \cite{noauthor_nvidia_2017} GPU consists of many Streaming Multiprocessors (SM) that execute multiple thread blocks in parallel. A thread block on Nvidia GPUs is executed by a warp in the SM and that warp incorporates many simple cores that are executed in SIMD groups with a single program counter. A warp on Volta or Pascal Nvidia GPU architecture consists of 32 simple cores which share a common memory region. Programmers of those GPUs have to be aware of those architecture semantics to use the underlying cache, memory, and computation structure optimally. A thread block should, for example, be sized according to the multiple of the size of one warp, even if programmers can decide on other thread block sizes. Volta has 64 Warps per SM, which means a maximum of 2048 threads scheduled concurrently on that SM \cite{noauthor_nvidia_2017}.
+Frameworks such as OpenCL or CUDA are application programming interfaces (APIs) created to allow software developers to develop general-purpose applications running on the GPU. CUDA is a super-set language of C/C++ that allows the definition of functions that are run on the GPU and CPU. Annotating functions using \texttt{\detokenize{__device__}}, \texttt{\detokenize{__global__}} and/or \texttt{\detokenize{__host__}} tells the compiler on which processing unit the code can be run. Shared CPU-GPU code is possible, which is well suited for executing code on a heterogeneous system. Other advantages, such as unified memory abstractions for heterogeneous systems, are a deciding factor for using this technology in this thesis.
 
-As an example, Nvidia GPU architecture is built hierarchical 
-\begin{lstlisting}[language=C++, caption=Cuda kernel example, label=lst:kernel]
+\begin{lstlisting}[language=C++, caption=Simple CUDA kernel example \cite{noauthor_easy_2012}, label=lst:kernel]
 __global__
 void add(int n, float *x, float *y)
 {
@@ -37,27 +39,29 @@ void add(int n, float *x, float *y)
       y[i] = x[i] + y[i];
 }
 \end{lstlisting}
+In listing \ref{lst:kernel} a simple "kernel" function that adds an array to another array in parallel on the GPU is shown. Through the \texttt{\detokenize{__global__}} keyword, the compiler creates machine code suitable for a Nvidia GPU. By invoking this kernel, multiple instances of this function are scheduled in thread blocks on the GPU. The thread id of each invocation is accessed through the variable \emph{threadIdx}, and the number of threads in the block is accessed by \emph{blockDim}. When starting multiple blocks, the block id of the kernel invocation can be accessed by \emph{blockIdx}.
+Data passed into the function like the arrays x and y have to is created by CUDA run-time API functions, which handle memory allocation on the GPU \cite{noauthor_memory_nodate}.
 
-\ref{lst:kernel}
-%% TODO
+Nvidia GPUs used as accelerator devices have two different memory spaces. Data structures are created and allocated on the host or CPU memory space. After allocating memory on the GPU, the data has to be moved to the device from the CPU either by a direct transfer or by creating a Unified Virtual Memory system accessible from both CPU and GPU. The CUDA Runtime API enables the programmer to do both. In most cases, a single data transfer is done by allocating with \emph{cudaMalloc} and copying the data to the GPU with \emph{cudaMemcpy}. In the heterogeneous computing context, where data needs to be accessed by both the CPU and the GPU simultaneously, a Unified Virtual Memory (UVM) system helps the programmer with the data management. Since CUDA version 6.0, Nvidia introduced \emph{cudaMallocManaged} which handles necessary data transfer in both directions based on pagination. \cite{gayatri_comparing_nodate} Both the host and device keep track of the pages using a page table. On memory access, missing pages migrate to the correct location.
+For performance reasons, the CUDA run-time API allows for prefetching data to the correct device so that page misses, which can slow down the computation performance a lot, are prevented.
 
-- Hardware characteristics
-- CUDA Basics
-- Nvidia GPU Basics (Warp, Block, Streaming Multiprocessor)
-- Memory management
-- Unified Memory
-- 
+% - Hardware characteristics
+% - CUDA Basics
+% - Nvidia GPU Basics (Warp, Block, Streaming Multiprocessor)
+% - Memory management
+% - Unified Memory
+% - 
 
 \subsection{Constraint-Based Causal Structure Learning}
-In this section, I introduce necessary terminology in the context of Causal Structure Learning which is the problem class I look into in this thesis. This section introduces the Causal Graphical Model and the PC-Algorithm based on the definition given by Schmidt et al \cite{schmidt_order-independent_2018}. The PC-Algorithm is the base for the heterogeneous approach this thesis is about.
+In this section, I introduce necessary terminology in the context of Causal Structure Learning, which is the problem class I look into in this thesis. This section introduces the Causal Graphical Model and the PC-Algorithm based on the definition given by Schmidt et al. \cite{schmidt_order-independent_2018}. The order-independent GPU-based PC-Algorithm is the base for the heterogeneous approach.
 
 \subsubsection{Causal Graphical Model}
-Given a finite set of $N$ vertices $V = (V_1,...,V_N)$ and a set of edges $E \subseteq V \times V$, let $G = (V,E)$. The vertices each represent an observation. An edge $(V_i, V_j) \in E$ is called directed, i.e., $V_i \rightarrow V_j$, if $(V_i,V_j) \in E$ but $(V_j, V_i) \notin E$. An edge is called undirected, if both $(V_i,V_j) \in E$ and $(V_j, V_i) \in E$, i.e. $V_i - V_j$. Two vertices $V_i$, $V_j$ are called adjacent if there is an undirected edge $V_i - V_j$. The adjacenecy set $adj(G, V_i)$ of the vertex $V_i \in V$ in $G$ are all vertices $V_j \in V$ that are connected to $V_i$ by an undirected edge.
+Given a finite set of $N$ vertices $V = (V_1,...,V_N)$ and a set of edges $E \subseteq V \times V$, let $G = (V,E)$. The vertices each represent an variable. An edge $(V_i, V_j) \in E$ is called directed, i.e., $V_i \rightarrow V_j$, if $(V_i,V_j) \in E$ but $(V_j, V_i) \notin E$. An edge is called undirected, if both $(V_i,V_j) \in E$ and $(V_j, V_i) \in E$, i.e. $V_i - V_j$. Two vertices $V_i$, $V_j$ are called adjacent if there is an undirected edge $V_i - V_j$. The adjacenecy set $adj(G, V_i)$ of the vertex $V_i \in V$ in $G$ are all vertices $V_j \in V$ that are connected to $V_i$ by an undirected edge.
 
-Some graph $G$ where all edges are directed and $G$ does not contain any cycle is a Directed Acyclic Graph (DAG). In the context of Causal Structure Learning a directed edge $E$ in such a DAG represents a direct causal relationship between the connected vertices.
+Some graph $G$ where all edges are directed and $G$ does not contain any cycle is a Directed Acyclic Graph (DAG). In the context of Causal Structure Learning, a directed edge $E$ in such a DAG represents a direct causal relationship between the connected vertices.
 The d-separation criterion used in the DAG enables information about the conditional independence between variables. Two variables $V_i, V_j \in V$ are conditionally independent given a set $S \subset V \backslash \{V_i, V_j\}$ if the vertices $V_i$ and $V_j$ are d-separated by the set $S$, which is called separation set.
 A distribution $P$ of the variable set $V_1, ..., V_N$ that satisfies the above condition is called faithful.
-Several different DAGs, that describe the same conditional independence information, form a Markov equivalent class. \cite{andersson_characterization_1997}. If two DAGs are Markov equivalent, they share the same skeleton $C$ or the underlying undirected graph and the same v-structures.
+Several different DAGs that describe the same conditional independence information form a Markov equivalent class. \cite{andersson_characterization_1997}. If two DAGs are Markov equivalent, they share the same skeleton $C$ or the underlying undirected graph and the same v-structures.
 These v-structures are triples $V_i,V_j,V_k$ with $(V_i,V_k) \notin E$ and $(V_k,V_i) \notin E$ and directed edges $V_i \rightarrow V_j$ and $V_k \rightarrow V_j$. Moreover, it is possible to uniquely describe the corresponding Markov equivalent class by a Complete Partially Directed Acyclic Graph (CPDAG) \cite{chickering_optimal_2003}.
 A CPDAG is a partially directed acyclic graph where all DAGs in the Markov equivalence class incorporates the same directed edges, and there exist two DAGs that incorporate the two directed versions of every undirected edge $V_i - V_j$ in the Markov equivalence class.
 Hence, the focus lies on the estimation of the equivalence class of the DAG G based on the corresponding probability distribution $P$ of the involved variables $V_1,...,V_N$. In particular, under the assumption that the distribution $P$ is generated from the true causal DAG $G$, there is an edge $V_i - V_j$ in the skeleton of $G$ if and only if $V_i,V_j$ are dependent given all $S \subseteq V\backslash \{V_i,V_j\}$ \cite{spirtes_causation_1993}.
@@ -71,15 +75,15 @@ Hence, the examination of the conditional independence information of the observ
 
 
 \subsection{PC Algorithm}
-The PC Algorithm (Spirtes et al. \cite{spirtes_causation_1993}) was designed for learning DAGs. It assumes causal sufficiency, which means there are no unmeasured common causes. The PC Algorithm is mostly used in high-dimensional data settings because it aims to be performant for sparse graphs, that contain thousands of variables. \cite{kalisch_understanding_2010}
-I now describe the PC Algorithm, as it is explained in Colombo et al. \cite{colombo_order-independent_nodate}. The version of the PC Algorithm is also called PC-stable, because of its order independence regarding the different calculations.
+The PC Algorithm (Spirtes et al. \cite{spirtes_causation_1993}) was designed for learning DAGs. It assumes causal sufficiency, which means there are no unmeasured common causes. The PC Algorithm is mostly used in high-dimensional data settings and aims to be performant for sparse graphs that contain thousands of variables. \cite{kalisch_understanding_2010}
+The version of the PC Algorithm described in Colombo et al. \cite{colombo_order-independent_nodate} is also called PC-stable because of its order independence regarding the different calculations. Order independence of the computations helps to parallelize an algorithm by not relying on synchronization. The order-independent PC-stable algorithm is the chosen algorithm for later parallelizing efforts in this thesis.
 
-TODO CI test dependency => change to algorithm of colombo
+% TODO CI test dependency => change to algorithm of colombo
 \begin{algorithm}
     \caption{Adjacency search of PC-stable algorithm \cite{colombo_order-independent_nodate}}
     \label{alg:pcstable}
     \begin{algorithmic}[1]
-    \Require Vertex set $V$, correlation matrix $Cor$
+    \Require Vertex set $V$
     \Ensure Estimated skeleton $C$, separation sets \textbf{Sepset}
     \State with fully connected skeleton $C$ and $l = -1$
     \Repeat 
@@ -102,7 +106,7 @@ TODO CI test dependency => change to algorithm of colombo
     \end{algorithmic}
 \end{algorithm}
 
-As can be seen in \ref{alg:pcstable} the starting point of the algorithm is a set of vertices, that represent the given variables, and a correlation matrix 
-- Explain PC Algorithm
-- Pseudocode listing
-- Loops
+As can be seen in \ref{alg:pcstable} the starting point of the algorithm is a set of vertices that represent the given variables, and a correlation matrix 
+% - Explain PC Algorithm
+% - Pseudocode listing
+% - Loops

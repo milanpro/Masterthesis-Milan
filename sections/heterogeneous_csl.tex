@@ -75,7 +75,13 @@ taking the next bigger loop into consideration. The per edge iteration in line \
 
 The PC-stable algorithm is commonly used in high-dimensional settings with thousands of variables \cite{nagarajan_functional_2010}. An edge between each vertex representing a variable can exists so that $|E| \leq |V|^{2}$. Therefore millions of edges might exists in a level, so that agglomerating an edge as a task is not feasible for a GPU-CPU heterogeneous system.
 
-Looking further into the GPU side implementation leads to another possible task that agglomerates multiple edges.
+%TODO Maybe add illustration for both graphs (adj list vs matrix)
+Looking further into the GPU side implementation leads to another possible task that agglomerates multiple edges. The adjancency set that is populated in the algorithm can be implemented using an adjacency matrix or adjencency lists. An adjencency matrix is standard graph representation that encodes every edge between two vertices $V_1, V_2$ as a field in the matrix at some position to $A_G(V_1, V_2) = \{0,1\}$ where 1 represents an existing and 0 an deleted edge. This representation is constant in its memory usage and accessing a random element can be done in O(1). In every level this representation is used to delete edges from the graph. Because of the order independence nature of the algorithm another copy of the graph exists, which is only read from and the changes of the graph used for deletion are migrated to this graph at the end of each level.
+Adjancency lists on the other hand are memory efficient, because only existing edges are saved. Every row in a matrix represents a list of vertices, that are connected to the vertex of the row. So the edge count of some vertex is the length of the vertex row and for performance reasons the length of each row is calculated before each level and appended to the row. This representation is only used for reading existing edges in the level. Since every edge has to be processed, an index based approach is used and with that accessing a single edge can still be done in $O(1)$.
+Between each level the graph that contains the deleted edges of the last level has to be moved to the adjencency list representation used for reading existing edges. This step is called the compacting step \cite{zarebavani_cupc_2018}.
+
+%TODO Add Gpu pseudocode for better understanding of iteration length etc
+
 % - Agglomeration genauer erklären
 % - Durch adjazenz matrix basis bietet sich row basiert an
 % - row bundelt mehrere edges und ist damit etwas geeigneter als Task
