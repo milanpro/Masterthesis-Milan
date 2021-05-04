@@ -1,2 +1,43 @@
 %!TEX root = ../thesis.tex
 \chapter{Experiments}
+
+% - Explain dataset used for testing (TCGA)
+%   - Variable size
+%   - how sampled
+%   - paper (perscheid etc)
+% - Show delos as a testing machine
+%   - Intel Xeon 
+%   - Nvidia  V100
+%   - specs
+%   - numa nodes
+% - Show AC922
+%   - Explain why power9 + V100 special
+%   - ATS: Malloc is enough
+%   - Faster interconnect NVLINK
+%     - Comparison between interconnects
+%   - Other pros : atomics etc
+%   - Explain why this should affect my performance
+%   - Compare Power9 to Intel Xeon
+% - Show iteration measurements per level
+%   - show how many tests and iterations have to be done
+
+% - Measurements of GPU only Code
+
+% - Measurements of Pre-balanced
+%   - With, without migrating edges
+%   - Different thresholds
+%   - Different Dataset sizes
+%   - Different omp scheduling methods
+%   - Pinning on NUMA nodes
+%   - Delos vs AC922
+% - Measurements of Workstealing
+%   - With, without migrating edges
+%   - Different Dataset sizes
+%   - Pinning on NUMA nodes
+%   - Delos vs AC922
+
+% - Measurements with different Datasets
+%   - Iterations
+%   - Workstealing Numa 0
+%   - Prebalanced
+%   - GPU only

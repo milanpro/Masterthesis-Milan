@@ -135,3 +135,15 @@ Using the insights gathered from Foster's Methodology applied to the heterogeneo
 % - CPU nimmt sich längste rows als erstes vor und arbeitet von hinten ab
 % - regelmäßiges überprüfen ob schon fertig
 % - vermehrte kommunikation
+
+\section{Implementation}
+
+\subsection{Architecture}
+% - could be also integrated into the Approach sections
+% - one state containing unified memory data
+% - Executor abstraction
+% - Task as a struct containing row index and how many rows
+% - Load balancer invoked only in prebalanced case
+% - else GPU has all rows
+% - Workstealing approach guards
+% - Maybe show some code
