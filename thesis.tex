@@ -1,18 +1,18 @@
 \input{header}
 
 \newcommand{\TITLE}{Load Balancing Causal Structure Learning Algorithms in Heterogeneous Computing}
-\newcommand{\SUBTITLE}{Lasten Verteilung in Kausalem Struktur Lernen auf Heterogenen Systemen}
+\newcommand{\SUBTITLE}{Lasten Verteiltes Kausales Struktur Lernen auf Heterogenen Systemen}
 \newcommand{\AUTHOR}{Milan Proell}
 \newcommand{\EMAIL}{milan.proell@student.hpi.de}
 \newcommand{\SUPERVISOR}{Christopher Hagedorn}
 
 \lstset{breaklines=true,
-    numbersep=5pt,
- 	stepnumber=1,
+	numbersep=5pt,
+	stepnumber=1,
 	numbers=left,
 	captionpos=b,
 	float=htbp,
-    basicstyle=\ttfamily\fontsize{9}{12}\selectfont
+	basicstyle=\ttfamily\fontsize{9}{12}\selectfont
 }
 \lstset{frame=tb, aboveskip=0.5cm, belowskip=0.5cm}
 
@@ -64,10 +64,13 @@
 	\glsresetall
 	\pagenumbering {arabic}
 	\setcounter{page}{0}
-	\input{sections/introduction}
-	\input{sections/background}
-	\input{sections/problem_statement}
-	\input{sections/heterogeneous_csl}
+	\input{sections/1_introduction}
+	\input{sections/2_background}
+	\input{sections/3_problem_statement}
+	\input{sections/4_heterogeneous_csl}
+	\input{sections/5_experiments}
+	\input{sections/6_evaluation}
+	\input{sections/7_related_work}
 	\clearpage
 	%\printglossary[type=\acronymtype],style=modsuper]
 	\bibliography{Remote}

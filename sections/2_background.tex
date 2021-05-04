@@ -12,7 +12,7 @@ Most modern computing systems are heterogeneous and consist of one or more CPUs 
 CPU-GPU heterogeneous computing approaches are also referred to as hybrid or co-operative execution. In most applications, one of GPU and CPU is called the host, which controls the execution flow and the device that accelerates the execution of the host. Therefore the device is also called the accelerator. In this thesis, both the CPU and the GPU are called processing units (PU) as a term that includes both processors.
 
 \subsection{Central Processing Unit}
-The CPU, sometimes also just called processor, is the main instruction executing component of a computer. While modern CPUs introduce parallelism concepts, the main purpose is still low latency execution of given instructions.
+The CPU, sometimes also just called processor, is the main instruction executing component of a computer. While modern CPUs introduce parallelism concepts, the primary purpose is still low latency execution of given instructions.
 Without those later introduced parallelism concepts, a CPU is only able to execute instructions serially. The ability to run concurrent applications is mainly done by introducing a thread and scheduling concept, which switches those threads periodically using a set of rules. Programs can create such threads using an operating system interface.
 Additional performance improvements such as superscalar architectures and instruction pipelines, which can be extended through optimizations such as branch prediction or speculative execution, help support the main goal of the CPU, which is a robust and moderately fast way to run any code.
 Modern CPU architectures include instruction set extensions for data-level parallelism, called Single Instruction Multiple Data (SIMD). Those instructions execute operations, which would normally mutate scalar values on vector registers in memory. Those SIMD extensions are common in most modern CPU architectures such as x86\_64 (SSE, AVX) or PowerPC (AltiVec). Mathematical operations benefit of SIMD. Especially in linear algebra, optimized implementations for commonly used vector and matrix operations are implemented in Basic Linear Algebra Subprogram (BLAS) implementations. For realizing an optimal CPU side implementation for this thesis, using BLAS is essential and enables using the CPU resources.
@@ -76,7 +76,7 @@ Hence, the examination of the conditional independence information of the observ
 
 \subsection{PC Algorithm}
 The PC Algorithm (Spirtes et al. \cite{spirtesCausationPredictionSearch1993}) was designed for learning DAGs. It assumes causal sufficiency, which means there are no unmeasured common causes. The PC Algorithm is mostly used in high-dimensional data settings and aims to be performant for sparse graphs that contain thousands of variables. \cite{kalisch_understanding_2010}
-The version of the PC Algorithm described in Colombo et al. \cite{colomboOrderIndependentConstraintBasedCausal} is also called PC-stable because of its order independence regarding the different calculations. Order independence of the computations helps to parallelize an algorithm by not relying on synchronization. The order-independent PC-stable algorithm is the chosen algorithm for later parallelizing efforts in this thesis.
+The version of the PC Algorithm described in Colombo et al. \cite{colomboOrderIndependentConstraintBasedCausal} is also called PC-stable because of its order independence regarding the different calculations. Order independence of the computations helps to parallelize an algorithm by not relying on synchronization. The order-independent PC-stable algorithm is the algorithm chosen for later parallelizing efforts in this thesis.
 
 % TODO CI test dependency => change to algorithm of colombo
 \begin{algorithm}
@@ -106,7 +106,7 @@ The version of the PC Algorithm described in Colombo et al. \cite{colomboOrderIn
     \end{algorithmic}
 \end{algorithm}
 
-As can be seen in \ref{alg:pcstable} the starting point of the algorithm is a set of vertices that represent the given variables, and a correlation matrix 
+As can be seen in \ref{alg:pcstable} the starting point of the algorithm is a set of vertices that represent the given variables and a correlation matrix.
 % - Explain PC Algorithm
 % - Pseudocode listing
 % - Loops
