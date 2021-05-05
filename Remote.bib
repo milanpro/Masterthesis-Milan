@@ -61,6 +61,22 @@
   language = {en}
 }
 
+@article{blumofeSchedulingMultithreadedComputations1999,
+  title = {Scheduling Multithreaded Computations by Work Stealing},
+  author = {Blumofe, Robert D. and Leiserson, Charles E.},
+  year = {1999},
+  month = sep,
+  volume = {46},
+  pages = {720--748},
+  issn = {0004-5411},
+  doi = {10.1145/324133.324234},
+  abstract = {This paper studies the problem of efficiently schedulling fully strict (i.e., well-structured) multithreaded computations on parallel computers. A popular and practical method of scheduling this kind of dynamic MIMD-style computation is ``work stealing,'' in which processors needing work steal computational threads from other processors. In this paper, we give the first provably good work-stealing scheduler for multithreaded computations with dependencies. Specifically, our analysis shows that the expected time to execute a fully strict computation on P processors using our work-stealing scheduler is T1/P + O(T {$\infty$} , where T1 is the minimum serial execution time of the multithreaded computation and (T {$\infty$} is the minimum execution time with an infinite number of processors. Moreover, the space required by the execution is at most S1P, where S1 is the minimum serial space requirement. We also show that the expected total communication of the algorithm is at most O(PT {$\infty$}( 1 + nd)Smax), where Smax is the size of the largest activation record of any thread and nd is the maximum number of times that any thread synchronizes with its parent. This communication bound justifies the folk wisdom that work-stealing schedulers are more communication efficient than their work-sharing counterparts. All three of these bounds are existentially optimal to within a constant factor.},
+  file = {/Users/i500763/Zotero/storage/LQPWRE67/Blumofe and Leiserson - 1999 - Scheduling multithreaded computations by work stea.pdf},
+  journal = {Journal of the ACM},
+  keywords = {critical-path length,multiprocessor,multithreading,randomized algorithm,thread scheduling,work stealing},
+  number = {5}
+}
+
 @article{caldeiraIBMPowerSystem,
   title = {{{IBM Power System AC922 Introduction}} and {{Technical Overview}}},
   author = {Caldeira, Alexandre Bicas},
@@ -273,6 +289,22 @@
   language = {en}
 }
 
+@article{kwokStaticSchedulingAlgorithms1999,
+  title = {Static Scheduling Algorithms for Allocating Directed Task Graphs to Multiprocessors},
+  author = {Kwok, Yu-Kwong and Ahmad, Ishfaq},
+  year = {1999},
+  month = dec,
+  volume = {31},
+  pages = {406--471},
+  issn = {0360-0300, 1557-7341},
+  doi = {10.1145/344588.344618},
+  abstract = {Static scheduling of a program represented by a directed task graph on a multiprocessor system to minimize the program completion time is a well-known problem in parallel processing. Since finding an optimal schedule is an NP-complete problem in general, researchers have resorted to devising efficient heuristics. A plethora of heuristics have been proposed based on a wide spectrum of techniques, including branch-and-bound, integer-programming, searching, graph-theory, randomization, genetic algorithms, and evolutionary methods. The objective of this survey is to describe various scheduling algorithms and their functionalities in a contrasting fashion as well as examine their relative merits in terms of performance and time-complexity. Since these algorithms are based on diverse   assumptions, they differ in their functionalities, and hence are difficult to describe in a unified context. We propose a taxonomy that classifies these algorithms into different categories. We consider 27 scheduling algorithms, with each algorithm explained through an easy-to-understand description followed by an illustrative example to demonstrate its operation. We also outline some of the novel and promising optimization approaches and current research trends in the area. Finally, we give an overview of the software tools that provide scheduling/mapping functionalities.},
+  file = {/Users/i500763/Zotero/storage/PG74KN96/Kwok and Ahmad - 1999 - Static scheduling algorithms for allocating direct.pdf},
+  journal = {ACM Computing Surveys},
+  language = {en},
+  number = {4}
+}
+
 @article{lecunDeepLearning2015,
   title = {Deep {{Learning}}},
   author = {LeCun, Yann and Bengio, Yoshua and Hinton, Geoffrey},
@@ -325,6 +357,18 @@
   primaryclass = {cs, stat}
 }
 
+@inproceedings{letzWorkStealingScheduler2010,
+  title = {Work {{Stealing Scheduler}} for {{Automatic Parallelization}} in {{Faust}}},
+  booktitle = {Linux {{Audio Conference}}},
+  author = {Letz, St{\'e}phane and Orlarey, Yann and Fober, Dominique},
+  editor = {{LAC}},
+  year = {2010},
+  address = {{Utrecht, Netherlands}},
+  abstract = {Faust 0.9.10 introduces an alternative to OpenMP based parallel code generation using a Work Steal- ing Scheduler and explicit management of worker threads. This paper explains the new option and presents some benchmarks.},
+  file = {/Users/i500763/Zotero/storage/MJFZKHZ6/Letz et al. - 2010 - Work Stealing Scheduler for Automatic Parallelizat.pdf},
+  keywords = {compiler,dataflow,functional,processing,programming,real-time,signal}
+}
+
 @inproceedings{liLocalityLoopScheduling1993,
   title = {Locality {{And Loop Scheduling On Numa Multiprocessors}}},
   booktitle = {In {{Proceedings}} of the 1993 {{International Conference}} on {{Parallel Processing}}},
@@ -352,12 +396,17 @@
   number = {9}
 }
 
-@misc{MasterthesisMilan,
-  title = {Masterthesis-{{Milan}}},
-  abstract = {An online LaTeX editor that's easy to use. No installation, real-time collaboration, version control, hundreds of LaTeX templates, and more.},
-  file = {/Users/i500763/Zotero/storage/5T6JIDAR/605322fb08d18b24e8e9bf76.html},
-  howpublished = {https://www.overleaf.com/project/605322fb08d18b24e8e9bf76},
-  language = {en}
+@inproceedings{mattheisWorkStealingStrategies2012,
+  title = {Work {{Stealing Strategies}} for {{Parallel Stream Processing}} in {{Soft Real}}-{{Time Systems}}},
+  author = {Mattheis, Sebastian and Schuele, Tobias and Raabe, Andreas and Henties, Thomas and Gleim, Urs},
+  year = {2012},
+  month = feb,
+  volume = {7179},
+  pages = {172--183},
+  doi = {10.1007/978-3-642-28293-5_15},
+  abstract = {Work stealing has proven to be an efficient technique for scheduling parallel computations. In its basic form, however, work stealing is not suitable for real-time applications, since the latency of a task is hardly predictable. In this paper, we propose a number of variants and extensions of work stealing suitable for stream processing applications. Such applications are frequently encountered in embedded systems, which often have to obey real-time constraints. Moreover, we give bounds on the maximum latency for certain stealing strategies. Our experimental results show a significant reduction of the latency using these strategies.},
+  file = {/Users/i500763/Zotero/storage/CZX88YBV/Mattheis et al. - 2012 - Work Stealing Strategies for Parallel Stream Proce.pdf},
+  isbn = {978-3-642-28292-8}
 }
 
 @misc{MemoryManagement,
@@ -457,6 +506,26 @@
   address = {{New York, NY}},
   file = {/Users/i500763/Zotero/storage/5SU64RV2/Samples.pdf},
   isbn = {978-3-319-14432-0}
+}
+
+@phdthesis{prellEmbracingExplicitCommunication2016,
+  title = {Embracing Explicit Communication in Work-Stealing Runtime Systems},
+  author = {Prell, Andreas},
+  year = {2016},
+  month = jul,
+  address = {{Bayreuth}},
+  file = {/Users/i500763/Zotero/storage/H9XXBBDF/Prell - 2016 - Embracing explicit communication in work-stealing .pdf},
+  keywords = {Channels,Explicit Communication,Load Balancing,Message Passing,Parallel Programming,Runtime Systems,Task Parallelism,Work Stealing}
+}
+
+@article{quinnParallelProgramming2003,
+  title = {Parallel Programming},
+  author = {Quinn, Michael J},
+  year = {2003},
+  volume = {526},
+  pages = {105},
+  file = {/Users/i500763/Zotero/storage/27PM82CQ/Quinn - 2003 - Parallel programming.pdf},
+  journal = {TMH CSE}
 }
 
 @misc{sakharnykhEVERYTHINGYOUNEED,
@@ -584,6 +653,22 @@
   abstract = {While GPU query processing is a well-studied area, real adoption is limited in practice as typically GPU execution is only significantly faster than CPU execution if the data resides in GPU memory, which limits scalability to small data scenarios where performance tends to be less critical. Another problem is that not all query code (e.g. UDFs) will realistically be able to run on GPUs. We therefore investigate CPU-GPU co-processing, where both the CPU and GPU are involved in evaluating the query in scenarios where the data does not fit in the GPU memory.},
   file = {/Users/i500763/Zotero/storage/MAPIXF23/Tome et al. - Optimizing Group-By And Aggregation using GPU-CPU .pdf},
   language = {en}
+}
+
+@article{topcuogluPerformanceeffectiveLowcomplexityTask2002,
+  title = {Performance-Effective and Low-Complexity Task Scheduling for Heterogeneous Computing},
+  author = {Topcuoglu, H. and Hariri, S. and Wu, Min-You},
+  year = {2002},
+  month = mar,
+  volume = {13},
+  pages = {260--274},
+  issn = {1558-2183},
+  doi = {10.1109/71.993206},
+  abstract = {Efficient application scheduling is critical for achieving high performance in heterogeneous computing environments. The application scheduling problem has been shown to be NP-complete in general cases as well as in several restricted cases. Because of its key importance, this problem has been extensively studied and various algorithms have been proposed in the literature which are mainly for systems with homogeneous processors. Although there are a few algorithms in the literature for heterogeneous processors, they usually require significantly high scheduling costs and they may not deliver good quality schedules with lower costs. In this paper, we present two novel scheduling algorithms for a bounded number of heterogeneous processors with an objective to simultaneously meet high performance and fast scheduling time, which are called the Heterogeneous Earliest-Finish-Time (HEFT) algorithm and the Critical-Path-on-a-Processor (CPOP) algorithm. The HEFT algorithm selects the task with the highest upward rank value at each step and assigns the selected task to the processor, which minimizes its earliest finish time with an insertion-based approach. On the other hand, the CPOP algorithm uses the summation of upward and downward rank values for prioritizing tasks. Another difference is in the processor selection phase, which schedules the critical tasks onto the processor that minimizes the total execution time of the critical tasks. In order to provide a robust and unbiased comparison with the related work, a parametric graph generator was designed to generate weighted directed acyclic graphs with various characteristics. The comparison study, based on both randomly generated graphs and the graphs of some real applications, shows that our scheduling algorithms significantly surpass previous approaches in terms of both quality and cost of schedules, which are mainly presented with schedule length ratio, speedup, frequency of best results, and average scheduling time metrics.},
+  file = {/Users/i500763/Zotero/storage/TU2WXSDH/Topcuoglu et al. - 2002 - Performance-effective and low-complexity task sche.pdf;/Users/i500763/Zotero/storage/IDMR4DKB/993206.html},
+  journal = {IEEE Transactions on Parallel and Distributed Systems},
+  keywords = {Processor scheduling},
+  number = {3}
 }
 
 @misc{UNIFIEDMEMORYP9,
