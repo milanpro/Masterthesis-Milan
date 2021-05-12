@@ -43,7 +43,7 @@ In listing \ref{lst:kernel} a simple "kernel" function that adds an array to ano
 Data passed into the function like the arrays x and y have to is created by CUDA run-time API functions, which handle memory allocation on the GPU \cite{MemoryManagement}.
 
 Nvidia GPUs used as accelerator devices have two different memory spaces. Data structures are created and allocated on the host or CPU memory space. After allocating memory on the GPU, the data has to be moved to the device from the CPU either by a direct transfer or by creating a Unified Virtual Memory system accessible from both CPU and GPU. The CUDA Runtime API enables the programmer to do both. In most cases, a single data transfer is done by allocating with \emph{cudaMalloc} and copying the data to the GPU with \emph{cudaMemcpy}. In the heterogeneous computing context, where data needs to be accessed by both the CPU and the GPU simultaneously, a Unified Virtual Memory (UVM) system helps the programmer with the data management. Since CUDA version 6.0, Nvidia introduced \emph{cudaMallocManaged} which handles necessary data transfer in both directions based on pagination. \cite{gayatriComparingManagedMemory} Both the host and device keep track of the pages using a page table. On memory access, missing pages migrate to the correct location.
-For performance reasons, the CUDA run-time API allows for prefetching data to the correct device so that page misses, which can slow down the computation performance a lot, are prevented.
+For performance reasons, the CUDA run-time API allows for prefetching data to a device so that page misses, which can slow down the computation performance a lot, are prevented.
 
 % - Hardware characteristics
 % - CUDA Basics
@@ -83,7 +83,7 @@ The version of the PC Algorithm described in Colombo et al. \cite{colomboOrderIn
     \caption{Adjacency search of PC-stable algorithm \cite{colomboOrderIndependentConstraintBasedCausal}}
     \label{alg:pcstable}
     \begin{algorithmic}[1]
-    \Require Vertex set $V$
+    \Require Vertex set $V$, Additional data necessary for the CI-Test
     \Ensure Estimated skeleton $C$, separation sets \textbf{Sepset}
     \State with fully connected skeleton $C$ and $l = -1$
     \Repeat 
@@ -106,7 +106,7 @@ The version of the PC Algorithm described in Colombo et al. \cite{colomboOrderIn
     \end{algorithmic}
 \end{algorithm}
 
-As can be seen in \ref{alg:pcstable} the starting point of the algorithm is a set of vertices that represent the given variables and a correlation matrix.
+As can be seen in \ref{alg:pcstable} the starting point of the algorithm is a set of vertices that represent the given variables. The PC-Algorithm incrementally learns a skeleton in each level. Starting with a separation set of size 0, independence tests for every edge pair is done. Every edge between any vertice combination exist in level 0, therefore the independence test count can be calculated as $|P_0| = \frac{(|V| - 1) * |V|}{2}$. In subsequent level iterations separation sets are non empty and the existence of an edge cannot be assumed.
 % - Explain PC Algorithm
 % - Pseudocode listing
 % - Loops

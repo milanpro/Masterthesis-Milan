@@ -203,6 +203,38 @@
   language = {English}
 }
 
+@article{hazarikaSurveyMemoryManagement2019,
+  title = {Survey on Memory Management Techniques in Heterogeneous Computing Systems},
+  author = {Hazarika, Anakhi and Poddar, Soumyajit and Rahaman, Hafizur},
+  year = {2019},
+  month = dec,
+  volume = {14},
+  pages = {47--60},
+  publisher = {{IET Digital Library}},
+  issn = {1751-861X},
+  doi = {10.1049/iet-cdt.2019.0092},
+  abstract = {A major issue faced by data scientists today is how to scale up their processing infrastructure to meet the challenge of big data and high-performance computing (HPC) workloads. With today\&apos;s HPC domain, it is required to connect multiple graphics processing units (GPUs) to accomplish large-scale parallel computing along with CPUs. Data movement between the processor and on-chip or off-chip memory creates a major bottleneck in overall system performance. The CPU/GPU processes all the data on a computer\&apos;s memory and hence the speed of the data movement to/from memory and the size of the memory affect computer speed. During memory access by any processing element, the memory management unit (MMU) controls the data flow of the computer\&apos;s main memory and impacts the system performance and power. Change in dynamic random access memory (DRAM) architecture, integration of memory-centric hardware accelerator in the heterogeneous system and Processing-in-Memory (PIM) are the techniques adopted from all the available shared resource management techniques to maximise the system throughput. This survey study presents an analysis of various DRAM designs and their performances. The authors also focus on the architecture, functionality, and performance of different hardware accelerators and PIM systems to reduce memory access time. Some insights and potential directions toward enhancements to existing techniques are also discussed. The requirement of fast, reconfigurable, self-adaptive memory management schemes in the high-speed processing scenario motivates us to track the trend. An effective MMU handles memory protection, cache control and bus arbitration associated with the processors.},
+  file = {/Users/i500763/Zotero/storage/MEF7YWVC/iet-cdt.2019.html},
+  journal = {IET Computers \&amp; Digital Techniques},
+  language = {en},
+  number = {2}
+}
+
+@article{ibmpower9nputeamFunctionalityPerformanceNVLink2018,
+  title = {Functionality and Performance of {{NVLink}} with {{IBM POWER9}} Processors},
+  author = {{IBM POWER9 NPU team}},
+  year = {2018},
+  month = jul,
+  volume = {62},
+  pages = {9:1--9:10},
+  issn = {0018-8646},
+  doi = {10.1147/JRD.2018.2846978},
+  abstract = {Heterogeneous computer systems with multiple types of processing elements (PEs) are becoming a popular design to optimize performance and efficiency for a wide variety of applications. Each part of an application can be executed on the PE for which it is best suited. In heterogeneous systems, communication, efficient data movement, and memory sharing across PEs are critical to execute an application across the different PEs while incurring minimal overhead for communication and synchronization. The IBM POWER9 processor supports the NVIDIA NVLink interface, a high-performance interconnect with many such capabilities. In the IBM Power System AC922, IBM POWER9 processors directly connect to multiple NVIDIA GPUs using NVLink. In this paper, we highlight the important functional and performance capabilities of NVLink with the POWER9 processor. These include high bandwidth, hardware cache coherence, fine-grained data movement, and hardware support for atomic operations across all PEs of a compute node. We also present an analysis of how these performance and functional capabilities of POWER9 processors and NVLink are expected to have significant impacts on performance and programmability across a variety of important applications, such as machine learning and domains within high-performance computing.},
+  file = {/Users/i500763/Zotero/storage/2HWLQ8HC/IBM POWER9 NPU team - 2018 - Functionality and performance of NVLink with IBM P.pdf},
+  journal = {IBM Journal of Research and Development},
+  number = {4-5}
+}
+
 @article{kalischCausalStructureLearning2014,
   title = {Causal {{Structure Learning}} and {{Inference}}: {{A Selective Review}}},
   shorttitle = {Causal {{Structure Learning}} and {{Inference}}},
@@ -488,6 +520,18 @@
   file = {/Users/i500763/Zotero/storage/MB9QSSQS/NVIDIA TESLA V100 GPU ARCHITECTURE.pdf}
 }
 
+@article{NVLink2021,
+  title = {{{NVLink}}},
+  year = {2021},
+  month = may,
+  abstract = {NVLink is a wire-based serial multi-lane near-range communications link developed by Nvidia. Unlike PCI Express, a device can consist of multiple NVLinks, and devices use mesh networking to communicate instead of a central hub. The protocol was first announced in March 2014 and uses a proprietary high-speed signaling interconnect (NVHS).},
+  annotation = {Page Version ID: 1021388572},
+  copyright = {Creative Commons Attribution-ShareAlike License},
+  file = {/Users/i500763/Zotero/storage/U9ME34A8/index.html},
+  journal = {Wikipedia},
+  language = {en}
+}
+
 @article{pearlIntroductionCausalInference2010,
   title = {An {{Introduction}} to {{Causal Inference}}},
   author = {Pearl, Judea},
@@ -641,6 +685,16 @@
   abstract = {Bayesian networks (BNs) are a widely used graphical model in machine learning. As learning the structure of BNs is NP-hard, high-performance computing methods are necessary for constructing large-scale networks. In this paper, we present a parallel framework to scale BN structure learning algorithms to tens of thousands of variables. Our framework is applicable to learning algorithms that rely on the discovery of Markov blankets (MBs) as an intermediate step. We demonstrate the applicability of our framework by parallelizing three different algorithms: Grow-Shrink (GS), Incremental Association MB (IAMB), and Interleaved IAMB (Inter-IAMB). Our implementations are able to construct BNs from real data sets with tens of thousands of variables and thousands of observations in less than a minute on 1024 cores, with a speedup of up to 845X and 82.5\% efficiency. Furthermore, we demonstrate using simulated data sets that our proposed parallel framework can scale to BNs of even higher dimensionality.},
   file = {/Users/i500763/Zotero/storage/SAAUJ3GS/Srivastava et al. - 2020 - A Parallel Framework for Constraint-Based Bayesian.pdf},
   isbn = {978-1-72819-998-6},
+  language = {en}
+}
+
+@article{sutterFreeLunchFundamental2013,
+  title = {The {{Free Lunch Is Over A Fundamental Turn Toward Concurrency}} in {{Software}}},
+  author = {Sutter, H.},
+  year = {2013},
+  abstract = {The major processor manufacturers and architectures, from Intel and AMD to Sparc and PowerPC, have run out of room with most of their traditional approaches to boosting CPU performance. Instead of driving clock speeds and straight-line instruction throughput ever higher, they are instead turning en masse to hyperthreading and multicore architectures. Both of these features are already available on chips today; in particular, multicore is available on current PowerPC and Sparc IV processors, and is coming in 2005 from Intel and AMD. Indeed, the big theme of the 2004 InStat/MDR Fall Processor Forum was multicore devices, as many companies showed new or updated multicore processors. Looking back, it's not much of a stretch to call 2004 the year of multicore.},
+  file = {/Users/i500763/Zotero/storage/HGBJVUIA/Free_Lunch.pdf;/Users/i500763/Zotero/storage/N57BKIBX/324d81807507a03b9e301def1887f686b18c13bc.html},
+  journal = {undefined},
   language = {en}
 }
 
