@@ -140,9 +140,11 @@ A special case of a dynamic scheduling algorithm is the work-stealing scheduler.
 % - Two approaches pre balanced and workstealing
 
 \section{Heterogeneous PC Algorithm Approaches}
-Using the insights gathered from Foster's Methodology applied to the heterogeneous PC-stable algorithm, two approaches arise. First, the static scheduling approach that balances rows pre-execution on the heterogeneous system. This approach is called the pre-balanced approach. The second approach uses dynamic scheduling by work-stealing rows from an executing processing unit. Boh approaches use the length information gained from the adjacency matrix to place the rows with the longer estimated run time on the CPU which is specialized for executing sequential tasks fast and every other row is executed on the highly parallel GPU.
+Using the insights gathered from Foster's Methodology applied to the heterogeneous PC-stable algorithm, two approaches arise. First, the static scheduling approach that balances rows pre-execution on the heterogeneous system. This approach is called the pre-balanced approach. The second approach uses dynamic scheduling by work-stealing rows from an executing processing unit. Both approaches use the length information gained from the adjacency matrix to place the rows with the longer estimated run time on the CPU, which is specialized for executing sequential tasks fast. Every unscheduled row is executed on the highly parallel GPU.
 
 \subsection{Pre-Balanced Approach}
+Static scheduling is done ahead of execution and, in most cases, at compile time \cite{singhSurveyStaticScheduling2015}. Because of the varying size of task and dataset dimensions, the scheduling approach proposed schedules between levels and just before execution. A task, which is defined as a row of the adjacency matrix, is scheduled using its length as an identifier for the execution time parameter. The scheduled tasks are passed to the execution unit, and all execution units process their tasks concurrently. The different characteristics of the given execution units have to be considered during load balancing. The GPUs processing power lies in parallelization. Therefore most tasks should be scheduled on this processing unit. The task with the estimated longest execution time gets placed on the CPU, which is better at processing serial tasks than the GPU. The ratio between tasks placed on the CPU and tasks placed on the GPU is an estimation and can be optimized using hardware characteristics. Such a characteristic used in this approach is the core count of the CPU, which can be an indicator of how many tasks can be processed concurrently. Additional characteristics that could improve the balance of tasks placed on the processing units are the clock-speed of both CPU and GPU, which can approximate the speed at which tasks are processed and the maximum thread count schedulable on the GPU. Because of the approximative nature of the static scheduling approach, each additional parameter used does not necessarily mean a better balancing. Balancing parameters need tuning, which is done by adding and setting thresholds.
+The maximum count of tasks placed on the CPU is thresholded by a proportion of the CPU core count. Because of the distinct execution times of a single test in different levels this threshold has to be tuned for each level.
 % - Static scheduling ansatz
 % - Load balancer schiebt längste rows auf CPU
 % ...
@@ -160,11 +162,11 @@ Using the insights gathered from Foster's Methodology applied to the heterogeneo
 \section{Implementation}
 
 \subsection{Architecture}
-% - could be also integrated into the Approach sections
+% - could be integrated into the Approach sections
 % - one state containing unified memory data
 % - Executor abstraction
 % - Task as a struct containing row index and how many rows
-% - Load balancer invoked only in prebalanced case
+% - Load balancer invoked only in pre-balanced case
 % - else GPU has all rows
 % - Workstealing approach guards
 % - Maybe show some code
