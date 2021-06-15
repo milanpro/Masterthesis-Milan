@@ -1,6 +1,12 @@
 %!TEX root = ../thesis.tex
 \chapter{Experiments}
-To test the proposed approaches and their implementations a stable experiment environment is used. The dataset the experiments use for computation is based on the dataset used in the experiments of Perscheid et al. \cite{perscheidIntegrativeGeneSelection2018}. The dataset is taken from The Cancer Genome Atlas (TCGA). 
+In this chapter both proposed heterogeneous pc-stable algorithm approaches are evaluated. Two different systems are used for the evaluation to elaborate the hardware dependency of the heterogeneous version.
+
+\chapter{Setup}
+The dataset the experiments use for computation is based on the dataset used in the experiments of Perscheid et al. \cite{perscheidIntegrativeGeneSelection2018}. The dataset is taken from The Cancer Genome Atlas (TCGA) \cite{weinsteinCancerGenomeAtlas2013}. Genes with more than 30\% missing values are filtered out. The remaining data is normalized and log-transformed. The original dataset consists of 55 573 variables. While the run-time of the PC stable algorithm grows exponentially with the variable count, subsets of the dataset are used for evaulation. The subset sizes chosen for the evaluation are 1000 variables, 10 000 variables and 45 000 variables. The 1000 variables dataset is used to represent small datasets and will be called TCGA-1000. The 10 000 variables dataset is a large dataset, that does not completly fill the memory of the systems GPU. The 45 000 variable dataset is therefore used to show effects of GPU memory overflow on the algorithms execution time in this evaluation.
+
+Tow different systems are used for the evaluation. One system, which will be called delos in the following, consists of 4 Nvidia Tesla V100 GPUs with each 32GB of SXM2 memory and 2 Intel Xeon Gold 6148 CPUs with each 755GB of DDR4 memory. The Tesla V100 GPUs clock rate is 1,53 GHz. It contains 80 Streaming Multiprocessors which each can execute maximum 2048 concurrently \cite{NVIDIATESLAV1002017}. The Intel Xeon Gold 6148 has 20 Cores with a clock rate of max 3,70 GHz. Each core has 2 so called hyperthreads so that the CPU can execute 40 threads concurrently.
+
 % - Explain dataset used for testing (TCGA)
 %   - Variable size
 %   - how sampled
