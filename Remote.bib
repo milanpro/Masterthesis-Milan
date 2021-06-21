@@ -138,6 +138,23 @@
   language = {en}
 }
 
+@incollection{dijkstraCooperatingSequentialProcesses2002,
+  title = {Cooperating {{Sequential Processes}}},
+  booktitle = {The {{Origin}} of {{Concurrent Programming}}: {{From Semaphores}} to {{Remote Procedure Calls}}},
+  author = {Dijkstra, Edsger W.},
+  editor = {Hansen, Per Brinch},
+  year = {2002},
+  pages = {65--138},
+  publisher = {{Springer}},
+  address = {{New York, NY}},
+  doi = {10.1007/978-1-4757-3472-0_2},
+  abstract = {This chapter is intended for all those who expect that in their future activities they will become seriously involved in the problems that arise in either the design or the more advanced applications of digital information processing equipment; they are further intended for all those who are just interested in information processing.},
+  file = {/Users/i500763/Zotero/storage/RV5Y8EBD/Dijkstra - 2002 - Cooperating Sequential Processes.pdf},
+  isbn = {978-1-4757-3472-0},
+  keywords = {Communication Facility,Critical Section,Mutual Exclusion,Sequential Process,Transmission Variable},
+  language = {en}
+}
+
 @misc{EasyIntroductionCUDA2012,
   title = {An {{Easy Introduction}} to {{CUDA C}} and {{C}}++},
   year = {2012},
@@ -216,6 +233,15 @@
   language = {English}
 }
 
+@article{harrisPCAlgorithmNonparanormal,
+  title = {{{PC Algorithm}} for {{Nonparanormal Graphical Models}}},
+  author = {Harris, Naftali and Drton, Mathias},
+  pages = {19},
+  abstract = {The PC algorithm uses conditional independence tests for model selection in graphical modeling with acyclic directed graphs. In Gaussian models, tests of conditional independence are typically based on Pearson correlations, and high-dimensional consistency results have been obtained for the PC algorithm in this setting. Analyzing the error propagation from marginal to partial correlations, we prove that high-dimensional consistency carries over to a broader class of Gaussian copula or nonparanormal models when using rank-based measures of correlation. For graph sequences with bounded degree, our consistency result is as strong as prior Gaussian results. In simulations, the `Rank PC' algorithm works as well as the `Pearson PC' algorithm for normal data and considerably better for non-normal data, all the while incurring a negligible increase of computation time. While our interest is in the PC algorithm, the presented analysis of error propagation could be applied to other algorithms that test the vanishing of low-order partial correlations.},
+  file = {/Users/i500763/Zotero/storage/S4KQKNJS/Harris and Drton - PC Algorithm for Nonparanormal Graphical Models.pdf},
+  language = {en}
+}
+
 @article{hazarikaSurveyMemoryManagement2019,
   title = {Survey on Memory Management Techniques in Heterogeneous Computing Systems},
   author = {Hazarika, Anakhi and Poddar, Soumyajit and Rahaman, Hafizur},
@@ -251,6 +277,7 @@
 @misc{IntelXeonGold,
   title = {{{Intel}}\textregistered{} {{Xeon}}\textregistered{} {{Gold}} 6148 {{Processor}} (27.{{5M Cache}}, 2.40 {{GHz}}) - {{Product Specifications}}},
   abstract = {Intel\textregistered{} Xeon\textregistered{} Gold 6148 Processor (27.5M Cache, 2.40 GHz) quick reference with specifications, features, and technologies.},
+  file = {/Users/i500763/Zotero/storage/VGC2SWHJ/specifications.html},
   howpublished = {https://www.intel.com/content/www/us/en/products/sku/120489/intel-xeon-gold-6148-processor-27-5m-cache-2-40-ghz/specifications.html},
   journal = {Intel},
   language = {en}
@@ -420,6 +447,26 @@
   abstract = {Faust 0.9.10 introduces an alternative to OpenMP based parallel code generation using a Work Steal- ing Scheduler and explicit management of worker threads. This paper explains the new option and presents some benchmarks.},
   file = {/Users/i500763/Zotero/storage/MJFZKHZ6/Letz et al. - 2010 - Work Stealing Scheduler for Automatic Parallelizat.pdf},
   keywords = {compiler,dataflow,functional,processing,programming,real-time,signal}
+}
+
+@article{liEvaluatingModernGPU2020,
+  title = {Evaluating {{Modern GPU Interconnect}}: {{PCIe}}, {{NVLink}}, {{NV}}-{{SLI}}, {{NVSwitch}} and {{GPUDirect}}},
+  shorttitle = {Evaluating {{Modern GPU Interconnect}}},
+  author = {Li, Ang and Song, Shuaiwen Leon and Chen, Jieyang and Li, Jiajia and Liu, Xu and Tallent, Nathan and Barker, Kevin},
+  year = {2020},
+  month = jan,
+  volume = {31},
+  pages = {94--110},
+  issn = {1045-9219, 1558-2183, 2161-9883},
+  doi = {10.1109/TPDS.2019.2928289},
+  abstract = {High performance multi-GPU computing becomes an inevitable trend due to the ever-increasing demand on computation capability in emerging domains such as deep learning, big data and planet-scale simulations. However, the lack of deep understanding on how modern GPUs can be connected and the real impact of state-of-the-art interconnect technology on multi-GPU application performance become a hurdle. In this paper, we fill the gap by conducting a thorough evaluation on five latest types of modern GPU interconnects: PCIe, NVLink-V1, NVLink-V2, NVLink-SLI and NVSwitch, from six high-end servers and HPC platforms: NVIDIA P100-DGX-1, V100-DGX-1, DGX-2, OLCF's SummitDev and Summit supercomputers, as well as an SLI-linked system with two NVIDIA Turing RTX-2080 GPUs. Based on the empirical evaluation, we have observed four new types of GPU communication network NUMA effects: three are triggered by NVLink's topology, connectivity and routing, while one is caused by PCIe chipset design issue. These observations indicate that, for an application running in a multi-GPU node, choosing the right GPU combination can impose considerable impact on GPU communication efficiency, as well as the application's overall performance. Our evaluation can be leveraged in building practical multi-GPU performance models, which are vital for GPU task allocation, scheduling and migration in a shared environment (e.g., AI cloud and HPC centers), as well as communication-oriented performance tuning.},
+  archiveprefix = {arXiv},
+  eprint = {1903.04611},
+  eprinttype = {arxiv},
+  file = {/Users/i500763/Zotero/storage/GBGYBK3R/Li et al. - 2020 - Evaluating Modern GPU Interconnect PCIe, NVLink, .pdf;/Users/i500763/Zotero/storage/QILL3XEQ/1903.html},
+  journal = {IEEE Transactions on Parallel and Distributed Systems},
+  keywords = {Computer Science - Distributed; Parallel; and Cluster Computing,Computer Science - Hardware Architecture,Computer Science - Networking and Internet Architecture,Computer Science - Performance},
+  number = {1}
 }
 
 @inproceedings{liLocalityLoopScheduling1993,
@@ -595,6 +642,23 @@
   doi = {doi:10.2202/1557-4679.1203},
   journal = {The International Journal of Biostatistics},
   number = {2}
+}
+
+@incollection{pearlTheoryInferredCausation1995,
+  title = {A Theory of Inferred Causation},
+  booktitle = {Studies in {{Logic}} and the {{Foundations}} of {{Mathematics}}},
+  author = {Pearl, Judea and Verma, Thomas S.},
+  editor = {Prawitz, Dag and Skyrms, Brian and Westerst{\aa}hl, Dag},
+  year = {1995},
+  month = jan,
+  volume = {134},
+  pages = {789--811},
+  publisher = {{Elsevier}},
+  doi = {10.1016/S0049-237X(06)80074-1},
+  abstract = {This chapter discusses the theory of inferred causation. The study of causation is central to the understanding of human reasoning. Inferences involving changing environments require causal theories that make formal distinctions between beliefs based on passive observations and those reflecting intervening actions. In applications such as diagnosis, qualitative physics, and plan recognition, a central task is that of finding a satisfactory explanation to a given set of observations, and the meaning of explanation is intimately related to the notion of causation. In some systems, causal ordering is defined as the ordering at which subsets of variables can be solved independently of others; in other systems, it follows the way a disturbance is propagated from one variable to others. An empirical semantics for causation is important for several reasons. The notion of causation is often associated with those of necessity and functional dependence; causal expressions often tolerate exceptions, primarily because of missing variables and coarse description. Temporal precedence is normally assumed essential for defining causation, and it is one of the most important clues that people use to distinguish causal from other types of associations.},
+  file = {/Users/i500763/Zotero/storage/ZD9PAQI2/S0049237X06800741.html},
+  language = {en},
+  series = {Logic, {{Methodology}} and {{Philosophy}} of {{Science IX}}}
 }
 
 @article{perscheidIntegrativeGeneSelection2018,
@@ -817,6 +881,19 @@
   copyright = {NVIDIA},
   file = {/Users/i500763/Zotero/storage/J8VIK8NZ/ORNL_workshop_mar2018.pdf},
   language = {en}
+}
+
+@inproceedings{vermaEquivalenceSynthesisCausal1990,
+  title = {Equivalence and Synthesis of Causal Models},
+  booktitle = {Proceedings of the {{Sixth Annual Conference}} on {{Uncertainty}} in {{Artificial Intelligence}}},
+  author = {Verma, Thomas and Pearl, Judea},
+  year = {1990},
+  month = jul,
+  pages = {255--270},
+  publisher = {{Elsevier Science Inc.}},
+  address = {{USA}},
+  isbn = {978-0-444-89264-5},
+  series = {{{UAI}} '90}
 }
 
 @article{weinsteinCancerGenomeAtlas2013,

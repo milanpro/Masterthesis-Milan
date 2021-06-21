@@ -1,11 +1,29 @@
 %!TEX root = ../thesis.tex
 \chapter{Experiments}
-In this chapter both proposed heterogeneous pc-stable algorithm approaches are evaluated. Two different systems are used for the evaluation to elaborate the hardware dependency of the heterogeneous version.
+In this chapter, both proposed heterogeneous pc-stable algorithm approaches are evaluated. Two different systems are used for the evaluation to elaborate the hardware dependency of the heterogeneous version.
 
-\chapter{Setup}
-The dataset the experiments use for computation is based on the dataset used in the experiments of Perscheid et al. \cite{perscheidIntegrativeGeneSelection2018}. The dataset is taken from The Cancer Genome Atlas (TCGA) \cite{weinsteinCancerGenomeAtlas2013}. Genes with more than 30\% missing values are filtered out. The remaining data is normalized and log-transformed. The original dataset consists of 55 573 variables. While the run-time of the PC stable algorithm grows exponentially with the variable count, subsets of the dataset are used for evaulation. The subset sizes chosen for the evaluation are 1000 variables, 10 000 variables and 45 000 variables. The 1000 variables dataset is used to represent small datasets and will be called TCGA-1000. The 10 000 variables dataset is a large dataset, that does not completly fill the memory of the systems GPU. The 45 000 variable dataset is therefore used to show effects of GPU memory overflow on the algorithms execution time in this evaluation.
+\section{Setup}
+The dataset the experiments use for computation is based on the dataset used in the experiments of Perscheid et al. \cite{perscheidIntegrativeGeneSelection2018}. The dataset is taken from The Cancer Genome Atlas (TCGA) \cite{weinsteinCancerGenomeAtlas2013}. Genes with more than 30\% missing values are filtered out. The remaining data is normalized and log-transformed. The original dataset consists of 55 573 variables. While the run-time of the PC stable algorithm grows exponentially with the variable count, subsets of the dataset are used for evaluation. The subset sizes chosen for the evaluation are 1000 variables, 10 000 variables, and 45 000 variables. The 1000 variables dataset is used to represent small datasets and will be called TCGA-1000. The 10 000 variables dataset is a large dataset that does not fill the memory of the system's GPU. The 45 000 variables dataset is therefore used to show effects of GPU memory overflow on the algorithms execution time in this evaluation.
 
-Tow different systems are used for the evaluation. One system, which will be called delos in the following, consists of 4 Nvidia Tesla V100 GPUs with each 32GB of SXM2 memory and 2 Intel Xeon Gold 6148 CPUs with each 755GB of DDR4 memory. The Tesla V100 GPUs clock rate is 1,53 GHz. It contains 80 Streaming Multiprocessors which each can execute maximum 2048 concurrently \cite{NVIDIATESLAV1002017}. The Intel Xeon Gold 6148 has 20 Cores with a clock rate of max 3,70 GHz. Each core has 2 so called hyperthreads so that the CPU can execute 40 threads concurrently.
+\begin{figure}[h]
+  \caption{System 1 Architektur - Delos}
+  \includegraphics[width=\textwidth]{figures/delos_system_arch.png}
+  \centering
+  \label{fig:delos_arch}
+\end{figure}
+
+Two different systems are used for the evaluation. One system, which will be called Delos \ref{fig:delos_arch} in the following, consists of 4 Nvidia Tesla V100 GPUs with each 32GB of SXM2 memory and 2 Intel Xeon Gold 6148 CPUs with each 755GB of DDR4 memory. The Tesla V100 GPU clock rate is 1,53 GHz. It contains 80 Streaming Multiprocessors which each can execute a maximum of 2048 threads concurrently \cite{NVIDIATESLAV1002017}. The Intel Xeon Gold 6148 has 20 cores with a clock rate maximum of 3,70 GHz. Each core has two so-called hyper threads so that the CPU can execute 40 threads concurrently.
+
+The second system, which will be called AC922 in the following, is a high performance computing system developed in collaboration by IBM and Nvidia. It incoroporates the same GPUs as the Delos system (4xNvidia Tesla V100) and two IBM Power9 processors. Each Power9 processor has 16 cores with a clock rate maximum of 4 GHz, that, by using SMT4 multithreading, can execute 64 threads concurrently. 256GB DDR4 RAM is connected to each CPU.
+
+Through the collaboration of IBM and Nvidia, the interconnect between a CPU and GPU in this system is NVLINK with a bandwith of 150GB/s in contrast to the Delos PCIe 3.0 16GB/s interconnect. NVLINK is also faster latency wise \cite{liEvaluatingModernGPU2020}. This allows for evaluating bottlenecks regarding interconnect speed in this heterogeneous computation scenario.
+%TODO add ATS etc 
+
+The following experiments only use one GPU for execution, even if the proposed algorithm can be executed on multiple GPUs at once. Therefore parameters, such as GPU-GPU memory handling and interconnect technology, do not influence the CPU-GPU computation results. Some benchmarks are pinned to the NUMA node closest to the executing GPU to further limit interconnect effects not related to the direct CPU-GPU connection. On both systems, with two CPUs each directly connected to two GPUs, this means using only half the cores and memory. The largest dataset being used with the size of 36GB$\sim$, will not be the limiting factor for the CPU's associated memory of 755GB on Delos and 256GB on AC922. On the other hand, 36GB$\sim$ of data will fill the GPU's memory of 32GB which is intentional behavior as said above.
+
+% TODO add structured listing of experiments done
+
+The first experiments
 
 % - Explain dataset used for testing (TCGA)
 %   - Variable size
