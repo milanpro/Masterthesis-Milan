@@ -1,0 +1,16 @@
+\begin{table}[h!]
+  \centering
+  \begin{tabular}{||c | c||} 
+   \hline
+    & Execution time (ms) \\ [0.5ex] 
+   \hline\hline
+   GPU-only execution & 16290.8 \\
+   Workstealing & 15796.8 \\ 
+   Workstealing without postponed edge migrations & 15892.2 \\
+   Workstealing without atomics & 23551.0 \\
+   Workstealing NUMA pinned & 16266.4 \\ [1ex] 
+   \hline
+  \end{tabular}
+  \caption{Workstealing execution time results (Delos)}
+  \label{table:workst_delos}
+\end{table}

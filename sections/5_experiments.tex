@@ -6,7 +6,7 @@ In this chapter, both proposed heterogeneous pc-stable algorithm approaches are 
 The dataset the experiments use for computation is based on the dataset used in the experiments of Perscheid et al. \cite{perscheidIntegrativeGeneSelection2018}. The dataset is taken from The Cancer Genome Atlas (TCGA) \cite{weinsteinCancerGenomeAtlas2013}. Genes with more than 30\% missing values are filtered out. The remaining data is normalized and log-transformed. The original dataset consists of 55 573 variables. While the run-time of the PC stable algorithm grows exponentially with the variable count, subsets of the dataset are used for evaluation. The subset sizes chosen for the evaluation are 1000 variables, 10 000 variables, and 45 000 variables. The 1000 variables dataset is used to represent small datasets and will be called TCGA-1000. The 10 000 variables dataset is a large dataset that does not fill the memory of the system's GPU. The 45 000 variables dataset is therefore used to show the effects of GPU memory overflow on the algorithms execution time in this evaluation.
 
 \begin{figure}[h]
-  \caption{System 1 Architektur - Delos}
+  \caption{System 1 Structure - Delos}
   \includegraphics[width=\textwidth]{figures/delos_system_arch.png}
   \centering
   \label{fig:delos_arch}
@@ -14,12 +14,19 @@ The dataset the experiments use for computation is based on the dataset used in 
 
 Two different systems are used for the evaluation. One system, which will be called Delos \ref{fig:delos_arch} in the following, consists of 4 Nvidia Tesla V100 GPUs with each 32GB of SXM2 memory and 2 Intel Xeon Gold 6148 CPUs with each 755GB of DDR4 memory. The Tesla V100 GPU clock rate is 1,53 GHz. It contains 80 Streaming Multiprocessors which each can execute a maximum of 2048 threads concurrently \cite{NVIDIATESLAV1002017}. The Intel Xeon Gold 6148 has 20 cores with a clock rate maximum of 3,70 GHz. Each core has two so-called hyper threads so that the CPU can execute 40 threads concurrently.
 
-The second system, which will be called AC922 in the following, is a high-performance computing system developed in collaboration with IBM and Nvidia \cite{caldeiraIBMPowerSystem}. It incorporates the same GPUs as the Delos system (4xNvidia Tesla V100) and two IBM Power9 processors. Each Power9 processor has 16 cores with a clock rate maximum of 4 GHz, which, by using SMT4 multithreading, can execute 64 threads concurrently. 256GB DDR4 RAM is connected to each CPU.
+\begin{figure}[h]
+  \caption{System 2 Structure - AC922 \cite{ganesannarayanasamyPowerAIDeepDive12:39:24UTC}}
+  \includegraphics[width=\textwidth]{figures/ac922_system_arch.png}
+  \centering
+  \label{fig:ac922_arch}
+\end{figure}
+
+The second system, which will be called AC922 \ref{fig:ac922_arch} in the following, is a high-performance computing system developed in collaboration with IBM and Nvidia \cite{caldeiraIBMPowerSystem}. It incorporates the same GPUs as the Delos system (4xNvidia Tesla V100) and two IBM Power9 processors. Each Power9 processor has 16 cores with a clock rate maximum of 4 GHz, which, by using SMT4 multithreading, can execute 64 threads concurrently. 256GB DDR4 RAM is connected to each CPU.
 
 Through the collaboration of IBM and Nvidia, the interconnect between a CPU and GPU in this system is NVLINK \cite{NVLink2021, zargesEvaluationOnNodeGPU} with a bandwidth of 150GB/s in contrast to the Delos PCIe 3.0 16GB/s interconnect. NVLINK is also faster latency wise \cite{liEvaluatingModernGPU2020}. The latency and throughput differences of both systems allow evaluating bottlenecks regarding interconnect speed in this heterogeneous computation scenario.
-Furthermore the collaboration brings other features which a heterogeneous computing application can benefit from, such as Adress Translation Services \cite{ibmpower9nputeamFunctionalityPerformanceNVLink2018} unifying the GPU and CPU page table, native atomics support for system wide accessible memory and direct GPU memory access by the CPU \cite{UNIFIEDMEMORYP9}.
+Furthermore, the collaboration brings other features which a heterogeneous computing application can benefit from, such as Adress Translation Services \cite{ibmpower9nputeamFunctionalityPerformanceNVLink2018} unifying the GPU and CPU page table, native atomics support for system-wide accessible memory and direct GPU memory access by the CPU \cite{UNIFIEDMEMORYP9}.
 
-The following experiments only use one GPU for execution, even if the proposed algorithm can be executed on multiple GPUs at once. Therefore parameters, such as GPU-GPU memory handling and interconnect technology, do not influence the CPU-GPU computation results. Some benchmarks are pinned to the NUMA node closest to the executing GPU to limit interconnect effects not related to the direct CPU-GPU connection. Both systems' CPUs are each directly connected to two GPUs, whichs means using only half the cores and memory while NUMA pinned. The largest dataset being used with the size of 36GB$\sim$ will not be the limiting factor for the CPU's associated memory of 755GB on Delos and 256GB on AC922. On the other hand, 36GB$\sim$ of data will fill the GPU's memory of 32GB which is intentional behavior as said above.
+The following experiments only use one GPU for execution, even if the proposed algorithm can be executed on multiple GPUs at once. Therefore parameters, such as GPU-GPU memory handling and interconnect technology, do not influence the CPU-GPU computation results. Some benchmarks are pinned to the NUMA node closest to the executing GPU to limit interconnect effects not related to the direct CPU-GPU connection. Both systems' CPUs are directly connected to two GPUs, which means using only half the cores and memory while NUMA pinned. The largest dataset being used with the size of 36GB$\sim$ will not be the limiting factor for the CPU's associated memory of 755GB on Delos and 256GB on AC922. On the other hand, 36GB$\sim$ of data will fill the GPU's memory of 32GB which is intentional behavior as said above.
 
 The following table shows the tools and libraries used for the experiments:
 \input{figures/version_table}
@@ -29,22 +36,48 @@ Further the following flags were passed to GCC on the systems:
   \item Delos: -O3 -DNDEBUG -march=native -mtune=native
   \item AC922: -O3 -DNDEBUG -flto -fpeel-loops -funroll-loops -ftree-vectorize -ffast-math -mcpu=power9 -mtune=power9
 \end{itemize}
-The flags used on the AC922 system are recommended by IBM for optimized binaries \cite{LinuxIBMPower}. NVCC, the Nvidia CUDA compiler, gets passed the same flags on both systems (-O3 -DNDEBUG -lineinfo) and additionally CMake autmatically sets the correct flags to compile for best optimization on the V100 architecture.
+The flags used on the AC922 system are recommended by IBM for optimized binaries \cite{LinuxIBMPower}. NVCC, the Nvidia CUDA compiler, gets passed the same flags on both systems (-O3 -DNDEBUG -lineinfo). Additionally, CMake automatically sets the correct flags to compile for best optimization on the V100 architecture.
 
 \section{Benchmarks}
-For each system, basic experiments for both approaches are done first to determine the relevance and effectivness of those approaches. To analyze hardware-specific effects on the experiments, more detailed benchmarks are done later, such as tests with a modified thread count used for the CPU execution.
-The first approach, which is called pre-balanced, will be tested and compared to the GPU only execution of the algorithm. Additionally, the effect of migrating edges after each level and pinning the execution to some NUMA node is tested as well.
+For each system, basic experiments for both approaches are done first to determine the relevance and effectiveness of those approaches. To analyze hardware-specific effects on the experiments, more detailed benchmarks are done later, such as tests with a modified thread count used for the CPU execution.
+The first approach, which is called pre-balanced, will be tested and compared to the GPU-only execution of the algorithm. Additionally, the effect of migrating edges after each level and pinning the execution to some NUMA node is tested as well.
 
-The same tests are then done for the workstealing approach, where a test for atomic usage is added, since atomics are not necessary for this approach and only used so that edges are not processed twice.
+The same tests are then done for the workstealing approach, where a test for atomic usage is added since atomics are not necessary for this approach and only used so that edges are not processed twice.
 
-Those described experiments are done on both the Delos system and the AC922 system. On the Delos system, further experiments to evaluate the scalability of the approaches are done using larger datasets as said above.
+Those described experiments are done on both the Delos system and the AC922 system. Each test relying on the dataset with 1000 variables is executed five times, and for the final result, the mean of all results is calculated. On the Delos system, further experiments to evaluate the scalability of the approaches are done using large datasets, as said above.
 
 \subsection{Benchmarks Delos}
 \input{figures/delos_preb_bench}
-The first experiments using the pre-balanced approach seen in \ref{table:preb_delos} show that there is a slight performance boost of 2,9\% in comparison to the GPU-only variant possible. While pinning the NUMA node, there is even a slow down seen, which tells us two things: First, the missing processing power of the lost cores while pinning the execution is missing, and more cores should help in speeding up the execution. Second, the interconnect bottleneck does not hit the performance in a meaningful way when edges of different rows are processed by GPU and CPU, supported by the little to no effect of migrating edges after level execution. Additionally, the count of rows placed on the CPU by the load balancer had to be tuned carefully for the best performance. The row count balanced on the CPU are in level one and two, 14 rows and in level three and four 8 rows, which is small compared to the maximum of 1000 rows.
+The first experiments using the pre-balanced approach seen in \ref{table:preb_delos} show that there is a slight performance boost of 2,9\% in comparison to the GPU-only variant possible. While pinning the NUMA node, there is even a slow down seen, which tells us two things: First, the missing processing power of the lost cores while pinning the execution is missing, and more cores should help in speeding up the execution. Second, the interconnect bottleneck does not hit the performance in a meaningful way when edges of different rows are processed by GPU and CPU, supported by the little to no effect of migrating edges after level execution. Additionally, the count of rows placed on the CPU by the load balancer had to be tuned carefully for the best performance. The row count balanced on the CPU is 14 rows in level one and two and 8 rows in level three and four, which is small compared to the maximum of 1000 rows.
 
-This volatility does tuning the pre-balanced approach hard, especially for large datasets where the PC stable algorithm can execute for hours or even days. Multiple tuning executions might not be feasible in such situations, because this threshold might change alot for different datasets which could lead to more sparse rows.
+This volatility makes tuning the pre-balanced approach hard, especially for large datasets where the PC stable algorithm can execute for hours or days. Multiple tuning executions might not be feasible in such situations because this threshold might change a lot for different datasets, which could lead to more sparse rows.
 
+\input{figures/delos_workst_bench}
+Experiments with the workstealing approach seen in \ref{table:workst_delos} show a 3,1\% performance boost in comparison to the GPU-only execution, which is similar to the pre-balanced approaches result, even if there should be dynamic scheduling overhead. Postponing the migration of the edge deletion does not impact the execution time, whereas the benchmark without atomics shows a slowdown of $\sim$33\ in comparison to using atomics. The reason for the slowdown while not using atomics is presumably because tasks are processed multiple times and changes to the flags annotating tasks that are being processed have to be migrated via pages between the processors.
+
+Comparing the pre-balanced approaches and the workstealing approaches results, both seem to be similarly effective for speeding up the pc-stable variant. Still workstealing and dynamic scheduling is more flexible and does not need to be tuned for the dataset being used. Due to the flexibility, further tests on the Delos system are done using the workstealing approach.
+
+\begin{figure}[h]
+  \caption{Testing the CPU side parallelizability of the workstealing approach on Delos. The approach does no scale well with multiple cores}
+  \includegraphics[width=\textwidth]{figures/threaded_wsteal.pdf}
+  \centering
+  \label{fig:wstealing_threaded_delos}
+\end{figure}
+
+The implementation of the CPU execution is parallelized with OpenMP, a library that allows easy tuning of the thread count that is spawned for execution. In the following experiment, the parallelizability of the CPU execution is tested \ref{fig:wstealing_threaded_delos}.
+The peack at 80 threads is to be expected, because there is also a main thread, used for orchestration, and one thread per GPU, used for GPU synchronization, running. With 80 plus 2 threads running there is not enough execution units available to have all of them running without collisions. Therefore the maximum number of threads, that should be used is 78.
+
+While a performance boost can be seen for additional threads spawned, there is another peak of execution time at around 20 threads. This peak might be explained by bad optimization, which could be an interconnect bottleneck hit with the two NUMA nodes involved or the system-wide synchonization through atomics. 78 thread execution is the fastest, but not by far and therefore might not be suitable in comparison to one thread in energy efficient environments. The speedup of 78 threads workstealing to GPU-only is $\sim$16,6\%.
+
+\input{figures/delos_workst_scaling}
+
+Looking at the scalability of the workstealing approach by running benchmarks on larger datasets it can easily be seen, that the approach does not scale well. Because at 10 000 variables there is even a slowdown. The reason for this slowdown is that the data migration between the CPU and the GPU rises with more variables to be randomly accessed and the CPU-GPU interconnect is limited in its througput. More variables also produce more row length peaks, which are less likely to be an outlier, because of the higher possibility of occuring peaks.
+The GPU-only execution is faster, due to the more balanced data and the better memory access times.
+
+While the dataset based on 10 000 variables does not exhaust the memory associated with the GPU, the 45 000 does. By exhausting the GPU memory, the CUDA runtime has to swap memory in and out while accessing, because there is always a part of the dataset, which cannot be held in memory. This swapping process is usually slow, because the CPU-GPU interconnect is used, and does get triggered often if there is some random access pattern.
+
+The CPU still holds the whole data in system memory and is able to access the data fast. The heterogeneous computing approach is 6,61 times faster then the GPU-only variant, because the memory overflown GPU is slower in this case and the CPU can help more in relation to the other cases.
+Since the raw computing power is the most important part about the CPU in this scenario, using more threads speeds the computation up as well.
 
 
 \subsection{Benchmarks AC922}

@@ -1,0 +1,14 @@
+\begin{table}[h!]
+  \centering
+  \begin{tabular}{||c | c | c||} 
+   \hline
+   Variable count & 1 thread speedup factor & 78 threads speedup factor \\ [0.5ex] 
+   \hline\hline\hline
+   1000 & 1,11x & 1,17x \\
+   10 000 & 0,95x & 0,96x \\ 
+   45 000 (only level 0 and 1) & 1,06x & 6,61x \\ [1ex] 
+   \hline
+  \end{tabular}
+  \caption{Workstealing execution time results (Delos)}
+  \label{table:workst_delos_scaling}
+\end{table}
