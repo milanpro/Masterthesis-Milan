@@ -94,8 +94,7 @@ Interestingly the most tasks are stolen in level 2 by the CPU. While the CPU ste
 After exploring both approaches on the Delos system, a further look into the bottleneck of the CPU-GPU interconnect is evaluated by doing comparable benchmarks on the AC922, whose interconnect is faster by relying on NVLINK in contrast to Delos, which relies on PCIe. Native system-wide atomics should also show in the workstealing benchmarks.
 While the GPU built into both systems is the same Nvidia V100 GPU, the built-in CPUs are different and might impact the benchmarks.
 
-While the Intel Xeon CPU included in the Delos system is x86\_64 based, the Power9 CPU, which is included in the AC922 system, is based on the ppc64le architecture. Through the different architectures of both CPUs, different optimizations are done, which can influence execution times \cite{AnalysisX86Vs}.
-
+While the Intel Xeon CPU included in the Delos system is x86\_64 architecture based, the Power9 CPU, which is included in the AC922 system, is based on the ppc64le architecture. Through the different architectures of both CPUs, different optimizations are done, which can influence execution times \cite{AnalysisX86Vs}.
 
 
 % - Explain dataset used for testing (TCGA)
