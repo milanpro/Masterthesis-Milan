@@ -1,2 +1,24 @@
 %!TEX root = ../thesis.tex
 \chapter{Evaluation}
+% Performance improvements could be shown for level 2 and 3
+% But only in specific contexts
+%   - doees not scale well
+%   - perfect for situations, where the GPU gets to its (memory) limit
+% 
+% Workstealing better than pre-balanced through dynamic nature
+%   - does not have to be tuned
+% Pre balanced is very hard to tune (might be even harder for different datasets)
+%   - perforamnce characteristic has to be look at while tuning
+%   - what is perforamnce? Too complex to decide. Just heuristics, which could not be portable to other systems
+%   - The bigger the dataset, the worse to tune (long runtimes)
+%   - Tuning after execution does not help, because the tuned values are not really reusable
+% Hardware impacts execution times alot (SMT)
+% Has to decided for each system if applying is worth
+% Multithreading not efficient (could be fixed)
+% 
+% 
+% 
+% Topic has to be further look into but seems promising
+% 
+% 
+% 
