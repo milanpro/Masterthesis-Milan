@@ -79,8 +79,23 @@ While the dataset based on 10 000 variables does not exhaust the memory associat
 The CPU still holds the whole data in system memory and is able to access the data fast. The heterogeneous computing approach is 6,61 times faster then the GPU-only variant, because the memory overflown GPU is slower in this case and the CPU can help more in relation to the other cases.
 Since the raw computing power is the most important part about the CPU in this scenario, using more threads speeds the computation up as well.
 
+\begin{figure}[h]
+  \caption{Comparing the level-wise speedup factor of the pre-balanced and workstealing approach to GPU-only execution}
+  \includegraphics[width=\textwidth]{figures/levelwise.pdf}
+  \centering
+  \label{fig:levelwise_delos}
+\end{figure}
+
+By comparing the speedup level-wise in \ref{fig:levelwise_delos} it is clear that level 2 and 3 are impacted by the heterogeneous computing speedup through the CPU. Level 1 and 4 are slower than GPU-only when executed heterogeneously because there are less to none execution-time outlier tasks in the data, that can be placed on the CPU. In level 2 and 3 there are larger and more performance impacting outlier tasks. The influence of level 1 and 4 is negligible, due to the small share of 1\% in the execution time. Nevertheless, the best performance is achievable through executing only level 2 and 3 via heterogeneous computing.
+
+Interestingly the most tasks are stolen in level 2 by the CPU. While the CPU steals around 90 000 tasks in level 1 where the additional help of the CPU slows the execution, the CPU steals around 4000 tasks in level 2 and 1000 in level 3. This is to be expected, because tasks in higher levels are slower on average and the CPU takes the longest tasks on purpose. This difference in processed tasks on the CPU supports the argumentation, that in level 3 and 4 more outliers are done on the CPU, which take generally longer.
 
 \subsection{Benchmarks AC922}
+After exploring both approaches on the Delos system, a further look into the bottleneck of the CPU-GPU interconnect is evaluated by doing comparable benchmarks on the AC922, whose interconnect is faster by relying on NVLINK in contrast to Delos, which relies on PCIe. Native system-wide atomics should also show in the workstealing benchmarks.
+While the GPU built into both systems is the same Nvidia V100 GPU, the built-in CPUs are different and might impact the benchmarks.
+
+While the Intel Xeon CPU included in the Delos system is x86\_64 based, the Power9 CPU, which is included in the AC922 system, is based on the ppc64le architecture. Through the different architectures of both CPUs, different optimizations are done, which can influence execution times \cite{AnalysisX86Vs}.
+
 
 
 % - Explain dataset used for testing (TCGA)
