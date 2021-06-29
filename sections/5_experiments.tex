@@ -5,7 +5,7 @@ In this chapter, both proposed heterogeneous pc-stable algorithm approaches are 
 \section{Setup}
 The dataset the experiments use for computation is based on the dataset used in the experiments of Perscheid et al. \cite{perscheidIntegrativeGeneSelection2018}. The dataset is taken from The Cancer Genome Atlas (TCGA) \cite{weinsteinCancerGenomeAtlas2013}. Genes with more than 30\% missing values are filtered out. The remaining data is normalized and log-transformed. The original dataset consists of 55 573 variables. While the run-time of the PC stable algorithm grows exponentially with the variable count, subsets of the dataset are used for evaluation. The subset sizes chosen for the evaluation are 1000 variables, 10 000 variables, and 45 000 variables. The 1000 variables dataset is used to represent small datasets and will be called TCGA-1000. The 10 000 variables dataset is a large dataset that does not fill the memory of the system's GPU. The 45 000 variables dataset is therefore used to show the effects of GPU memory overflow on the algorithms execution time in this evaluation.
 
-\begin{figure}[h]
+\begin{figure}[H]
   \caption{System 1 Structure - Delos}
   \includegraphics[width=\textwidth]{figures/delos_system_arch.png}
   \centering
@@ -14,7 +14,7 @@ The dataset the experiments use for computation is based on the dataset used in 
 
 Two different systems are used for the evaluation. One system, which will be called Delos \ref{fig:delos_arch} in the following, consists of 4 Nvidia Tesla V100 GPUs with each 32GB of SXM2 memory and 2 Intel Xeon Gold 6148 CPUs with each 755GB of DDR4 memory. The Tesla V100 GPU clock rate is 1,53 GHz. It contains 80 Streaming Multiprocessors which each can execute a maximum of 2048 threads concurrently \cite{NVIDIATESLAV1002017}. The Intel Xeon Gold 6148 has 20 cores with a clock rate maximum of 3,70 GHz. Each core has two so-called hyper threads so that the CPU can execute 40 threads concurrently.
 
-\begin{figure}[h]
+\begin{figure}[H]
   \caption{System 2 Structure - AC922 \cite{ganesannarayanasamyPowerAIDeepDive12:39:24UTC}}
   \includegraphics[width=\textwidth]{figures/ac922_system_arch.png}
   \centering
@@ -57,7 +57,7 @@ Experiments with the workstealing approach seen in \ref{table:workst_delos} show
 
 Comparing the pre-balanced approaches and the workstealing approaches results, both seem to be similarly effective for speeding up the pc-stable variant. Still workstealing and dynamic scheduling is more flexible and does not need to be tuned for the dataset being used. Due to the flexibility, further tests on the Delos system are done using the workstealing approach.
 
-\begin{figure}[h]
+\begin{figure}[H]
   \caption{Testing the CPU side parallelizability of the workstealing approach on Delos. The approach does no scale well with multiple cores}
   \includegraphics[width=\textwidth]{figures/threaded_wsteal.pdf}
   \centering
@@ -79,7 +79,7 @@ While the dataset based on 10 000 variables does not exhaust the memory associat
 The CPU still holds the whole data in system memory and is able to access the data fast. The heterogeneous computing approach is 6,61 times faster then the GPU-only variant, because the memory overflown GPU is slower in this case and the CPU can help more in relation to the other cases.
 Since the raw computing power is the most important part about the CPU in this scenario, using more threads speeds the computation up as well.
 
-\begin{figure}[h]
+\begin{figure}[H]
   \caption{Comparing the level-wise speedup factor of the pre-balanced and workstealing approach to GPU-only execution}
   \includegraphics[width=\textwidth]{figures/levelwise.pdf}
   \centering
@@ -94,9 +94,45 @@ Interestingly the most tasks are stolen in level 2 by the CPU. While the CPU ste
 After exploring both approaches on the Delos system, a further look into the bottleneck of the CPU-GPU interconnect is evaluated by doing comparable benchmarks on the AC922, whose interconnect is faster by relying on NVLINK in contrast to Delos, which relies on PCIe. Native system-wide atomics should also show in the workstealing benchmarks.
 While the GPU built into both systems is the same Nvidia V100 GPU, the built-in CPUs are different and might impact the benchmarks.
 
-While the Intel Xeon CPU included in the Delos system is x86\_64 architecture based, the Power9 CPU, which is included in the AC922 system, is based on the ppc64le architecture. Through the different architectures of both CPUs, different optimizations are done, which can influence execution times \cite{AnalysisX86Vs}.
+While the Intel Xeon CPU included in the Delos system is x86\_64 architecture based, the Power9 CPU, which is included in the AC922 system, is based on the ppc64le architecture. Through the different architectures of both CPUs, different optimizations are done, which can influence execution times. Those optimizations include different SIMD instruction set extensions (e.g. AVX versus AltiVec), different instruction set designs (CISC versus RISC) or different core-based task-level parallelism technologies (hyperthreading versus SMT Mode) \cite{AnalysisX86Vs}.
 
+\input{figures/ac922_bench}
 
+Basic benchmarks with both approaches as shown in \ref{table:bench_ac922} indicate, that there is a new bottleneck occuring on the AC922 system. While on the Delos system, the first benchmarks where faster or close to the GPU-only execution time, the AC922 system  benchmarks for both approaches show a siginificant slowdown. In comparison to the workstealing approaches results, the pre-balanced approach is also slower with a larger gap. This gap may indicate, that the CPU of the system may be at fault for a large portion of the slowdown, which is supported by the fact, that NUMA pinning, which halves the core count, speeds up the performance of both approaches a lot.
+
+THe pre-balanced approach places rows on each execution unit/core of the processor and the parameter, that controls this behavior is tuned the same way for this benchmark as in the Delos systems benchmarks, for comparison purposes.
+In the pre-balanced approach, the GPU should finish at least in the same time as the GPU-only variants GPU should, since there is no difference in execution. Therefore the slowdown can only occur through a longer load-balance duration or the CPU execution taking way longer than the GPU execution.
+
+Looking at the measurements of the pre-balanced execution, the load-balance duration is negligible, because the time measurement mechanism does round the time to 0 milliseconds for each TCGA 1000 variables execution. In both the pre-balanced, as well as the workstealing approaches measurements, a disparity between the CPU and the GPU execution time can be seen.
+
+\begin{figure}[H]
+  \caption{Comparing the workstealing approach pinned to a NUMA node, with different thread counts for OpenMP and different SMT settings (AC922)}
+  \includegraphics[width=\textwidth]{figures/ac922_threadcount.pdf}
+  \centering
+  \label{fig:threadcount_ac922}
+\end{figure}
+
+For a better understanding for the bottleneck in those benchmarks, a few benchmarks with different AC922 CPU influencing settings are done in \ref{fig:threadcount_ac922}. A tendency to better performance can be seen for less threads. The difference between SMT-4 and no SMT is small and insignificant. With an execution time of 14560.6 ms, the NUMA pinned SMT-4 version is the fastest and does not show the bottleneck of the first AC922 benchmarks. It is around 10 times faster than the AC922 NUMA-pinned max threads workstealing execution and around \textbf{13,8\% faster} than the GPU-only execution on the AC922 system. Therefore a performance improvement using the heterogeneous computing approach can be seen in comparison to the GPU-only execution. The \ref{fig:threadcount_ac922} comparison shows a slowdown with additional threads, which indicates a parallelism problem in the CPU code and/or bad Power9 optimization. Those perforamnce problems could be fixed with additional investments in the CPU execution implementation.
+
+\begin{figure}[H]
+  \caption{Comparing the workstealing approach pinned to a NUMA node and 1 CPU execution thread, level-wise (AC922)}
+  \includegraphics[width=\textwidth]{figures/ac922_levelwise.pdf}
+  \centering
+  \label{fig:levelwise_ac922}
+\end{figure}
+
+By measuring the level-wise impact in \ref{fig:levelwise_ac922} the same behavior as in the Delos level-wise benchmarks can be seen. Level 2 and 3 profit from the heterogeneous computation, but level 1 and 4 are slowed down by it. A small performance improvement would be achievable by switching the approaches in a smart way per level. But the same relative distribution of time spent can be observed here and level 1 and 4 only make up a small percentage of the total execution time.
+
+\subsection{Delos versus AC922}
+The initial thought of testing the approaches on the AC922 system is, that the more powerful interconnect between the CPU and the GPU could show, if there is a bottleneck created by having a slower interconnect.
+
+\input{figures/ac922_vs_delos}
+
+The execution times seen in \ref{table:ac922_vs_delos} show that the Delos system workstealing execution with a speedup of 116,5\% versus the GPU-only variant is a bit faster than the AC922 system workstealing execution with a speedup of 113,8\% versus the GPU-only variant.
+
+The benchmark being faster on the Delos system, indicate that raw single threaded CPU power might be the most beneficial for the workstealing approach proposed, where the Intel Xeon Gold 6148 is presumably stronger than the Power9 CPU \cite{POWER9BenchmarksVs}.
+
+The interconnect factor does not show the expected perforamnce improvements results. The implementation of both approaches are aligned to the strict seperation of reads and writes between tasks on the same data. The observation that the interconnect does not strongly influence the performance of the execution, implies that the seperation of reads and write on the same data is successful and computational power is the most important variable for the execution.
 % - Explain dataset used for testing (TCGA)
 %   - Variable size
 %   - how sampled
