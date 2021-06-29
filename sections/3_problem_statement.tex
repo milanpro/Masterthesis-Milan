@@ -1,5 +1,6 @@
 %!TEX root = ../thesis.tex
 \chapter{Problem Statement}
+\label{chap:problem_statement}
 Efforts for a more efficient PC algorithm execution have been made for versions running solely on the CPU or GPU. Since the skeleton discovery phase can be highly parallelizable, GPU variants mostly outperformed variants running on the CPU. In both variants, the other processor idles, and its processing power is unused. A solution to this problem could be using both processing units simultaneously and to split the workload accordingly.
 Splitting the workload into predefined, equal-sized tasks can help to parallelize the workload. For scheduling such split tasks on homogeneous processing units, a simple load-balancing such as splitting the task's load into equal size batches and placing them on the available processors is sufficient.
 Because of their equal processing power, those homogeneous processors should process these task-batches in the same time frame.

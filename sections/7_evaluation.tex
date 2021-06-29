@@ -1,10 +1,22 @@
 %!TEX root = ../thesis.tex
 \chapter{Evaluation}
+In this chapter the results of the experiments chapter \ref{chap:experiments} are evaluated and discussed. In the discussion, the results critic points are worked out. In the end there will be a learned conclusion from the discussion, which answers the research question of the problem statement chapter \ref{chap:problem_statement}.
+
 % Performance improvements could be shown for level 2 and 3
 % But only in specific contexts
 %   - doees not scale well
 %   - perfect for situations, where the GPU gets to its (memory) limit
 % 
+As can be seen in \ref{table:ac922_vs_delos} performance improvements are achievable through introducing heterogeneous computing in the PC algorithm context. With a peformance improvement of 16,5\% in comparison to the GPU-only variant, using the additional resources of the heterogeneous system is successful.
+
+With a deeper look into this performance by looking at the different levels \ref{fig:levelwise_delos} it is clear, that the performance improvement is conditional bound to the level and/or dataset used. Therefore a prior analysis of the dataset could be benefitial for the decision to use the heterogeneous computing approach.
+
+Furthermore solidifying the dataset and level dependency, using a 10 000 variables dataset slowed down the execution and only opened a performance improvement when looking at the level-wise performance. In level 3 the GPU-only variants execution duration is 2467224 ms and the Delos workstealing execution duration is 2107416 ms.
+The difference in level 3 is a 17,1\% improvement of peformance by using both CPU and GPU, but since every other level is slower with the workstealing execution, the whole execution time gets worse.
+
+Level 2 is faster in the heterogeneous approach than GPU-only only applied on the 1000 variable dataset. With the 10 000 variable dataset, there is a performance regression and this could hint on a scaling problem of the approach.
+This scaling issue is irrelevant as soon as the memory limit of the GPU is reached, at which the heterogeneous approach helps a lot with its 6,61 times speedup in comparison to the GPU-only variant \ref{table:workst_delos_scaling}.
+
 % Workstealing better than pre-balanced through dynamic nature
 %   - does not have to be tuned
 % Pre balanced is very hard to tune (might be even harder for different datasets)

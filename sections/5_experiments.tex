@@ -1,5 +1,6 @@
 %!TEX root = ../thesis.tex
 \chapter{Experiments}
+\label{chap:experiments}
 In this chapter, both proposed heterogeneous pc-stable algorithm approaches are evaluated. Furthermore, two different systems are used for the evaluation to elaborate the hardware dependency of the heterogeneous version.
 
 \section{Setup}
@@ -88,7 +89,18 @@ Since the raw computing power is the most important part about the CPU in this s
 
 By comparing the speedup level-wise in \ref{fig:levelwise_delos} it is clear that level 2 and 3 are impacted by the heterogeneous computing speedup through the CPU. Level 1 and 4 are slower than GPU-only when executed heterogeneously because there are less to none execution-time outlier tasks in the data, that can be placed on the CPU. In level 2 and 3 there are larger and more performance impacting outlier tasks. The influence of level 1 and 4 is negligible, due to the small share of 1\% in the execution time. Nevertheless, the best performance is achievable through executing only level 2 and 3 via heterogeneous computing.
 
-Interestingly the most tasks are stolen in level 2 by the CPU. While the CPU steals around 90 000 tasks in level 1 where the additional help of the CPU slows the execution, the CPU steals around 4000 tasks in level 2 and 1000 in level 3. This is to be expected, because tasks in higher levels are slower on average and the CPU takes the longest tasks on purpose. This difference in processed tasks on the CPU supports the argumentation, that in level 3 and 4 more outliers are done on the CPU, which take generally longer.
+Interestingly the most tasks are stolen in level 1 by the CPU. While the CPU steals around 90 000 tasks in level 1 where the additional help of the CPU slows the execution, the CPU steals around 4000 tasks in level 2 and 1000 in level 3. This is to be expected, because tasks in higher levels are slower on average and the CPU takes the longest tasks on purpose. This difference in processed tasks on the CPU supports the argumentation, that in level 3 and 4 more outliers are done on the CPU, which take generally longer.
+
+\begin{figure}[H]
+  \caption{Comparing the level-wise speedup factor of the workstealing approach to GPU-only execution with the 10 000 variables TCGA dataset}
+  \includegraphics[width=\textwidth]{figures/levelwise_scaled.pdf}
+  \centering
+  \label{fig:levelwise_scaled_delos}
+\end{figure}
+
+
+Using this insight on level-wise performance improvements, the scaling issue seen in the 10 000 variables dataset benchmark \ref{table:workst_delos_scaling} can be analyzed further by also inspecting the level-wise peformance \ref{fig:levelwise_scaled_delos}. In the benchmarks speedup factor result a peformance improvement of around 17,1\% can be obtained in level 3 using the workstealing approach.
+
 
 \subsection{Benchmarks AC922}
 After exploring both approaches on the Delos system, a further look into the bottleneck of the CPU-GPU interconnect is evaluated by doing comparable benchmarks on the AC922, whose interconnect is faster by relying on NVLINK in contrast to Delos, which relies on PCIe. Native system-wide atomics should also show in the workstealing benchmarks.
@@ -128,11 +140,12 @@ The initial thought of testing the approaches on the AC922 system is, that the m
 
 \input{figures/ac922_vs_delos}
 
-The execution times seen in \ref{table:ac922_vs_delos} show that the Delos system workstealing execution with a speedup of 116,5\% versus the GPU-only variant is a bit faster than the AC922 system workstealing execution with a speedup of 113,8\% versus the GPU-only variant.
+The execution times seen in \ref{table:ac922_vs_delos} show that the Delos system workstealing execution with a speedup of 16,5\% versus the GPU-only variant is a bit faster than the AC922 system workstealing execution with a speedup of 13,8\% versus the GPU-only variant.
 
 The benchmark being faster on the Delos system, indicate that raw single threaded CPU power might be the most beneficial for the workstealing approach proposed, where the Intel Xeon Gold 6148 is presumably stronger than the Power9 CPU \cite{POWER9BenchmarksVs}.
 
 The interconnect factor does not show the expected perforamnce improvements results. The implementation of both approaches are aligned to the strict seperation of reads and writes between tasks on the same data. The observation that the interconnect does not strongly influence the performance of the execution, implies that the seperation of reads and write on the same data is successful and computational power is the most important variable for the execution.
+
 % - Explain dataset used for testing (TCGA)
 %   - Variable size
 %   - how sampled
