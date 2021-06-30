@@ -6,11 +6,11 @@ Splitting the workload into predefined, equal-sized tasks can help to paralleliz
 Because of their equal processing power, those homogeneous processors should process these task-batches in the same time frame.
 Heterogeneous systems are more complex than homogeneous for balancing the workload because of the additional parameters influencing the execution. Those additional parameters can be complex interconnects for communication between the processors or parameters emerging from the heterogeneity of the processors. For example, a modern CPU has few but fast processing cores, being good at processing a few tasks with high load. In contrast, the modern GPU has multiple slower processing cores that process many parallel tasks concurrently.
 
-On this basis, the following research question arise: How to optimally use the resources of a heterogeneous system to speed up the PC Algorithm execution?
+On this basis, the following research question arise: How to optimally use the resources of a heterogeneous system to speed up the PC algorithm execution?
 The research question splits into a few smaller questions that are important to answer the research question itself and allow a finer-grained view of the problem:
 
 \begin{enumerate}
-  \item What tasks to define in the workload of the PC-Algorithm?
+  \item What tasks to define in the workload of the PC algorithm?
   \item How to parallelize the workload in a heterogeneous context?
   \item How to schedule the workload effectively on those processing units?
   \item What performance parameters are important on heterogeneous systems?
