@@ -161,6 +161,22 @@
   number = {null}
 }
 
+@inproceedings{cirouTripletClusteringScheduling2001,
+  title = {Triplet: {{A}} Clustering Scheduling Algorithm for Heterogeneous Systems},
+  shorttitle = {Triplet},
+  booktitle = {Proceedings {{International Conference}} on {{Parallel Processing Workshops}}},
+  author = {Cirou, B. and Jeannot, E.},
+  year = {2001},
+  pages = {231--236},
+  publisher = {{IEEE Comput. Soc}},
+  address = {{Valencia, Spain}},
+  doi = {10.1109/ICPPW.2001.951956},
+  abstract = {The goal of the OURAGAN project is to provide access of meta-computing resources to Scilab users. We present here an approach that consists, given a Scilab script, in scheduling and executing this script on an heterogeneous cluster of machines. One of the most effective scheduling technique is called clustering which consists in grouping tasks on virtual processors (clusters) and then mapping clusters onto real processors. In this paper, we study and apply the clustering technique for heterogeneous systems. We present a clustering algorithm called triplet, study its performance and compare it to the HEFT algorithm. We show that triplet has good characteristics and outperforms HEFT in most of the cases.},
+  file = {/Users/i500763/Zotero/storage/8B3G8QM2/Cirou and Jeannot - 2001 - Triplet A clustering scheduling algorithm for het.pdf},
+  isbn = {978-0-7695-1260-0},
+  language = {en}
+}
+
 @article{cohenSolvingComputationalProblems2009,
   title = {Solving {{Computational Problems}} with {{GPU Computing}}},
   author = {Cohen, Jonathan and Garland, Michael},
@@ -429,6 +445,22 @@
   number = {1}
 }
 
+@article{khokharHeterogeneousComputingChallenges1993,
+  title = {Heterogeneous Computing: Challenges and Opportunities},
+  shorttitle = {Heterogeneous Computing},
+  author = {Khokhar, A.A. and Prasanna, V.K. and Shaaban, M.E. and Wang, C.-L.},
+  year = {1993},
+  month = jun,
+  volume = {26},
+  pages = {18--27},
+  issn = {0018-9162},
+  doi = {10.1109/2.214439},
+  file = {/Users/i500763/Zotero/storage/E9WE8JWV/Khokhar et al. - 1993 - Heterogeneous computing challenges and opportunit.pdf},
+  journal = {Computer},
+  language = {en},
+  number = {6}
+}
+
 @article{kimBatchAwareUnifiedMemory,
   title = {Batch-{{Aware Unified Memory Management}} in {{GPUs}} for {{Irregular Workloads}}},
   author = {Kim, Hyojong and Sim, Jaewoong and Gera, Prasun and Hadidi, Ramyad and Kim, Hyesoon},
@@ -551,6 +583,25 @@
   primaryclass = {cs, stat}
 }
 
+@inproceedings{leParallelPCPackageEfficient2018,
+  title = {{{ParallelPC}}: {{An R Package}} for {{Efficient Causal Exploration}} in {{Genomic Data}}},
+  shorttitle = {{{ParallelPC}}},
+  booktitle = {Trends and {{Applications}} in {{Knowledge Discovery}} and {{Data Mining}}},
+  author = {Le, Thuc Duy and Xu, Taosheng and Liu, Lin and Shu, Hu and Hoang, Tao and Li, Jiuyong},
+  editor = {Ganji, Mohadeseh and Rashidi, Lida and Fung, Benjamin C. M. and Wang, Can},
+  year = {2018},
+  pages = {207--218},
+  publisher = {{Springer International Publishing}},
+  address = {{Cham}},
+  doi = {10.1007/978-3-030-04503-6_22},
+  abstract = {Discovering causal relationships from genomic data is the ultimate goal in gene regulation research. Constraint based causal exploration algorithms, such as PC, FCI, RFCI, PC-simple, IDA and Joint-IDA have achieved significant progress and have many applications. However, their applications in bioinformatics are still limited due to their high computational complexity. In this paper, we present an R package, ParallelPC, that includes the parallelised versions of these causal exploration algorithms and 12 different conditional independence tests for each. The parallelised algorithms help speed up the procedure of experimenting large biological datasets and reduce the memory used when running the algorithms. Our experiment results on a real gene expression dataset show that using the parallelised algorithms it is now practical to explore causal relationships in high dimensional datasets with thousands of variables in a personal multicore computer. We present some typical applications in bioinformatics using different algorithms in ParallelPC. ParallelPC is available in CRAN repository at https://cran.r-project.org/web/packages/ParallelPC/index.html.},
+  file = {/Users/i500763/Zotero/storage/VWAARB7N/Le et al. - 2018 - ParallelPC An R Package for Efficient Causal Expl.pdf},
+  isbn = {978-3-030-04503-6},
+  keywords = {Bayesian networks,Causality discovery,Constraint-based methods,Parallel computing},
+  language = {en},
+  series = {Lecture {{Notes}} in {{Computer Science}}}
+}
+
 @inproceedings{letzWorkStealingScheduler2010,
   title = {Work {{Stealing Scheduler}} for {{Automatic Parallelization}} in {{Faust}}},
   booktitle = {Linux {{Audio Conference}}},
@@ -617,6 +668,40 @@
   journal = {Sensors},
   language = {en},
   number = {9}
+}
+
+@article{madsenParallelAlgorithmBayesian2017,
+  title = {A Parallel Algorithm for {{Bayesian}} Network Structure Learning from Large Data Sets},
+  author = {Madsen, Anders L. and Jensen, Frank and Salmer{\'o}n, Antonio and Langseth, Helge and Nielsen, Thomas D.},
+  year = {2017},
+  month = feb,
+  volume = {117},
+  pages = {46--55},
+  issn = {0950-7051},
+  doi = {10.1016/j.knosys.2016.07.031},
+  abstract = {This paper considers a parallel algorithm for Bayesian network structure learning from large data sets. The parallel algorithm is a variant of the well known PC algorithm. The PC algorithm is a constraint-based algorithm consisting of five steps where the first step is to perform a set of (conditional) independence tests while the remaining four steps relate to identifying the structure of the Bayesian network using the results of the (conditional) independence tests. In this paper, we describe a new approach to parallelization of the (conditional) independence testing as experiments illustrate that this is by far the most time consuming step. The proposed parallel PC algorithm is evaluated on data sets generated at random from five different real-world Bayesian networks. The algorithm is also compared empirically with a process-based approach where each process manages a subset of the data over all the variables on the Bayesian network. The results demonstrate that significant time performance improvements are possible using both approaches.},
+  file = {/Users/i500763/Zotero/storage/4ARLSUQS/Madsen et al. - 2017 - A parallel algorithm for Bayesian network structur.pdf},
+  journal = {Knowledge-Based Systems},
+  keywords = {Bayesian network,Parallelization,PC algorithm},
+  number = {C}
+}
+
+@inproceedings{madsenParallelisationPCAlgorithm2015,
+  title = {Parallelisation of the {{PC Algorithm}}},
+  booktitle = {Advances in {{Artificial Intelligence}}},
+  author = {Madsen, Anders L. and Jensen, Frank and Salmer{\'o}n, Antonio and Langseth, Helge and Nielsen, Thomas D.},
+  editor = {Puerta, Jos{\'e} M. and G{\'a}mez, Jos{\'e} A. and Dorronsoro, Bernabe and Barrenechea, Edurne and Troncoso, Alicia and Baruque, Bruno and Galar, Mikel},
+  year = {2015},
+  pages = {14--24},
+  publisher = {{Springer International Publishing}},
+  address = {{Cham}},
+  doi = {10.1007/978-3-319-24598-0_2},
+  abstract = {This paper describes a parallel version of the PC algorithm for learning the structure of a Bayesian network from data. The PC algorithm is a constraint-based algorithm consisting of five steps where the first step is to perform a set of (conditional) independence tests while the remaining four steps relate to identifying the structure of the Bayesian network using the results of the (conditional) independence tests. In this paper, we describe a new approach to parallelisation of the (conditional) independence testing as experiments illustrate that this is by far the most time consuming step. The proposed parallel PC algorithm is evaluated on data sets generated at random from five different real-world Bayesian networks. The results demonstrate that significant time performance improvements are possible using the proposed algorithm.},
+  file = {/Users/i500763/Zotero/storage/W55YJJPV/Madsen et al. - 2015 - Parallelisation of the PC Algorithm.pdf},
+  isbn = {978-3-319-24598-0},
+  keywords = {Bayesian network,Parallelisation,PC algorithm},
+  language = {en},
+  series = {Lecture {{Notes}} in {{Computer Science}}}
 }
 
 @inproceedings{mattheisWorkStealingStrategies2012,
@@ -709,6 +794,25 @@
   file = {/Users/i500763/Zotero/storage/WLTY7MD9/Nemirovsky and Tullsen - 2013 - Multithreading Architecture.pdf;/Users/i500763/Zotero/storage/69FPGNZT/S00458ED1V01Y201212CAC021.html},
   journal = {Synthesis Lectures on Computer Architecture},
   number = {1}
+}
+
+@inproceedings{nguyenMrPCCausalStructure2020,
+  title = {{{MrPC}}: {{Causal Structure Learning}} in {{Distributed Systems}}},
+  shorttitle = {{{MrPC}}},
+  booktitle = {Neural {{Information Processing}}},
+  author = {Nguyen, Thin and Nguyen, Duc Thanh and Le, Thuc Duy and Venkatesh, Svetha},
+  editor = {Yang, Haiqin and Pasupa, Kitsuchart and Leung, Andrew Chi-Sing and Kwok, James T. and Chan, Jonathan H. and King, Irwin},
+  year = {2020},
+  pages = {87--94},
+  publisher = {{Springer International Publishing}},
+  address = {{Cham}},
+  doi = {10.1007/978-3-030-63820-7_10},
+  abstract = {PC algorithm (PC) \textendash{} named after its authors, Peter and Clark \textendash{} is an advanced constraint based method for learning causal structures. However, it is a time-consuming algorithm since the number of independence tests is exponential to the number of considered variables. Attempts to parallelise PC have been studied intensively, for example, by distributing the tests to all computing cores in a single computer. However, no effort has been made to speed up PC through parallelising the conditional independence tests into a cluster of computers. In this work, we propose MrPC, a robust and efficient PC algorithm, to accelerate PC to serve causal discovery in distributed systems. Alongside with MrPC, we also propose a novel manner to model non-linear causal relationships in gene regulatory data using kernel functions. We evaluate our method and its variants in the task of building gene regulatory networks. Experimental results on benchmark datasets show that the proposed MrPCgains up to seven times faster than sequential PC implementation. In addition, kernel functions outperform conventional linear causal modelling approach across different datasets.},
+  file = {/Users/i500763/Zotero/storage/X8VW2T8J/Nguyen et al. - 2020 - MrPC Causal Structure Learning in Distributed Sys.pdf},
+  isbn = {978-3-030-63820-7},
+  keywords = {Causal structure learning,Causality,Distributed systems,Explainable AI},
+  language = {en},
+  series = {Communications in {{Computer}} and {{Information Science}}}
 }
 
 @article{nickollsGPUComputingEra2010,
@@ -1241,6 +1345,7 @@
   publisher = {{Association for Computing Machinery}},
   address = {{New York, NY, USA}},
   doi = {10.1145/109025.109062},
+  file = {/Users/i500763/Zotero/storage/2TPJGPTA/109025.pdf},
   isbn = {978-0-89791-434-5},
   series = {{{ICS}} '91}
 }
