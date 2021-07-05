@@ -1,12 +1,21 @@
 %!TEX root = ../thesis.tex
 \chapter{Introduction}
-In data mining and statistics deriving knowledge from observational data is used to find correlations between variables in the data. Through those correlations data distribution characteristics are found
+In data mining and statistics deriving knowledge from observational data is used to find correlations between variables in the data. Through those correlations data distribution characteristics are found. Correlation does no imply causation, which means that, to understand the data and found correlation thoroughly, causality information has to be gathered.
 
+There are many fields where causal relationships of particular interest. In for example medicine or more specifically genetic research the inference of gene regulatory networks can help estimating causal effects among genes. \cite{rauJointEstimationCausal2013}
 % motivation, Relevanz (Anwendungsfall, Daten etc warum Effizienz?)
 
 Moore's Law \cite{mooreCrammingMoreComponents1965} says essentially that transistors placed on an integrated circuit double approximately every two years. This law has been self-fulfilling and can be seen in the real world. Still modern processor development is getting to a physical limit, called the "Power Wall". More transistors, that are more densely placed, with lower voltage, and higher frequencies, produce all together more heat. While cooling performance has its physical limits, the "Power Wall" is hit at some point. To work against this limit, modern processors incorporate multiple cores, that work in parallel.
 
-Multi-core processors can speedup execution, by splitting work and processing that work in parallel. But parallelization has its own limits and converges to an upper bound  \cite{amdahlValiditySingleProcessor1967}.
+Multi-core processors can speedup execution, by splitting work and processing that work in parallel. But parallelization has its own limits and converges to an upper bound for any work \cite{amdahlValiditySingleProcessor1967}. While this is specific for the work that is parallelized and there are algorithms and applications specifically desgined to be executed on multiple cores, the upper bound still exists. On of the next logical steps for improving performance and optimizing execution speed is adding specialized processors, tailored for the use case. This is where heterogeneous systems, with heterogeneous processors emerged. The processor best fitting for the work to be done is used and with that the best possible performance is to be expected. But while one processor handles the work, the remaining processors may not be used and additional computing power is lost.
+
+Heterogeneous computing tries to solve the problem of lost computing power in heterogeneous systems by using as many resources of the system as possible. Algorithms and applications are inspected and split into parts that are, given their properties such as parrallelizability, placed onto the different processors. The execution time is reduced, by using multiple specialized processors for the best fitting part of the executed work. A downside of using multiple specialized processors is, that parallelized work almost always needs orchestration and communication between each executing unit. The communication time spent is directly related to the interconnection speed between those executing units.
+
+Modern heterogeneous system interconnects between processors are getting faster. Still the interconnect between processors are one of the slowest connections in a computer. Therefore most heterogeneous computing solutions are limited by their interconnect bottleneck. This bottleneck is such an essential part of heterogeneous computing, that many solutions for heterogeneous systems are even slower while using all of the resources because of the communication overhead. Due to that importance of efficient communication designing heterogeneous algrotihms essentially means solving the communication problem.
+
+In this thesis both the PC algorithm and heterogeneous computing are combined to a efficient PC algorithm variant that can be executed on hetergeneous system to use its resources and get an additional speedup in comparison to the non heterogeneous variant. Using the hetergoeneously executed PC algorithm experiments are done to analy bottlenecks and efficiency of the solution.
+
+Since many use cases of causal structure learning profit from faster results and dataset can be large scale leading to long execution times, a speedup in execution time is benefitial.
 
 
 % Trend hardware? heterogene (vllt dark silicon)

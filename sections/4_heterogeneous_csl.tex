@@ -173,8 +173,14 @@ If one of the execution units checked every task, a global flag is set, which in
 % - vermehrte kommunikation
 
 \section{Implementation}
+Both approaches implementations were done using C++ as the base programming language and CUDA for the GPU side code. This enables optimizations by developing close to the underlying system. Global datastructures, which have to be accessed in every task, such as the adjacency lists of the skeleton, are held as pointers in a struct, which can be easily cloned and passed to CPU and GPU threads. Memory is allocated using the CUDA runtime unified memory allocators, so that data pointer are globally accessible.
 
-\subsection{Architecture}
+The main loop iterates over each level starting with 0 until the last level is executed and the skeleton is estimated. In level 0 the GPU code for processing each edge is called. The following levels all share the same procedure. First the changes of the write-only graph in matrix form is migrated to the read-only adjacency list form. After that, the load-balancer starts placing tasks in the queues of the CPU and GPU for the pre-balanced approach. The workstealing approach directly moves to the execution instead.
+
+After the balancing step, execution starts. Each processing unit is abstracted by an executor class, so that execution can fewer or additional processing units in futher code extensions. A thread is spawned for every processing unit by the executor, that orchestrates its execution flow. While in the pre-balanced approach every task is executed independently, because all tasks have their respective owning processing unit, in the workstealing approach every task is marked with an system-wide atomic flag before execution, using the libcu++ library by Nvidia \cite{NVIDIALibcudacxx2021}, to prevent doubly executed tasks.
+
+CPU side execution is handled by OpenMP which spawns the necessary threads. For the pre-balanced approach OpenMP dynamic scheduling is used, so that threads do not idle. This is preferred, because task execution time can differ significantly and due to that static scheduling is not sufficient.
+
 % - could be integrated into the Approach sections
 % - one state containing unified memory data
 % - Executor abstraction
