@@ -13,11 +13,13 @@ Heterogeneous computing tries to solve the problem of lost computing power in he
 
 Modern heterogeneous system interconnects between processors are getting faster. Still the interconnect between processors are one of the slowest connections in a computer. Therefore most heterogeneous computing solutions are limited by their interconnect bottleneck. This bottleneck is such an essential part of heterogeneous computing, that many solutions for heterogeneous systems are even slower while using all of the resources because of the communication overhead. Due to that importance of efficient communication designing heterogeneous algrotihms essentially means solving the communication problem.
 
-In this thesis both the PC algorithm and heterogeneous computing are combined to a efficient PC algorithm variant that can be executed on hetergeneous system to use its resources and get an additional speedup in comparison to the non heterogeneous variant. Using the hetergoeneously executed PC algorithm experiments are done to analy bottlenecks and efficiency of the solution.
+In this thesis both the PC algorithm and heterogeneous computing are combined to a efficient PC algorithm variant that can be executed on heterogeneous system to use its resources and get an additional speedup in comparison to the non heterogeneous variant. Using the heterogeneously executed PC algorithm experiments are done to analyze bottlenecks and the efficiency of the solution.
 
 Since many use cases of causal structure learning profit from faster results and dataset can be large scale leading to long execution times, a speedup in execution time is benefitial.
 
+Starting with the theoretical background, basic terminology is introduced. While parallel programming is essential for parallizing algorithms on heterogeneous systems, this topic is covered first. The basics on heterogeneous computing and constraint-based causal structure learning are elaborated in the second part of the background chapter.
 
+After that, in the problem statement chapter, the research question is developed using the acquired terminology and explaining the problem state which is aimed to be solved. 
 % Trend hardware? heterogene (vllt dark silicon)
 % moores law
 % processing speed i limited an does not grow any longer (physics, get too hot when more dense) => dynamic power, power wall
@@ -25,7 +27,7 @@ Since many use cases of causal structure learning profit from faster results and
 % memory wall (memory speed, and latency limited)
 % Dark silicon = next step / power wall 2.0
 % - multicore scaling limited as well
-\cite{esmaeilzadehDarkSiliconEnd2011}
+% \cite{esmaeilzadehDarkSiliconEnd2011}
 % - specialized hardware has potential
 % - speedup through using the right processor for the correct task
 % - Needs alot more software optimizations
