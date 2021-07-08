@@ -90,7 +90,7 @@ Hence, the examination of the conditional independence information of the observ
 \subsection{Constraint-Based Methods}
 In Causal Structure Learning, two main approaches have been proposed: the constraint-based method and the score-based method. While in the constraint-based method, conditional independence tests (in following called CI-Tests) are used to recover the CPDAG, score-based algorithms search for a high score rank to find the best fitting CPDAG. Both approaches have their advantages and disadvantages. Choosing the best approach is mostly dependent on the type of data. Constraint-based methods, for example, are more accurate on datasets with a small sample size \cite{scutariBayesianNetworkConstraintBased2017}. Example constraint-based approaches are PC \cite{spirtesCausationPredictionSearch1993}, Rank PC \cite{harrisPCAlgorithmNonparanormal}, PC-stable \cite{colomboOrderIndependentConstraintBasedCausal}, IC \cite{vermaEquivalenceSynthesisCausal1990}, and FCI \cite{spirtesCausationPredictionSearch1993}.
 The constraint-based PC-stable algorithm by Colombo et al. \cite{colomboOrderIndependentConstraintBasedCausal} lays the basis for this thesis work because of the order independence in between different CI-tests and the possibility to parallelize the algorithm easily. For the same reason, different parallelized GPU and CPU implementations of the PC-stable algorithm exist \cite{schmidtLoadBalancedParallelConstraintBased2019,schmidtOrderIndependentConstraintBasedCausal2018,zarebavaniCuPCCUDAbasedParallel2018}, which influenced the approach described in this thesis.
-The PC algorithm avoids doing conditional independence checks for each pair of vertices $V_i, V_j \in V$ given all possible subsets $S \subseteq V \backslash \{V_i, V_j\}$ \cite{pearlTheoryInferredCausation1995} since this would become infeasible for a large number of vertices. The PC algorithm independence is tested incrementally in multiple levels by increasing the separation set size in each level. Edges where the given independence test successfully breaks the threshold are deleted. Therefore fewer edges have to be considered in higher levels, and the test count is reduced. Reducing the test count with this method applied to sparse matrices can decrease the complexity from exponential to polynomial with respect to the number of vertices \cite{kalischEstimatingHighDimensionalDirected2007}.
+The PC algorithm avoids doing conditional independence checks for each pair of vertices $V_i, V_j \in V$ given all possible subsets $S \subseteq V \backslash \{V_i, V_j\}$ \cite{pearlTheoryInferredCausation1995} since this would become infeasible for a large number of vertices. The PC algorithm independence is tested incrementally in multiple levels by increasing the separation set size in each level. Edges where the given independence test successfully meets a defined condition are deleted. By deleting edges in a level, fewer edges have to be considered in higher levels, and the test count is reduced. Reducing the test count level-wise on sparse matrices can decrease the exponential complexity to polynomial complexity with respect to the number of vertices \cite{kalischEstimatingHighDimensionalDirected2007}.
 The PC-stable variant of the PC algorithm removes the dependency on the order of the variable set $V_1, ...,V_N$ \cite{colomboOrderIndependentConstraintBasedCausal,schmidtOrderIndependentConstraintBasedCausal2018}.
 
 \subsection{PC Algorithm}
@@ -108,13 +108,13 @@ The version of the PC algorithm described in Colombo et al. \cite{colomboOrderIn
     \Repeat 
         \State $l=l+1$
         \For{all Variables $V_i$ in $C$}
-            \State Let $a(V_i) = adj(C,V_i)$
+            \State Let $a(V_i) = adj(C,V_i)$ \label{alg:pcstable_adjlist}
         \EndFor
-        \Repeat
+        \Repeat \label{alg:pcstable_edgeloop}
             \State Select pairs $(V_i,V_j)$ adjacent in $C$ with $|a(V_i)\backslash\{V_j\}| \geq l$
             \Repeat
-                \State Choose separation set $S \subseteq a(V_i ) \ {V_j }$ with $| S | = l$
-                \If{$p(V_i,V_j|S) \leq \alpha$}
+                \State Choose separation set $S \subseteq a(V_i ) \backslash \{V_j \}$ with $| S | = l$ \label{alg:pcstable_sepsbuild}
+                \If{$p(V_i,V_j|S) \leq \alpha$} \label{alg:pcstable_alpha}
                     \State Delete edge $V_i - V_j$ from $C$
                     \State Set Sepset(i,j) = Sepset(j,i) = S
                 \EndIf
@@ -125,7 +125,11 @@ The version of the PC algorithm described in Colombo et al. \cite{colomboOrderIn
     \end{algorithmic}
 \end{algorithm}
 
-As can be seen in \ref{alg:pcstable} the starting point of the algorithm is a set of vertices that represent the given variables. The PC algorithm incrementally learns a skeleton at each level. Starting with a separation set of size 0 $S = \emptyset$ and a complete undirected skeleton $C$ in level 0, independence tests for every edge pair are done. Every edge between any vertice combination exist in level 0, therefore the independence test count can be calculated as $|P_0| = \frac{(|V| - 1) * |V|}{2}$. In subsequent level iterations, separation sets are non-empty, and the existence of an edge cannot be assumed. The test result is compared to a tuning parameter $\alpha$ and an edge $V_i - V_j$ is queued up for deletion in C if $p(V_i,V_j|S) \leq \alpha$. The real deletion is done in between levels, else deleted edges had to be considered by other CI tests. For each level $l$ the separation set $S$ with $|S| = l$ is built from the adjacent vertices $S \subset adj(C, V_i)\backslash V_j$. After testing every edge with its possible separation sets $S$ for that level, the queued edges are deleted, and the next level $l=l+1$ starts. If there is no separation set $S$ with $|S| = l$ for any vertex combination, the maximum level is reached, and the skeleton $C$ is estimated.
+As can be seen in algorithm \ref{alg:pcstable} the starting point of the algorithm is a set of vertices that represent the given variables. The PC algorithm incrementally learns a skeleton at each level. Starting with a separation set of size 0 $S = \emptyset$ and a complete undirected skeleton $C$ in level 0, independence tests for every edge pair are done. Every edge between any vertex combination exist in level 0, therefore the independence test count can be calculated as $|P_0| = \frac{(|V| - 1) * |V|}{2}$. In subsequent level iterations, separation sets are non-empty, and the existence of an edge cannot be assumed. For each level $l$ the separation set $S$ with $|S| = l$ is built from the adjacent vertices $S \subseteq a(V_i ) \backslash \{V_j \}$ as seen in line \ref{alg:pcstable_sepsbuild}.
+
+The result of an independence test is compared to a tuning parameter $\alpha$ in line \ref{alg:pcstable_alpha} and an edge $V_i - V_j$ is deleted in C if $p(V_i,V_j|S) \leq \alpha$. Because the deletion is done in $C$ and vertice pairs as well as separation sets are built using $a(V_i)$, the deletion does not affect the current levels selection of edges. By deleting edges in $C$ there is no dependence on the order of edges in the loop of line \ref{alg:pcstable_edgeloop}. Through building the adjacency lists $a(V_i)$ at the start of the level in line \ref{alg:pcstable_adjlist}, changes in $C$ are assured in the level itself.
+
+After testing every edge with its possible separation sets $S$ for that level, the next level $l=l+1$ starts. If there is no separation set $S$ with $|S| = l$ for any vertex combination, the maximum level is reached, and the skeleton $C$ is estimated.
 This skeleton is then used to apply deterministic orientation rules so that the corresponding CPDAG is found. \cite{colomboOrderIndependentConstraintBasedCausal,kalischEstimatingHighDimensionalDirected2007,pearlIntroductionCausalInference2010,schmidtOrderIndependentConstraintBasedCausal2018}
 % - Explain PC Algorithm
 % - Pseudocode listing
