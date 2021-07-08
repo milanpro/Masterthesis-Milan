@@ -1,5 +1,6 @@
 %!TEX root = ../thesis.tex
 \chapter{Future Work}
+\label{chap:fuwork}
 This thesis experiments rely on the same dataset with different sized variable samples. Although this helps to get a first good impression on the effectiveness of the approaches, there is still a bias in the experiment result regarding the datasets structure and edge deletion behavior. If the edge deletion state of the graph is different, there is expected to be a different effectiveness outcome. While a more significant difference in outlier versus non-outlier task length could result in more effective outlier scheduling on the CPU, less to no outlier occurrence should make the GPU-only variant more effective.
 
 This dataset behavior could be tested by executing the benchmarks with a different alpha value, directly influencing the amount with which edges are deleted. Another way of testing is generating datasets that show one of the said behaviors.

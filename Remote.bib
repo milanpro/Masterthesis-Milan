@@ -335,6 +335,22 @@
   year = {12:39:24 UTC}
 }
 
+@inproceedings{gangulyAdaptivePageMigration2020,
+  title = {Adaptive {{Page Migration}} for {{Irregular Data}}-Intensive {{Applications}} under {{GPU Memory Oversubscription}}},
+  booktitle = {2020 {{IEEE International Parallel}} and {{Distributed Processing Symposium}} ({{IPDPS}})},
+  author = {Ganguly, Debashis and Zhang, Ziyu and Yang, Jun and Melhem, Rami},
+  year = {2020},
+  month = may,
+  pages = {451--461},
+  publisher = {{IEEE}},
+  address = {{New Orleans, LA, USA}},
+  doi = {10.1109/IPDPS47924.2020.00054},
+  abstract = {Unified Memory in heterogeneous systems serves a wide range of applications. However, limited capacity of the device memory becomes a first order performance bottleneck for data-intensive general-purpose applications with increasing working sets. The performance overhead under memory oversubscription depends on the memory access pattern of the corresponding workload. While a regular application with sequential, dense memory access suffers from long latency writebacks, performance of a irregular application with sparse, seldom access to large data-sets degrades due to page thrashing. Although smart spatio-temporal prefetching and large page eviction yield good performance in general, remote zero-copy access to host-pinned memory proves to be beneficial for irregular, data-intensive applications. Further, new generation GPUs introduced hardware access counters to delay page migration and reduce memory thrashing. However, the responsibility of deciding what strategy is the best fit for a given application relies heavily on the programmer based on thorough understanding of the memory access pattern through intrusive profiling. In this work, we propose a programmer-agnostic runtime that leverages the hardware access counters to automatically categorize memory allocations based on the access pattern and frequency. The proposed heuristic adaptively navigates between remote zero-copy access to host-pinned memory and first-touch page migration based on the trade-off between low latency remote access and high-bandwidth local access. We show that although designed to address memory oversubscription, our scheme has no impact on performance when working sets fit in the device-local memory. Experimental results show that our scheme provides performance improvement of 22\% to 78\% for irregular applications under 125\% memory oversubscription compared to the state of the art. At the same time, regular applications are not impacted by the framework.},
+  file = {/Users/i500763/Zotero/storage/98DLKI94/Ganguly et al. - 2020 - Adaptive Page Migration for Irregular Data-intensi.pdf},
+  isbn = {978-1-72816-876-0},
+  language = {en}
+}
+
 @article{gayatriComparingManagedMemory,
   title = {Comparing {{Managed Memory}} and {{UVM}} with and without {{Prefetching}} on {{NVIDIA Volta GPUs}}},
   author = {Gayatri, Rahulkumar and Gott, Kevin and Deslippe, Jack},
@@ -1080,6 +1096,18 @@
   copyright = {NVIDIA},
   file = {/Users/i500763/Zotero/storage/Z7AQK26E/Sakharnykh - EVERYTHING YOU NEED TO KNOW ABOUT UNIFIED MEMORY.pdf},
   language = {en}
+}
+
+@article{saravananStudyFactorsInfluencing2011,
+  title = {A {{Study}} on {{Factors Influencing Power Consumption}} in {{Multithreaded}} and {{Multicore CPUs}}},
+  author = {Saravanan, Vijayalakshmi and Chandran, Senthil Kumar and Kothari, D P},
+  year = {2011},
+  volume = {10},
+  pages = {11},
+  abstract = {The ever-growing demand for computational power and high performance has led to a rapid growth in the semiconductor industry. This evolution has seen a continuous increase in CPU performance and the number of transistors on a chip has roughly doubled every two years \textendash{} proving Moore's law. An inevitable consequence when achieving this is that more functional units, deeper pipelining and larger cache sizes have had to be implemented on the CPU chip. The result is a significant increase in the power consumption. Achieving high performance with low power consumption has been the traditional goal in high-end processors. In order to accomplish high performance, multithreaded and multicore CPUs have become the recent trend in semi-conductor technology. The purpose of this paper is to statistically analyze the various factors that affect power, to study their relationship to quantify their influence on power consumption in multithreaded and multicore CPUs. This paper explores the on-chip power modeling simulation techniques with the existing processors and compares the performance and power trade-off between multicore and multithreaded CPUs. In this paper, we also present review/tutorial of recent advancements in power savings through the implementation of power-limiting micro-architectural features (e.g. out-of-order execution, branch prediction, caching and prefetching) in contemporary multi-core processors, such as Intel Nehalem and AMD's Istanbul processors. The results show that the statistical findings on power consumption are encouraging and useful for low power application and power-aware processor designers.},
+  file = {/Users/i500763/Zotero/storage/IJYICR64/Saravanan et al. - 2011 - A Study on Factors Influencing Power Consumption i.pdf},
+  language = {en},
+  number = {3}
 }
 
 @inproceedings{schmidtLoadBalancedParallelConstraintBased2019,
