@@ -84,7 +84,7 @@ Those described experiments are done on both the Delos system and the AC922 syst
 \subsection{Benchmarks Delos}
 In the following benchmarks on delos using both approaches are plotted and explained.
 
-\subsubsection{Pre-Balanced TCGA-1000 Benchmarks}
+\paragraph{Pre-Balanced TCGA-1000 Benchmarks}
 \input{figures/delos_preb_bench}
 The first experiments using the pre-balanced approach seen in \ref{table:preb_delos} show that there is a slight performance boost of 2,9\% without pinning he NUMA node compared to the GPU-only variant possible. While pinning the NUMA node, there is even a slow down seen, which tells us, that the processing power of the lost cores has slows the execution, and more cores should therefore help speeding up the execution. 
 
@@ -94,14 +94,14 @@ Additionally, the count of rows placed on the CPU by the load-balancer had to be
 
 This volatility makes tuning the pre-balanced approach hard, especially for large datasets where the PC stable algorithm can execute for hours or days. Multiple tuning executions might not be feasible in such situations because this threshold might change a lot for different datasets, which could lead to more sparse rows.
 
-\subsubsection{Workstealing TCGA-1000 Benchmarks}
+\paragraph{Workstealing TCGA-1000 Benchmarks}
 \input{figures/delos_workst_bench}
 Experiments with the workstealing approach seen in \ref{table:workst_delos} show a 3,1\% performance boost in comparison to the GPU-only execution, which is similar to the pre-balanced approaches result, even if there should be dynamic scheduling overhead. Postponing the migration of the edge deletion does not impact the execution time, whereas the benchmark without atomics shows a slowdown of $\sim$33\ in comparison to using atomics. The slowdown of the execution while not using atomics presumably happens because tasks are processed multiple times. Changes to the flags annotating tasks that are being processed must be migrated via pages between the processors.
 
-\subsubsection{Comparing the Workstealing and Pre-Balanced Benchmarks}
+\paragraph{Comparing the Workstealing and Pre-Balanced Benchmarks}
 Comparing the pre-balanced approaches and the workstealing approaches results, both seem similarly effective for speeding up the PC-stable variant. Still workstealing and dynamic scheduling is more flexible, because it does not need to be tuned for the dataset being used and still a speedup is seen. Due to the flexibility, further tests on the Delos system are done using the workstealing approach.
 
-\subsubsection{Threaded CPU Execution Scaling with TCGA-1000}
+\paragraph{Threaded CPU Execution Scaling with TCGA-1000}
 \begin{figure}[H]
   \caption{Testing the CPU side parallelizability of the workstealing approach on Delos. The approach does not scale well with multiple cores. Testing different thread counts to compare 1 to 5 threads and larger scalings (20-80 threads).}
   \includegraphics[width=\textwidth]{figures/threaded_wsteal.pdf}
@@ -116,7 +116,7 @@ While a performance boost can be seen for additional threads spawned, there is a
 
 Looking at the workstealing performance the speedup of 78 threads workstealing compared to GPU-only is $\sim$16,6\% .
 
-\subsubsection{Workstealing TCGA-10000 and TCGA-45000 Benchmarks}
+\paragraph{Workstealing TCGA-10000 and TCGA-45000 Benchmarks}
 \input{figures/delos_workst_scaling}
 
 Looking at the scalability of the workstealing approach by running benchmarks on larger datasets, it can  be seen that the approach might not scale well. At 10 000 variables, there is even a slowdown. This slowdown can be explained by the rising data migration between the CPU and the GPU with more variables to be randomly accessed and the limited CPU-GPU interconnect throughput. More variables also produce more row length peaks, which are less likely to be an outlier because of the higher possibility of occurring peaks.
@@ -127,7 +127,7 @@ While the dataset based on 10 000 variables does not exhaust the memory associat
 The CPU still holds the whole data in system memory and can access the data fast. The heterogeneous computing approach is 6,61 times faster than the GPU-only variant because the memory overflown GPU is slower in this case. The CPU can help more by having faster access times on the data without the data migration happening.
 Since the raw computing power is the most critical part of the CPU in this scenario, using more threads speeds the computation up.
 
-\subsubsection{Level-Wise Workstealing Benchmarks}
+\paragraph{Level-Wise Workstealing Benchmarks}
 \begin{figure}[H]
   \caption{Comparing the level-wise speedup factor of the pre-balanced and workstealing approach to GPU-only execution}
   \includegraphics[width=\textwidth]{figures/levelwise.pdf}
@@ -155,7 +155,7 @@ While the GPU built into both systems is the same Nvidia V100 GPU, the built-in 
 
 While the Intel Xeon CPU included in the Delos system is x86\_64 architecture based, the Power9 CPU, which is included in the AC922 system, is based on the ppc64le architecture. Through the different architectures of both CPUs, different optimizations are done, which can influence execution times. Those optimizations include different SIMD instruction set extensions (e.g., AVX versus AltiVec), different instruction set designs (CISC versus RISC), or different core-based task-level parallelism technologies (hyperthreading versus SMT Mode) \cite{AnalysisX86Vs}.
 
-\subsubsection{TCGA-1000 Benchmarks for both approaches}
+\paragraph{TCGA-1000 Benchmarks for both approaches}
 \input{figures/ac922_bench}
 
 Benchmarks with both approaches as shown in Table \ref{table:bench_ac922} indicate that there is a new bottleneck occurring on the AC922 system. The AC922 system benchmarks for both approaches show a significant slowdown. In comparison to the workstealing approaches results, the pre-balanced approach is slower with a more significant gap compared to the GPU-only execution. This gap may indicate that the CPU of the system may be at fault for a large portion of the slowdown, which is supported by the fact, that NUMA pinning, which halves the core count, speeds up the performance of both approaches a lot.
@@ -165,6 +165,7 @@ The pre-balanced approach places rows on each execution unit/core of the process
 
 % Looking at the measurements of the pre-balanced execution, the load-balance duration is negligible because the time measurement mechanism does round the time to 0 milliseconds for each TCGA 1000 variables execution. In both the pre-balanced and the workstealing approaches measurements, a disparity between the CPU and the GPU execution time can be seen.
 
+\paragraph{SMT, Threading and NUMA Benchmarks}
 \begin{figure}[H]
   \caption{Comparing the workstealing approach pinned to a NUMA node, with different thread counts for OpenMP and different SMT settings (AC922)}
   \includegraphics[width=\textwidth]{figures/ac922_threadcount.pdf}
@@ -174,6 +175,7 @@ The pre-balanced approach places rows on each execution unit/core of the process
 
 For a better understanding of the bottleneck in those benchmarks, a few benchmarks with different AC922 CPU influencing settings are done in Figure \ref{fig:threadcount_ac922}. A tendency to better performance can be seen for fewer threads. The difference between SMT-4 and no SMT is small and insignificant. With an execution time of 14560.6 ms, the NUMA pinned SMT-4 version is the fastest and does not show the bottleneck of the first AC922 benchmarks. It is around ten times faster than the AC922 NUMA-pinned max threads workstealing execution and around \textbf{13,8\% faster} than the GPU-only execution on the AC922 system. Therefore a performance improvement using the heterogeneous computing approach can be seen in comparison to the GPU-only execution. The comparison in Figure \ref{fig:threadcount_ac922} shows a slowdown with additional threads, which indicates a parallelism problem in the CPU code or bad Power9 optimization. A detailed investigation of the CPU parallel perfomance is left for future work.
 
+\paragraph{Level-wise TCGA-1000 Benchmark}
 \begin{figure}[H]
   \caption{Comparing the workstealing approach pinned to a NUMA node and 1 CPU execution thread, level-wise (AC922)}
   \includegraphics[width=\textwidth]{figures/ac922_levelwise.pdf}
