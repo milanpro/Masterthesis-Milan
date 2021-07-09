@@ -74,7 +74,7 @@ For performance reasons, the CUDA run-time API allows for prefetching data to a 
 % - 
 
 \section{Constraint-Based Causal Structure Learning}
-This section introduces necessary terminology in Causal Structure Learning, which is the problem class considered in this thesis. The Causal Graphical Model and the PC algorithm are elaborated based on the definition given by Pearl \cite{pearlCausality2009}, and Spirtes et al. \cite{spirtesCausationPredictionSearch1993}. The order-independent GPU-based PC-Algorithm is the base for the heterogeneous approach of this thesis \cite{schmidtOrderIndependentConstraintBasedCausal2018}.
+This section introduces necessary terminology in Causal Structure Learning, which is the problem class considered in this thesis. The Causal Graphical Model and the PC algorithm are elaborated based on the definition given by Pearl \cite{pearlCausality2009}, and Spirtes et al. \cite{spirtesCausationPredictionSearch1993}. The order-independent GPU-based PC algorithm is the base for the heterogeneous approach of this thesis \cite{schmidtOrderIndependentConstraintBasedCausal2018}.
 
 \subsection{Causal Graphical Model}
 Given a finite set of $N$ vertices $V = (V_1,...,V_N)$ and a set of edges $E \subseteq V \times V$, let a graph G be $G = (V,E)$. The vertices each represent a variable. An edge $(V_i, V_j) \in E$ is called directed, i.e., $V_i \rightarrow V_j$, if $(V_i,V_j) \in E$ but $(V_j, V_i) \notin E$. An edge is called undirected, if both $(V_i,V_j) \in E$ and $(V_j, V_i) \in E$, i.e. $V_i - V_j$. Two vertices $V_i$, $V_j$ are called adjacent if there is an undirected edge $V_i - V_j$. The adjacency set $adj(G, V_i)$ of the vertex $V_i \in V$ in $G$ are all vertices $V_j \in V$ that are connected to $V_i$ by an undirected edge.
