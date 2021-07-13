@@ -103,16 +103,16 @@ Comparing the pre-balanced approaches and the workstealing approaches results, b
 
 \paragraph{Threaded CPU Execution Scaling with TCGA-1000}
 \begin{figure}[H]
-  \caption{Testing the CPU side parallelizability of the workstealing approach on Delos. The approach does not scale well with multiple cores. Testing different thread counts to compare 1 to 5 threads and larger scalings (20-80 threads).}
+  \caption{Testing the CPU side parallelizability of the workstealing approach on Delos. Points of interests marked with vertical colored lines.}
   \includegraphics[width=\textwidth]{figures/threaded_wsteal.pdf}
   \centering
   \label{fig:wstealing_threaded_delos}
 \end{figure}
 
 The implementation of the CPU execution is parallelized with OpenMP, a library that allows easy tuning of the thread count that is spawned for execution. In the following experiment, the parallelizability of the CPU execution can be seen in Figure \ref{fig:wstealing_threaded_delos}.
-The peak at 80 threads is expected because there is also the main thread used for orchestration, and one thread per GPU is used for GPU synchronization. With 80 plus 2 threads running, there are not enough execution units available to run without collisions. Therefore the maximum number of threads that the CPU tasks execution should use is 78.
+The peak at 79/80 threads, marked with a green vertical line, is expected because there is also the main thread running used for orchestration, and additionally one thread per GPU is used for GPU synchronization. With 80 plus at least additional 2 threads running, there are not enough execution units available to run all threads without collisions. Therefore the maximum number of threads that the CPU tasks execution should use is 78 (using one GPU), so that the sum of threads used is 80 running on the 80 hyperthreads of Delos.
 
-While a performance boost can be seen for additional threads spawned, there is another peak of execution time at around 20 threads. We could not find a proper reason for that behavior but speculate that it is caused by bad optimization, which could be an interconnect bottleneck hit with the two NUMA nodes involved or the system-wide synchronization through atomics. 78 thread execution is the fastest, but not by far, and therefore might not be suitable compared to one thread in energy-efficient environments because using more cores of a CPU means effectively using more watt \cite{saravananStudyFactorsInfluencing2011}. Using 78 threads is around 5\% faster than using a single thread.
+While a performance boost can be seen for additional threads spawned, there is another peak of execution time at around 12 threads, marked with a red vertical line. We could not find a proper reason for that behavior but speculate that it is caused by bad optimization, which could be an interconnect bottleneck hit with the two NUMA nodes involved or the system-wide synchronization through atomics. 78 thread execution is the fastest, but not by far, and therefore might not be suitable compared to one thread in energy-efficient environments because using more cores of a CPU means effectively using more watt \cite{saravananStudyFactorsInfluencing2011}. Using 78 threads is around 5\% faster than using a single thread.
 
 Looking at the workstealing performance, the speedup of 78 threads workstealing compared to GPU-only is $\sim$16,6\%.
 
