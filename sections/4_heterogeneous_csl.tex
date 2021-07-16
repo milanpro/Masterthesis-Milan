@@ -113,11 +113,11 @@ The maximum iteration count per row can be calculated by dividing the CI-Test co
 
 The CI-test count can be calculated using the row length $L_{row}$ which is the count of vertices connected to the rows vertex $V_i$ via an edge. For an edge $E=(V_i,V_j)$ and a separation set for that edge in a level $l$ is defined as $S \subseteq a(V_i ) \backslash \{V_j\}$ with $| S | = l$, the count of seperation set combinations can be calculated as $|Sepset(i,j)| = {L_{row} - 1 \choose level}$. The seperation set combination count is equal to the maximum CI-tests done for an edge.
 
-Suppose the maximum execution time of every edge in a row is proportional to the maximum possible iterations. In that case, the execution time of a single row can be estimated by the row length because with a larger row length, the CI-Test coun also grows.
+Suppose the maximum execution time of every edge in a row is proportional to the maximum possible iterations. In that case, the execution time of a single row can be estimated by the row length because with a larger row length, the CI-Test count also grows.
 
-\ref{Reducing the Sequential Part of the GPUs Workload}
+\paragraph{Reducing the Sequential Part of the GPUs Workload}
 
-Applying Amdahl's law to a whole level as a fixed workload, the sequential part of that level processed by the GPU is the longest row in the adjacency matrix, and speedup can be realized by minimizing the longest row. So the execution time of that level on the GPU can also be written as $t_{l}(\max I_n) \equiv O_{l}(\max L_n)$ where $L_n$ is the length of the row $n$. According to Amdahl's law, a possible speedup for the workload of the GPU is only possible by minimizing the sequential part.
+Applying Amdahl's law \cite{amdahlValiditySingleProcessor1967} to a whole level as a fixed workload, the sequential part of that level processed by the GPU is the longest row in the adjacency matrix, and speedup can be realized by minimizing the longest row. So the execution time of that level on the GPU can also be written as $t_{l}(\max I_n) \equiv O_{l}(\max L_n)$ where $L_n$ is the length of the row $n$. According to Amdahl's law, a possible speedup for the workload of the GPU is only possible by minimizing the sequential part.
 %  By adding the CPU as an additional processing unit which is also specialized in executing sequential tasks fast, moving the longest rows of the adjacency matrix to the CPU is the obvious approach.
 
 The agglomerated task mapped to the processing units in the Mapping stage is defined as one or more rows of the adjacency matrix. The length of those rows influences the runtime of that task and is used for the Mapping stage by limiting the GPU's sequential part.
@@ -146,7 +146,7 @@ The agglomerated task mapped to the processing units in the Mapping stage is def
 % - wird auch in \cite{zarebavani_cupc_2018} verwendet
 
 \subsection{Mapping}
-The last stage of Foster's Methodology, called Mapping, applies the tasks created in the Agglomeration stage to the given system. This stage is vital for heterogeneous systems because the underlying system has to be utilized efficiently. Utilizing heterogeneous systems means maximizing CPU and GPU usage and minimizing inter-processor communication. Minimizing the inter-processor communication includes the connection between GPU and CPU and the core/thread connections in the GPU and CPU.
+The last stage of Foster's Methodology \cite{fosterDesigningBuildingParallel1995}, called Mapping, applies the tasks created in the Agglomeration stage to the given system. This stage is vital for heterogeneous systems because the underlying system has to be utilized efficiently. Utilizing heterogeneous systems means maximizing CPU and GPU usage and minimizing inter-processor communication. Minimizing the inter-processor communication includes the connection between GPU and CPU and the core/thread connections in the GPU and CPU.
 Mapping the tasks on the system PUs is also called scheduling. There are two common ways of scheduling tasks: Static and dynamic scheduling \cite{kopetzRealTimeScheduling1997}.
 
 A scheduler is called static if it makes its scheduling decisions pre-execution. The static scheduler needs prior knowledge of the capabilities of each processing unit. In addition, the static scheduler needs to know the performance implications and characteristics of the given task set so that the tasks are balanced optimally on the system. Therefore a static scheduler that does not schedule on compile time is also called a static load-balancer.
@@ -203,7 +203,7 @@ If one of the execution units checked every task, a global flag is set, which in
 % - vermehrte kommunikation
 
 \section{Implementation}
-Both approaches' implementations were done using C++ as the base programming language and CUDA for the GPU side code. System programming languages such as C++ enable optimizations by developing close to the underlying system. Global data structures, which have to be accessed in every task, such as the adjacency lists of the skeleton, are held as pointers in a struct, which can be easily cloned and passed to CPU and GPU threads. Memory is allocated using the CUDA runtime unified memory allocator so that data pointers are globally accessible.
+Both approaches' implementations\footnote{https://github.com/milanpro/Masterthesis-Heterogeneous-PC/tree/state/thesis} were done using C++ as the base programming language and CUDA for the GPU side code. System programming languages such as C++ enable optimizations by developing close to the underlying system. Global data structures, which have to be accessed in every task, such as the adjacency lists of the skeleton, are held as pointers in a struct, which can be easily cloned and passed to CPU and GPU threads. Memory is allocated using the CUDA runtime unified memory allocator so that data pointers are globally accessible.
 
 The main loop iterates over each level, starting with level 0 until the last level is executed and the skeleton is estimated. In level 0 the GPU code for processing each edge is called. The following levels all share the same procedure. First, the changes of the write-only graph in matrix form are migrated to the read-only adjacency list form. After that, the load-balancer starts placing tasks in the queues of the CPU and GPU for the pre-balanced approach. The workstealing approach directly moves to the execution instead.
 

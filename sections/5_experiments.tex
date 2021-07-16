@@ -40,7 +40,7 @@ The following table shows the tools and libraries used for the experiments:
 
 CMake is used as a build tool simplifying the build process, which can handle CUDA code compilation and optimization for specific Nvidia GPUs used. GCC is used as the host compiler for the C++ code, with the versions already existing on the system. The CUDA compiler and libraries are provided by the CUDA Toolkit version 11.3. The CPU side mathematical calculations such as the pseudoinverse are done using Armadillo C++, an abstraction of BLAS libraries, so that best performance is achieved on each system. Boost is used for creating the command line interface of the application and for numerical helper functions.
 
-Further, the following flags were passed to GCC on the systems:
+Further, the following flags were passed to GCC on the systems\footnote{https://github.com/milanpro/Masterthesis-Heterogeneous-PC/blob/state/thesis/CMakeLists.txt}:
 \begin{itemize}
   \item Delos: -O3 -DNDEBUG -march=native -mtune=native
   \item AC922: -O3 -DNDEBUG -flto -fpeel-loops -funroll-loops -ftree-vectorize -ffast-math -mcpu=power9 -mtune=power9
@@ -52,7 +52,7 @@ Each experiment based on the TCGA-1000 dataset is done in five iterations.  Beca
 
 \section{Estimating the Speedup}
 \label{chap:est_speedup}
-Analyzing the TCGA-1000 dataset while executing could lead to a potential estimation of the theoretical speedup possible through the heterogeneous execution. In Chapter \ref{chap:agglo} where the Agglomeration stage of Foster's Methodology is applied to the PC-stable algorithm, the execution time of an edge is estimated by the length of the containing adjacency list.
+Analyzing the TCGA-1000 dataset while executing could lead to a potential estimation of the theoretical speedup possible through the heterogeneous execution. In Chapter \ref{chap:agglo} where the Agglomeration stage of Foster's Methodology \cite{fosterDesigningBuildingParallel1995} is applied to the PC-stable algorithm, the execution time of an edge is estimated by the length of the containing adjacency list.
 
 \begin{figure}[H]
   \caption{Boxplot of the adjancency row lengths at the start of each level based on the TCGA-1000.}
@@ -103,7 +103,7 @@ Comparing the pre-balanced approaches and the workstealing approaches results, b
 
 \paragraph{Threaded CPU Execution Scaling with TCGA-1000}
 \begin{figure}[H]
-  \caption{Testing the CPU side parallelizability of the workstealing approach on Delos. Points of interests marked with vertical colored lines.}
+  \caption{Testing the CPU side parallelizability of the workstealing approach on Delos with the TCGA-1000 dataset. Points of interests marked with vertical colored lines.}
   \includegraphics[width=\textwidth]{figures/threaded_wsteal.pdf}
   \centering
   \label{fig:wstealing_threaded_delos}
@@ -140,7 +140,7 @@ By comparing the speedup level-wise in Figure \ref{fig:levelwise_delos} it is cl
 Interestingly the most tasks are stolen in level 1 by the CPU. While the CPU steals around 90 000 tasks in level 1, where the additional help of the CPU slows the execution, the CPU steals around 4000 tasks in level 2 and 1000 in level 3. The difference of stolen tasks between levels 1 and 2/3 is expected because tasks in higher levels are slower on average, and the CPU takes the longest tasks on purpose. This difference in processed tasks on the CPU supports the argumentation of the most effective outliers of levels 3 and 4 (cf. Chapter \ref{chap:est_speedup}), because more outliers, which generally take longer, are done on the CPU in those levels.
 
 \begin{figure}[H]
-  \caption{Comparing the level-wise speedup factor of the workstealing approach to GPU-only execution with the 10 000 variables TCGA dataset}
+  \caption{Comparing the level-wise speedup factor of the workstealing approach to GPU-only execution with the TCGA-10000 dataset}
   \includegraphics[width=\textwidth]{figures/levelwise_scaled.pdf}
   \centering
   \label{fig:levelwise_scaled_delos}
