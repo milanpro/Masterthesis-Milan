@@ -195,13 +195,21 @@
   number = {05}
 }
 
-@article{colomboOrderIndependentConstraintBasedCausal,
+@article{colomboOrderIndependentConstraintBasedCausal2014,
   title = {Order-{{Independent Constraint}}-{{Based Causal Structure Learning}}},
-  author = {Colombo, Diego and Maathuis, Marloes H},
-  pages = {42},
+  author = {Colombo, Diego and Maathuis, Marloes H.},
+  year = {2014},
+  month = jan,
+  volume = {15},
+  pages = {3741--3782},
+  publisher = {{JMLR.org}},
+  issn = {1532-4435},
   abstract = {We consider constraint-based methods for causal structure learning, such as the PC-, FCI-, RFCI- and CCD- algorithms (Spirtes et al., 1993, 2000; Richardson, 1996; Colombo et al., 2012; Claassen et al., 2013). The first step of all these algorithms consists of the adjacency search of the PC-algorithm. The PC-algorithm is known to be order-dependent, in the sense that the output can depend on the order in which the variables are given. This order-dependence is a minor issue in low-dimensional settings. We show, however, that it can be very pronounced in high-dimensional settings, where it can lead to highly variable results. We propose several modifications of the PC-algorithm (and hence also of the other algorithms) that remove part or all of this order-dependence. All proposed modifications are consistent in high-dimensional settings under the same conditions as their original counterparts. We compare the PC-, FCI-, and RFCI-algorithms and their modifications in simulation studies and on a yeast gene expression data set. We show that our modifications yield similar performance in low-dimensional settings and improved performance in high-dimensional settings. All software is implemented in the R-package pcalg.},
   file = {/Users/i500763/Zotero/storage/72VWENC8/Colombo and Maathuis - Order-Independent Constraint-Based Causal Structur.pdf},
-  language = {en}
+  issue_date = {January 2014},
+  journal = {Journal of Machine Learning Research},
+  keywords = {CCD-algorithm,consistency,directed acyclic graph,FCI-algorithm,high-dimensional data,order-dependence,PC-algorithm},
+  number = {1}
 }
 
 @misc{dellGPUExpanseHPC2020,
@@ -355,8 +363,9 @@
   language = {en}
 }
 
-@article{gayatriComparingManagedMemory,
+@inproceedings{gayatriComparingManagedMemory,
   title = {Comparing {{Managed Memory}} and {{UVM}} with and without {{Prefetching}} on {{NVIDIA Volta GPUs}}},
+  booktitle = {The {{International Conference}} for {{High Performance Computing}}, {{Networking}}, {{Storage}}, and {{Analysis}} 2019},
   author = {Gayatri, Rahulkumar and Gott, Kevin and Deslippe, Jack},
   pages = {6},
   abstract = {One of the major differences in many-core versus multicore architectures is the presence of two different memory spaces: a host space and a device space. In the case of NVIDIA GPUs, the device is supplied with data from the host via one of the multiple memory management API calls provided by the CUDA framework, such as CudaMallocManaged and CudaMemCpy. Modern systems, such as the Summit supercomputer, have the capability to avoid the use of CUDA calls for memory management and access the same data on GPU and CPU. This is done via the Address Translation Services (ATS) technology that gives a unified virtual address space for data allocated with malloc and new if there is an NVLink connection between the two memory spaces. In this paper, we perform a deep analysis of the performance achieved when using two types of unified virtual memory addressing: UVM and managed memory.},
@@ -379,13 +388,17 @@
   language = {English}
 }
 
-@article{harrisPCAlgorithmNonparanormal,
+@article{harrisPCAlgorithmNonparanormal2013,
   title = {{{PC Algorithm}} for {{Nonparanormal Graphical Models}}},
   author = {Harris, Naftali and Drton, Mathias},
-  pages = {19},
+  year = {2013},
+  volume = {14},
+  pages = {3365--3383},
   abstract = {The PC algorithm uses conditional independence tests for model selection in graphical modeling with acyclic directed graphs. In Gaussian models, tests of conditional independence are typically based on Pearson correlations, and high-dimensional consistency results have been obtained for the PC algorithm in this setting. Analyzing the error propagation from marginal to partial correlations, we prove that high-dimensional consistency carries over to a broader class of Gaussian copula or nonparanormal models when using rank-based measures of correlation. For graph sequences with bounded degree, our consistency result is as strong as prior Gaussian results. In simulations, the `Rank PC' algorithm works as well as the `Pearson PC' algorithm for normal data and considerably better for non-normal data, all the while incurring a negligible increase of computation time. While our interest is in the PC algorithm, the presented analysis of error propagation could be applied to other algorithms that test the vanishing of low-order partial correlations.},
   file = {/Users/i500763/Zotero/storage/S4KQKNJS/Harris and Drton - PC Algorithm for Nonparanormal Graphical Models.pdf},
-  language = {en}
+  journal = {Journal of Machine Learning Research},
+  language = {en},
+  number = {69}
 }
 
 @article{hazarikaSurveyMemoryManagement2019,
@@ -437,9 +450,10 @@
   howpublished = {\url{https://www.intel.com/content/www/us/en/products/sku/120489/intel-xeon-gold-6148-processor-27-5m-cache-2-40-ghz/specifications.html}}
 }
 
-@article{johnsonSuperScalarProcessorDesign,
+@inproceedings{johnsonSuperScalarProcessorDesign1989,
   title = {Super-{{Scalar Processor Design}}},
   author = {Johnson, William M},
+  year = {1989},
   pages = {146},
   abstract = {A super-scalar processor is one that is capable of sustaining an instruction-execution rate of more than one instruction per clock cycle. Maintaining this execution rate is primarily a problem of scheduling processor resources (such as functional units) for high utilrzation. A number of scheduling algorithms have been published, with wide-ranging claims of performance over the single-instruction issue of a scalar processor. However, a number of these claims are based on idealizations or on special-purpose applications.},
   file = {/Users/i500763/Zotero/storage/T6BB25T5/Johnson - Super-Scalar Processor Design.pdf},
@@ -509,13 +523,21 @@
   number = {6}
 }
 
-@article{kimBatchAwareUnifiedMemory,
+@inproceedings{kimBatchAwareUnifiedMemory2020,
   title = {Batch-{{Aware Unified Memory Management}} in {{GPUs}} for {{Irregular Workloads}}},
+  booktitle = {Proceedings of the Twenty-Fifth International Conference on Architectural Support for Programming Languages and Operating Systems},
   author = {Kim, Hyojong and Sim, Jaewoong and Gera, Prasun and Hadidi, Ramyad and Kim, Hyesoon},
-  pages = {14},
-  abstract = {While unified virtual memory and demand paging in modern GPUs provide convenient abstractions to programmers for working with large-scale applications, they come at a significant performance cost. We provide the first comprehensive analysis of major inefficiencies that arise in page fault handling mechanisms employed in modern GPUs. To amortize the high costs in fault handling, the GPU runtime processes a large number of GPU page faults together. We observe that this batched processing of page faults introduces large-scale serialization that greatly hurts the GPU's execution throughput. We show real machine measurements that corroborate our findings. Our goal is to mitigate these inefficiencies and enable efficient demand paging for GPUs. To this end, we propose a GPU runtime software and hardware solution that (1) increases the batch size (i.e., the number of page faults handled together), thereby amortizing the GPU runtime fault handling time, and reduces the number of batches by supporting CPU-like thread block context switching, and (2) takes page eviction off the critical path with no hardware changes by overlapping evictions with CPU-to-GPU page migrations. Our evaluation demonstrates that the proposed solution provides an average speedup of 2x over the state-of-the-art page prefetching. We show that our solution increases the batch size by 2.27x and reduces the total number of batches by 51\% on average. We also show that the average batch processing time is reduced by 27\%.},
+  year = {2020},
+  pages = {1357--1370},
+  publisher = {{Association for Computing Machinery}},
+  address = {{New York, NY, USA}},
+  doi = {10.1145/3373376.3378529},
+  abstract = {While unified virtual memory and demand paging in modern GPUs provide convenient abstractions to programmers for working with large-scale applications, they come at a significant performance cost. We provide the first comprehensive analysis of major inefficiencies that arise in page fault handling mechanisms employed in modern GPUs. To amortize the high costs in fault handling, the GPU runtime processes a large number of GPU page faults together. We observe that this batched processing of page faults introduces large-scale serialization that greatly hurts the GPU's execution throughput. We show real machine measurements that corroborate our findings. Our goal is to mitigate these inefficiencies and enable efficient demand paging for GPUs. To this end, we propose a GPU runtime software and hardware solution that (1) increases the batch size (i.e., the number of page faults handled together), thereby amortizing the \o verheadName time, and reduces the number of batches by supporting CPU-like thread block context switching, and (2) takes page eviction off the critical path with no hardware changes by overlapping evictions with CPU-to-GPU page migrations. Our evaluation demonstrates that the proposed solution provides an average speedup of 2x over the state-of-the-art page prefetching. We show that our solution increases the batch size by 2.27x and reduces the total number of batches by 51\% on average. We also show that the average batch processing time is reduced by 27\%.},
   file = {/Users/i500763/Zotero/storage/7J6JC7E3/Kim et al. - Batch-Aware Unified Memory Management in GPUs for .pdf},
-  language = {en}
+  isbn = {978-1-4503-7102-5},
+  keywords = {graphics processing units,memory oversubscription,unified memory management,virtual memory},
+  language = {en},
+  series = {{{ASPLOS}} '20}
 }
 
 @incollection{kopetzRealTimeScheduling1997,
@@ -766,13 +788,16 @@
   isbn = {978-3-642-28292-8}
 }
 
-@article{mattsonPatternsParallelProgramming2004,
+@book{mattsonPatternsParallelProgramming2004,
   title = {Patterns for {{Parallel Programming}}},
-  author = {Mattson, Tim and Sanders, Beverly and Massingill, Berna},
+  author = {Mattson, Timothy and Sanders, Beverly and Massingill, Berna},
   year = {2004},
   month = sep,
-  issn = {0321228111},
-  file = {/Users/i500763/Zotero/storage/V58FAWMX/Mattson et al. - 2004 - Patterns for Parallel Programming.pdf}
+  edition = {First},
+  publisher = {{Addison-Wesley Professional}},
+  abstract = {The Parallel Programming Guide for Every Software DeveloperFrom grids and clusters to next-generation game consoles, parallel computing is going mainstream. Innovations such as Hyper-Threading Technology, HyperTransport Technology, and multicore microprocessors from IBM, Intel, and Sun are accelerating the movement's growth. Only one thing is missing: programmers with the skills to meet the soaring demand for parallel software.That's where Patterns for Parallel Programming comes in. It's the first parallel programming guide written specifically to serve working software developers, not just computer scientists. The authors introduce a complete, highly accessible pattern language that will help any experienced developer "think parallel"-and start writing effective parallel code almost immediately. Instead of formal theory, they deliver proven solutions to the challenges faced by parallel programmers, and pragmatic guidance for using today's parallel APIs in the real world. Coverage includes: Understanding the parallel computing landscape and the challenges faced by parallel developers Finding the concurrency in a software design problem and decomposing it into concurrent tasks Managing the use of data across tasks Creating an algorithm structure that effectively exploits the concurrency you've identified Connecting your algorithmic structures to the APIs needed to implement them Specific software constructs for implementing parallel programs Working with today's leading parallel programming environments: OpenMP, MPI, and JavaPatterns have helped thousands of programmers master object-oriented development and other complex programming technologies. With this book, you will learn that they're the best way to master parallel programming too.0321228111B08232004},
+  file = {/Users/i500763/Zotero/storage/V58FAWMX/Mattson et al. - 2004 - Patterns for Parallel Programming.pdf},
+  isbn = {0-321-22811-1}
 }
 
 @misc{MemoryManagement,
@@ -814,15 +839,17 @@
   number = {1}
 }
 
-@article{mooreCrammingMoreComponents1965,
-  title = {Cramming More Components onto Integrated Circuits},
-  author = {Moore, Gordon E},
-  year = {1965},
-  volume = {38},
-  pages = {4},
+@article{mooreCrammingMoreComponents2006,
+  title = {Cramming More Components onto Integrated Circuits, {{Reprinted}} from {{Electronics}}, Volume 38, Number 8, {{April}} 19, 1965, Pp.114 Ff.},
+  author = {Moore, Gordon E.},
+  year = {2006},
+  volume = {11},
+  pages = {33--35},
+  doi = {10.1109/N-SSC.2006.4785860},
   file = {/Users/i500763/Zotero/storage/MMW9A2PY/Moore - 1965 - Cramming more components onto integrated circuits.pdf},
+  journal = {IEEE Solid-State Circuits Society Newsletter},
   language = {en},
-  number = {8}
+  number = {3}
 }
 
 @article{nagarajanFunctionalRelationshipsGenes2010,
@@ -1048,7 +1075,7 @@
   pmid = {30785707}
 }
 
-@book{pfister1998search,
+@book{pfisterSearchClusters1998,
   title = {In Search of Clusters},
   author = {Pfister, G.F.},
   year = {1998},
@@ -1152,14 +1179,20 @@
 }
 
 @article{saravananStudyFactorsInfluencing2011,
-  title = {A {{Study}} on {{Factors Influencing Power Consumption}} in {{Multithreaded}} and {{Multicore CPUs}}},
-  author = {Saravanan, Vijayalakshmi and Chandran, Senthil Kumar and Kothari, D P},
+  title = {A Study on Factors Influencing Power Consumption in Multithreaded and Multicore {{CPUs}}},
+  author = {Saravanan, Vijayalakshmi and Chandran, Senthil Kumar and Punnekkat, Sasikumar and Kothari, D. P.},
   year = {2011},
+  month = mar,
   volume = {10},
-  pages = {11},
-  abstract = {The ever-growing demand for computational power and high performance has led to a rapid growth in the semiconductor industry. This evolution has seen a continuous increase in CPU performance and the number of transistors on a chip has roughly doubled every two years \textendash{} proving Moore's law. An inevitable consequence when achieving this is that more functional units, deeper pipelining and larger cache sizes have had to be implemented on the CPU chip. The result is a significant increase in the power consumption. Achieving high performance with low power consumption has been the traditional goal in high-end processors. In order to accomplish high performance, multithreaded and multicore CPUs have become the recent trend in semi-conductor technology. The purpose of this paper is to statistically analyze the various factors that affect power, to study their relationship to quantify their influence on power consumption in multithreaded and multicore CPUs. This paper explores the on-chip power modeling simulation techniques with the existing processors and compares the performance and power trade-off between multicore and multithreaded CPUs. In this paper, we also present review/tutorial of recent advancements in power savings through the implementation of power-limiting micro-architectural features (e.g. out-of-order execution, branch prediction, caching and prefetching) in contemporary multi-core processors, such as Intel Nehalem and AMD's Istanbul processors. The results show that the statistical findings on power consumption are encouraging and useful for low power application and power-aware processor designers.},
+  pages = {93--103},
+  publisher = {{World Scientific and Engineering Academy and Society (WSEAS)}},
+  address = {{Stevens Point, Wisconsin, USA}},
+  issn = {1109-2750},
+  abstract = {The ever-growing demand for computational power and high performance has led to a rapid growth in the semiconductor industry. This evolution has seen a continuous increase in CPU performance and the number of transistors on a chip has roughly doubled every two years - proving Moore's law. An inevitable consequence when achieving this is that more functional units, deeper pipelining and larger cache sizes have had to be implemented on the CPU chip. The result is a significant increase in the power consumption. Achieving high performance with low power consumption has been the traditional goal in high-end processors. In order to accomplish high performance, multithreaded and multicore CPUs have become the recent trend in semi-conductor technology. The purpose of this paper is to statistically analyze the various factors that affect power, to study their relationship to quantify their influence on power consumption in multithreaded and multicore CPUs. This paper explores the on-chip power modeling simulation techniques with the existing processors and compares the performance and power trade-off between multicore and multithreaded CPUs. In this paper, we also present review/tutorial of recent advancements in power savings through the implementation of power-limiting micro-architectural features (e.g. out-of-order execution, branch prediction, caching and prefetching) in contemporary multi-core processors, such as Intel Nehalem and AMD's Istanbul processors. The results show that the statistical findings on power consumption are encouraging and useful for low power application and power-aware processor designers.},
   file = {/Users/i500763/Zotero/storage/IJYICR64/Saravanan et al. - 2011 - A Study on Factors Influencing Power Consumption i.pdf},
-  language = {en},
+  issue_date = {March 2011},
+  journal = {W. Trans. on Comp.},
+  keywords = {power consumption,power-limiting factors,statistical analysis},
   number = {3}
 }
 
@@ -1178,14 +1211,21 @@
   series = {Proceedings of {{Machine Learning Research}}}
 }
 
-@article{schmidtOrderIndependentConstraintBasedCausal2018,
+@inproceedings{schmidtOrderIndependentConstraintBasedCausal2018,
   title = {Order-{{Independent Constraint}}-{{Based Causal Structure Learning}} for {{Gaussian Distribution Models}} Using {{GPUs}}},
-  author = {Schmidt, Christopher and Huegle, Johannes},
+  booktitle = {Proceedings of the 30th International Conference on Scientific and Statistical Database Management},
+  author = {Schmidt, Christopher and Huegle, Johannes and Uflacker, Matthias},
   year = {2018},
-  pages = {10},
-  abstract = {Learning the causal structures in high-dimensional datasets allows deriving advanced insights from observational data, thus creating the potential for new applications. One crucial limitation of stateof-the-art methods for learning causal relationships, such as the PC algorithm, is their long execution time. While, in the worst case, the execution time is exponential to the dimension of a given dataset, it is polynomial if the underlying causal structures are sparse. To address the long execution time, parallelized extensions of the algorithm have been developed addressing the Central Processing Unit (CPU) as the primary execution device. While modern multicore CPUs expose a decent level of parallelism, coprocessors, such as Graphics Processing Units (GPUs), are specifically designed to process thousands of data points in parallel, providing superior parallel processing capabilities compared to CPUs. In our work, we leverage the parallel processing power of GPUs to address the drawback of the long execution time of the PC algorithm and develop an efficient GPU-accelerated implementation for Gaussian distribution models. Based on an experimental evaluation of various high-dimensional real-world gene expression datasets, we show that our GPU-accelerated implementation outperforms existing CPU-based versions, by factors up to 700.},
+  publisher = {{Association for Computing Machinery}},
+  address = {{New York, NY, USA}},
+  doi = {10.1145/3221269.3221292},
+  abstract = {Learning the causal structures in high-dimensional datasets allows deriving advanced insights from observational data, thus creating the potential for new applications. One crucial limitation of state-of-the-art methods for learning causal relationships, such as the PC algorithm, is their long execution time. While, in the worst case, the execution time is exponential to the dimension of a given dataset, it is polynomial if the underlying causal structures are sparse. To address the long execution time, parallelized extensions of the algorithm have been developed addressing the Central Processing Unit (CPU) as the primary execution device. While modern multicore CPUs expose a decent level of parallelism, coprocessors, such as Graphics Processing Units (GPUs), are specifically designed to process thousands of data points in parallel, providing superior parallel processing capabilities compared to CPUs.In our work, we leverage the parallel processing power of GPUs to address the drawback of the long execution time of the PC algorithm and develop an efficient GPU-accelerated implementation for Gaussian distribution models. Based on an experimental evaluation of various high-dimensional real-world gene expression datasets, we show that our GPU-accelerated implementation outperforms existing CPU-based versions, by factors up to 700.},
+  articleno = {19},
   file = {/Users/i500763/Zotero/storage/ANBH9IMQ/Schmidt and Huegle - 2018 - Order-Independent Constraint-Based Causal Structur.pdf},
-  language = {en}
+  isbn = {978-1-4503-6505-5},
+  keywords = {causal inference,conditional independence testing,Gaussian distribution model,GPU-acceleration,parallelization,PC algorithm,probabilistic statistics},
+  language = {en},
+  series = {{{SSDBM}} '18}
 }
 
 @incollection{schmidtOutofCoreGPUAcceleratedCausal2020,
@@ -1226,15 +1266,13 @@
   title = {Learning {{Bayesian Networks}} with the Bnlearn {{R Package}}},
   author = {Scutari, Marco},
   year = {2010},
-  month = jul,
+  month = oct,
+  volume = {35},
+  doi = {10.18637/jss.v035.i03},
   abstract = {bnlearn is an R package which includes several algorithms for learning the structure of Bayesian networks with either discrete or continuous variables. Both constraint-based and score-based algorithms are implemented, and can use the functionality provided by the snow package to improve their performance via parallel computing. Several network scores and conditional independence algorithms are available for both the learning algorithms and independent use. Advanced plotting options are provided by the Rgraphviz package.},
-  archiveprefix = {arXiv},
-  eprint = {0908.3817},
-  eprinttype = {arxiv},
   file = {/Users/i500763/Zotero/storage/CZRSPCZH/Scutari - 2010 - Learning Bayesian Networks with the bnlearn R Pack.pdf;/Users/i500763/Zotero/storage/Q4U93FS2/0908.html},
-  journal = {arXiv:0908.3817 [stat]},
-  keywords = {Statistics - Machine Learning},
-  primaryclass = {stat}
+  journal = {Journal of Statistical Software},
+  keywords = {Statistics - Machine Learning}
 }
 
 @article{shanHeterogeneousProcessingStrategy2006,
@@ -1362,14 +1400,23 @@
   number = {16}
 }
 
-@article{sutterFreeLunchFundamental2013,
+@article{sutterFreeLunchFundamental2005,
   title = {The {{Free Lunch Is Over A Fundamental Turn Toward Concurrency}} in {{Software}}},
-  author = {Sutter, H.},
-  year = {2013},
+  author = {Sutter, Herb},
+  year = {2005},
+  volume = {30},
+  pages = {202--210},
   abstract = {The major processor manufacturers and architectures, from Intel and AMD to Sparc and PowerPC, have run out of room with most of their traditional approaches to boosting CPU performance. Instead of driving clock speeds and straight-line instruction throughput ever higher, they are instead turning en masse to hyperthreading and multicore architectures. Both of these features are already available on chips today; in particular, multicore is available on current PowerPC and Sparc IV processors, and is coming in 2005 from Intel and AMD. Indeed, the big theme of the 2004 InStat/MDR Fall Processor Forum was multicore devices, as many companies showed new or updated multicore processors. Looking back, it's not much of a stretch to call 2004 the year of multicore.},
+  added-at = {2008-09-03T09:42:11.000+0200},
+  biburl = {https://www.bibsonomy.org/bibtex/2215f355123504f02d0ddb1b40292abeb/gron},
   file = {/Users/i500763/Zotero/storage/HGBJVUIA/Free_Lunch.pdf;/Users/i500763/Zotero/storage/N57BKIBX/324d81807507a03b9e301def1887f686b18c13bc.html},
-  journal = {undefined},
-  language = {en}
+  interhash = {1540da30b9424bf778012a96f1192730},
+  intrahash = {215f355123504f02d0ddb1b40292abeb},
+  journal = {Dr. Dobb's Journal},
+  keywords = {Concurrency PhD Proposal},
+  language = {en},
+  number = {3},
+  timestamp = {2008-09-03T09:42:12.000+0200}
 }
 
 @inproceedings{tomeOptimizingGroupByAggregation2018,
@@ -1477,10 +1524,9 @@
   language = {en}
 }
 
-@article{zargesEvaluationOnNodeGPU,
+@phdthesis{zargesEvaluationOnNodeGPU,
   title = {Evaluation of {{On}}-{{Node GPU Interconnects}} for {{Training Deep Neural Networks}}},
   author = {Zarges, Nane-Maiken},
-  pages = {103},
   file = {/Users/i500763/Zotero/storage/WSDN3C3M/Zarges - Evaluation of On-Node GPU Interconnects for Traini.pdf},
   language = {en}
 }

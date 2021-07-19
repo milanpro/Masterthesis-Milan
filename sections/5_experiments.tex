@@ -5,14 +5,14 @@ In this chapter, both proposed heterogeneous pc-stable algorithm approaches are 
 
 \section{Setup}
 \label{chap:setup}
-All experiments are based on the same dataset, which is also used in the experiments of Perscheid et al. \cite{perscheidIntegrativeGeneSelection2018}. The dataset is taken from The Cancer Genome Atlas (TCGA) \cite{weinsteinCancerGenomeAtlas2013}. Genes with more than 30\% missing values are filtered out. The remaining data is normalized and log-transformed. The original dataset consists of 55 573 variables. While the runtime of the PC stable algorithm grows exponentially with the variable count, subsets of the dataset are used for evaluation. The subset sizes chosen for the evaluation are 1000 variables, 10 000 variables, and 45 000 variables. The 1000 variables dataset is used to represent small datasets and will be called TCGA-1000. The 10 000 variables dataset is a large dataset that does not fill the memory of the system's GPU and will be called TCGA-10000. The 45 000 variables dataset is used to show the effects of GPU memory overflow on the algorithms execution time in this evaluation and is called TCGA-45000.
+All experiments are based on the same dataset, which is also used in the experiments of Perscheid et al. \cite{perscheidIntegrativeGeneSelection2018}. The dataset is taken from The Cancer Genome Atlas (TCGA) \cite{weinsteinCancerGenomeAtlas2013}. Genes with more than 30\% missing values are filtered out. The remaining data is normalized and log-transformed. The original dataset consists of 55 573 variables. While the runtime of the PC stable algorithm grows exponentially with the variable count and experiments with the TCGA dataset could run for days, randomly sampled subsets of the dataset are used for evaluation. The subset sizes chosen for the evaluation are 1000 variables, 10 000 variables, and 45 000 variables. The 1000 variables dataset is used to represent small datasets and will be called TCGA-1000. The 10 000 variables dataset is a large dataset that does not fill the memory of the system's GPU and will be called TCGA-10000. The 45 000 variables dataset is used to show the effects of GPU memory overflow on the algorithms execution time in this evaluation and is called TCGA-45000.
 
 Terminology has to be defined to introduce the systems used for the experiments. A NUMA node is defined as some CPU and each non CPU device directly connected to that CPU so that there is no indirection in memory access from that CPU. NUMA nodes are essential for interconnection speed because multiple interconnects between devices in a system can be avoided. NUMA nodes can be pinned for execution so that the executed program can only use the resources of that NUMA node. Pinning the execution of a program to a single NUMA node while the system incorporates multiple CPUs leads to fewer cores available for execution because the other CPUs' resources cannot be used.
 
 The type of interconnection between processing units defines the speed with which processors can communicate. One important metric for interconnect speed is the bandwidth or throughput. While PCIe 3.0, which is used as a GPU-CPU in the following system (Figure \ref{fig:delos_arch}), has a maximum bandwidth of 15,75 GB/s, NVLink 2.0 is faster with a maximum of 25 GB/s \cite{zargesEvaluationOnNodeGPU}. The bandwidth gap between PCIe and NVLink grows even larger when multiple NVLink lanes are combined and used together as a single interconnect. Such NVLink combinations are often used in modern high-performance systems generating a maximum bandwidth of 50 GB/s or higher. NVLink is an interconnect standard designed for GPU-GPU connections but is also used as CPU-GPU interconnects in dedicated Power systems by IBM \cite{liEvaluatingModernGPU2020}. Interconnects between CPUs like UPI or X-Bus 4B are generally avoided because there is almost always a faster and more direct way to access data in memory when data management of the algorithm is done right. For complete avoidance and impact measuring of an additional CPU-CPU interconnect, experiments are done using a single pinned NUMA node.
 
 \begin{figure}[H]
-  \caption{System 1 Structure - Delos}
+  \caption{System Structure - Delos}
   \includegraphics[width=\textwidth]{figures/delos_system_arch.png}
   \centering
   \label{fig:delos_arch}
@@ -22,7 +22,7 @@ Two different systems are used for the evaluation. One system depicted in Figure
 
 
 \begin{figure}[H]
-  \caption{System 2 Structure - AC922 \cite{ganesannarayanasamyPowerAIDeepDive}}
+  \caption{System Structure - AC922 \cite{ganesannarayanasamyPowerAIDeepDive}}
   \includegraphics[width=\textwidth]{figures/ac922_system_arch.png}
   \centering
   \label{fig:ac922_arch}
@@ -52,7 +52,7 @@ Each experiment based on the TCGA-1000 dataset is done in five iterations.  Beca
 
 \section{Estimating the Speedup}
 \label{chap:est_speedup}
-Analyzing the TCGA-1000 dataset while executing could lead to a potential estimation of the theoretical speedup possible through the heterogeneous execution. In Chapter \ref{chap:agglo} where the Agglomeration stage of Foster's Methodology \cite{fosterDesigningBuildingParallel1995} is applied to the PC-stable algorithm, the execution time of an edge is estimated by the length of the containing adjacency list.
+Analyzing the TCGA-1000 dataset while executing could lead to a potential estimation of the theoretical speedup possible through the heterogeneous execution. In Chapter \ref{chap:agglo} where the Agglomeration stage of Foster's Methodology \cite{fosterDesigningBuildingParallel1995} is applied to the PC-stable algorithm, the execution time of an edge is estimated by the length of the containing adjacency list in the following called row length.
 
 \begin{figure}[H]
   \caption{Boxplot of the adjancency row lengths at the start of each level based on the TCGA-1000.}
@@ -61,7 +61,7 @@ Analyzing the TCGA-1000 dataset while executing could lead to a potential estima
   \label{fig:rowlength_bxplt}
 \end{figure}
 
-When plotting the length of each vertexes adjacency list before the level is executed in Figure \ref{fig:rowlength_bxplt}, a decline in edge deletions can be seen. The higher the level, the fewer edges are deleted. Most deletions happen in level one. Through rising test cases in higher levels with growing separation set combinations, the row length is not suitable anymore for estimating the execution time of a warp on the GPU. As said in the Agglomeration Chapter, the maximum iterations can be calculated using the maximum CI-tests that could be done for that row with a given level. The maximum CI-tests directly estimate the maximum execution time for each edge in that row and indicate the possible speedup through the heterogeneous PC algorithm variant.
+When plotting the length of each vertexes adjacency list before the level is executed in Figure \ref{fig:rowlength_bxplt}, a decline in edge deletions can be seen. The higher the level, the fewer edges are deleted. Most deletions happen in level one. Through rising test cases in higher levels with growing separation set combinations, the row length is not suitable for estimating the execution time of a warp handling all CI-Tests for an edge on the GPU. As said in the Agglomeration Chapter, the maximum iterations can be calculated using the maximum CI-tests that could be done for that row with a given level. The maximum CI-tests directly estimate the maximum execution time for each edge in that row and indicate the possible speedup through the heterogeneous PC algorithm variant.
 
 \begin{figure}[H]
   \caption{Boxplot of the maximum iterations needed for an edge in that row by a GPU warp. Calculated using the row lengths of Figure \ref{fig:rowlength_bxplt}.}
@@ -122,7 +122,7 @@ Looking at the workstealing performance, the speedup of 78 threads workstealing 
 Looking at the scalability of the workstealing approach by running benchmarks on larger datasets, it can be seen that the approach might not scale well. At 10 000 variables, there is even a slowdown. This slowdown can be explained by the rising data migration between the CPU and the GPU with more variables to be randomly accessed, and the limited CPU-GPU interconnect throughput. More variables also produce more row length peaks, which are less likely to be an outlier because of the higher possibility of occurring peaks.
 The GPU-only execution is presumably faster due to the better memory access times without having to migrate data.
 
-While the dataset based on 10 000 variables does not exhaust the memory associated with the GPU, the 45 000 variable dataset does. By exhausting the GPU memory, the CUDA runtime has to swap memory in and out while accessing because there is always a part of the dataset, which cannot be held in memory. This swapping process is usually slow because the CPU-GPU interconnect is used and does get triggered if there is some random access pattern \cite{gangulyAdaptivePageMigration2020, kimBatchAwareUnifiedMemory}.
+While the dataset based on 10 000 variables does not exhaust the memory associated with the GPU, the 45 000 variable dataset does. By exhausting the GPU memory, the CUDA runtime has to swap memory in and out while accessing because there is always a part of the dataset, which cannot be held in memory. This swapping process is usually slow because the CPU-GPU interconnect is used and does get triggered if there is some random access pattern \cite{gangulyAdaptivePageMigration2020, kimBatchAwareUnifiedMemory2020}.
 
 The CPU still holds the whole data in system memory and can access the data fast. The heterogeneous computing approach is 6,61 times faster than the GPU-only variant because the memory overflown GPU is slower in this case. The CPU can help more by having faster access times on the data without the data migration happening.
 Since the raw computing power is the most critical part of the CPU in this scenario, using more threads speeds the computation up.
@@ -185,7 +185,7 @@ For a better understanding of the bottleneck in those benchmarks, a few benchmar
 
 By measuring the level-wise impact in \ref{fig:levelwise_ac922} the same behavior as in the Delos level-wise benchmarks can be seen. Levels 2 and 3 profit from the heterogeneous computation, but levels 1 and 4 are slowed down. A slight performance improvement would be achievable by switching the approaches in an intelligent way per level. Nevertheless, the same relative distribution of time spent can be observed here, and levels 1 and 4 only make up a small percentage of the total execution time.
 
-\subsection{Delos versus AC922}
+\subsection{Comparing Delos and AC922}
 In Chapter \ref{chap:setup} while explaining the setup, the differences between PCIe 3.0, incorporated in the Delos system between the CPU and GPU, and NVLink 2.0, incorporated in the AC922 system between the CPU and the GPU, are investigated. While NVLink has better throughput and latency than PCIe 3.0, comparing both systems might lead to insights into the impact of the interconnect.
 
 Further, the Delos Intel Xeon Gold 6148 performs presumably better than the Power9 CPU in the AC922 system \cite{POWER9BenchmarksVs}, which could also invalidate the gains through the better interconnect of the AC922 system.
@@ -230,7 +230,6 @@ The interconnect factor does not show the expected performance improvements resu
 %   - Different Dataset sizes
 %   - Pinning on NUMA nodes
 %   - Delos vs AC922
-
 % - Measurements with different Datasets
 %   - Iterations
 %   - Workstealing Numa 0

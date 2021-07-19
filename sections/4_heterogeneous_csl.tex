@@ -25,7 +25,7 @@ The Communication stage specifies links between data consumers and producers. Do
 Using the PC-stable GPU-accelerated Algorithm proposed in the paper by Schmidt et al. \cite{schmidtOrderIndependentConstraintBasedCausal2018} makes handling the Partitioning and Communication step straightforward. The algorithm is based on the gaussian distribution model and handles only the CI-Test for multivariate normal distributed data. For simplicity purposes, the thesis implementation incorporates the same approach and looks into other CI-Tests later.
 
 \begin{algorithm}
-    \caption{Adjacency search of PC-stable algorithm with gaussian distribution model \cite{schmidtOrderIndependentConstraintBasedCausal2018, colomboOrderIndependentConstraintBasedCausal}}
+    \caption{Adjacency search of PC-stable algorithm with Gaussian distribution model \cite{schmidtOrderIndependentConstraintBasedCausal2018, colomboOrderIndependentConstraintBasedCausal2014}}
     \label{alg:pcstable_gaussian}
     \begin{algorithmic}[1]
     \Require Vertex set $V$, correlation matrix $Cor$
@@ -40,7 +40,7 @@ Using the PC-stable GPU-accelerated Algorithm proposed in the paper by Schmidt e
             \State Select pairs $(V_i,V_j)$ adjacent in $C$ with $|a(V_i)\backslash\{V_j\}| \geq l$
             \Repeat \label{alg:pcstable_gaussian:sepset_loop}
                 \State Choose separation set $S \subseteq a(V_i ) \backslash \{V_j\}$ with $| S | = l$
-                \If{$p(V_i,V_j|S) \leq \alpha$}
+                \If{$p = CITest(V_i,V_j,S,Cor) \land p \leq \alpha$}
                     \State Delete edge $V_i - V_j$ from $C$
                     \State Set Sepset(i,j) = Sepset(j,i) = S
                 \EndIf
@@ -92,7 +92,7 @@ In between each level, the graph that contains the edge-changes migrates to the 
 
 \paragraph{Estimating Execution Times of an Edge}
 
-\begin{lstlisting}[language=C++, caption=Basic separation set loop in level 1, label=lst:sepsetloopl1]
+\begin{lstlisting}[language=C++, caption=Separation set loop in level 1, label=lst:sepsetloopl1]
     for (size_t offset = threadIdx.x; offset < row_length; offset += blockDim.x)
     {
         double pVal = performIndependenceTestForSeparationSet(

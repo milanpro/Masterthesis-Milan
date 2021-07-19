@@ -17,7 +17,7 @@ The research question splits into a few smaller questions that are important to 
 \end{enumerate}
 
 Deciding on a task size is the main factor in being able to schedule the workload effectively. Using this task to parallelize the workload is then effectively assigning the tasks to the given processing units. Assigning the task to the given processing units has to be done by some scheduling algorithm, which has to know about the performance parameters of the heterogeneous system and its processing units.
-Performance parameters such as the processing power of the different processing units are essential factors for that decision. The single-core performance of the CPU is derived from the clock speed and the implemented instruction-level parallelism. Both performance indicators stalled in their development a few years ago \cite{sutterFreeLunchFundamental2013}. Most performance advancements are done by adding parallelism concepts such as multiple cores and SIMD instruction set extensions. Therefore highly parallelizable workloads gain the most performance when run on modern CPUs. The same applies to GPUs, which are dedicated to executing parallelizable workloads.
+Performance parameters such as the processing power of the different processing units are essential factors for that decision. The single-core performance of the CPU is derived from the clock speed and the implemented instruction-level parallelism. Both performance indicators stalled in their development a few years ago \cite{sutterFreeLunchFundamental2005}. Most performance advancements are done by adding parallelism concepts such as multiple cores and SIMD instruction set extensions. Therefore highly parallelizable workloads gain the most performance when run on modern CPUs. The same applies to GPUs, which are dedicated to executing parallelizable workloads.
 The similarity between GPU and modern CPU parallelization allows for a similar algorithm implementation used for the different processing units.
 
 Another critical performance parameter is the interconnect between the processing units. While accessing data available in the local processing unit memory is fast, accessing data elsewhere has to go over an interconnect and thus is relatively slow. Data movement between CPU and GPU in heterogeneous systems is widely known as the main bottleneck where the best solution is limiting communication between both \cite{hazarikaSurveyMemoryManagement2019}. Some workloads are prone to being more communication reliant because of their data access patterns.
@@ -28,6 +28,5 @@ Those hardware limitations and performance improvements lead to another research
 Are modern CPU-GPU interconnects such as PCIe or NVLink able to overcome the bottleneck of random memory access workloads such as the PC-stable Algorithm?
 
 In the experiment section, benchmarks of both PCIe and NVLink based systems are done and later evaluated for insights on the performance impacts of those interconnects.
-
 % Scaling?
 % Contributions, Challenges?
