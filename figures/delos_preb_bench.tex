@@ -1,13 +1,13 @@
 \begin{table}[H]
   \centering
-  \begin{tabular}{||c | c||} 
+  \begin{tabular}{||c | c | c | c||} 
    \hline
-    & Execution time (ms) \\ [0.5ex] 
+    & Execution time (ms) & $\Delta$ & $\Delta$ speedup in \% \\ [0.5ex] 
    \hline\hline
-   GPU-only & 16290.8 \\
-   Pre-Balanced & 15853.8 \\ 
-   Pre-Balanced without postponed edge migrations & 15821.8 \\
-   Pre-Balanced NUMA pinned & 16839.6 \\ [1ex] 
+   GPU-only & 16290.8 & 0 & - \\
+   Pre-Balanced & 15853.8 & -437 & 2,68 \\ 
+   No post level migrations & 15821.8 & -469 & 2,96 \\
+   NUMA node pinned & 16839.6 & 548,8 & -3,36 \\ [1ex] 
    \hline
   \end{tabular}
   \caption{Pre-Balanced execution time results (Delos)}

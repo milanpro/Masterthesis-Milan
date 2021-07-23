@@ -1,14 +1,14 @@
 \begin{table}[H]
   \centering
-  \begin{tabular}{||c | c||} 
+  \begin{tabular}{||c | c | c | c||} 
    \hline
-    & Execution time (ms) \\ [0.5ex] 
+   & Execution time (ms) & $\Delta$ & $\Delta$ speedup in \% \\ 
    \hline\hline
-   GPU-only & 16290.8 \\
-   Workstealing & 15796.8 \\ 
-   Workstealing without postponed edge migrations & 15892.2 \\
-   Workstealing without atomics & 23551.0 \\
-   Workstealing NUMA pinned & 16266.4 \\ [1ex] 
+   GPU-only & 16290.8 & 0 & -\\
+   Workstealing & 15796.8 & -494 & 3,12 \\ 
+   No post level migrations & 15892.2 & -398,6 & 2,51 \\
+   No atomics & 23551.0 & 7260,2 & -44,57 \\
+   NUMA node pinned & 16266.4 & -24,4 & 0,15 \\ [1ex] 
    \hline
   \end{tabular}
   \caption{Workstealing execution time results (Delos)}
