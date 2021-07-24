@@ -38,7 +38,7 @@ The following experiments only use one GPU for execution, even if the proposed a
 The following table shows the tools and libraries used for the experiments:
 \input{figures/version_table}
 
-CMake is used as a build tool simplifying the build process. It can handle CUDA code compilation and optimization for specific Nvidia GPUs used. GCC is used as the host compiler for the C++ code, with the versions already existing on the system. The CUDA compiler and libraries are provided by the CUDA Toolkit version 11.3. The CPU side mathematical calculations such as the pseudoinverse are performed using Armadillo C++, an abstraction of BLAS libraries so that best performance is achieved on each system. Boost is used for creating the command line interface of the application and for numerical helper functions.
+CMake is used as a build tool simplifying the build process. It can handle CUDA code compilation and optimization for specific Nvidia GPUs used. GCC is used as the host compiler for the C++ code, with the versions already existing on the system. The CUDA compiler and libraries are provided by the CUDA Toolkit version 11.3. The CPU-side mathematical calculations such as the pseudoinverse are performed using Armadillo C++, an abstraction of BLAS libraries so that best performance is achieved on each system. Boost is used for creating the command line interface of the application and for numerical helper functions.
 
 Further, the following flags were passed to GCC on the systems\footnote{https://github.com/milanpro/Masterthesis-Heterogeneous-PC/blob/state/thesis/CMakeLists.txt}:
 \begin{itemize}
@@ -103,7 +103,7 @@ Comparing the pre-balanced approaches and the workstealing approaches results, b
 
 \paragraph{Threaded CPU Execution Scaling with TCGA-1000}
 \begin{figure}[H]
-  \caption{Testing the CPU side parallelizability of the workstealing approach on Delos with the TCGA-1000 dataset. Points of interests marked with vertical lines.}
+  \caption{Testing the CPU-side parallelizability of the workstealing approach on Delos with the TCGA-1000 dataset. Points of interests marked with vertical lines.}
   \includegraphics[width=\textwidth]{figures/threaded_wsteal.pdf}
   \centering
   \label{fig:wstealing_threaded_delos}

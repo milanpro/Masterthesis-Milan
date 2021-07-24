@@ -210,7 +210,7 @@ The main loop iterates over each level, starting with level 0 until the last lev
 
 After the balancing step, execution starts. An executor class abstracts each processing unit so that additional processing units can be added in further code extensions. A thread is spawned for every processing unit by the executor that orchestrates its execution flow. While every task is executed independently in the pre-balanced approach because all tasks have their respective owning processing unit, in the workstealing approach, every task is marked with a system-wide atomic flag before execution, using the libcu++ library by Nvidia \cite{NVIDIALibcudacxx2021}, to prevent doubly executed tasks.
 
-CPU side execution is handled by OpenMP, which spawns the necessary threads. For the pre-balanced approach, OpenMP dynamic scheduling is used so that threads do not idle. Dynamic scheduling is preferred because task execution time can differ significantly, and due to that, static scheduling is not sufficient.
+CPU-side execution is handled by OpenMP, which spawns the necessary threads. For the pre-balanced approach, OpenMP dynamic scheduling is used so that threads do not idle. Dynamic scheduling is preferred because task execution time can differ significantly, and due to that, static scheduling is not sufficient.
 
 % - could be integrated into the Approach sections
 % - one state containing unified memory data
