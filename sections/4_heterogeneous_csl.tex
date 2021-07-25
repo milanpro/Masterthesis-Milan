@@ -89,7 +89,7 @@ On the other hand, adjacency lists are memory-efficient because only existing ed
 
 For performance reasons, the length of each row is calculated before each level and appended to the row. This representation is only used for reading existing edges in the level. Since every edge has to be processed, an index-based approach is used. Thus a single edge is still accessible in $O(1)$.
 Between two subsequent levels, the graph that contains the edge changes migrates to the adjacency list representation. This step is called the compacting step \cite{zarebavaniCuPCCUDAbasedParallel2018}.
-
+\newpage
 \paragraph{Estimating Execution Times of an Edge}
 
 \begin{lstlisting}[language=C++, caption=Separation set loop in level 1, label=lst:sepsetloopl1]
